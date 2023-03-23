@@ -53,6 +53,10 @@ Il faut ensuite compiler les fichiers `input.css` et `output.css` pour générer
 npx tailwindcss build input.css -o output.css
 ```
 
+Il ne reste plus qu'à intégrer les classes *Tailwindcss* dans le code HTML. Par exemple, pour créer un bouton avec un fond rouge et un texte blanc, il suffit d'ajouter la classe `bg-red-500` au bouton et la classe `text-white` au texte. La syntaxe est intuitive et facile à retenir. Il suffit de lire la documentation pour comprendre comment utiliser les classes.
+
 ## Documentation
 
 - [Tailwindcss - Documentation](https://v2.tailwindcss.com/docs)
+- [Tailwindcss - Installation](https://v2.tailwindcss.com/docs/installation)
+- [Tailwindcss - Configuration](https://v2.tailwindcss.com/docs/configuration)
