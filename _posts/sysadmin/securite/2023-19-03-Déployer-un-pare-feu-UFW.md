@@ -5,7 +5,7 @@ categories: [sysadmin, securite]
 tags: [sysadmin, securite, pare-feu, ufw, debian]
 ---
 
-Explication pour l'installation et la configuration d'un pare-feu sous Debian. Il permettra de filtrer les connexions entrantes et sortantes afin de préserver l'intégrité d'un serveur. 
+UFW est une interface de configuration pour le pare-feu iptables. Il est disponible sous Debian et peut être installé avec la commande `sudo apt install ufw`. Elle permet de configurer le pare-feu de manière simple et rapide.
 
 ## Installation de UFW
 
@@ -16,7 +16,8 @@ Sous debian, installer le paquet avec la commande `sudo apt install ufw`.
 La configuration dépend du type de serveur. Par défaut, il est recommandé de refuser toutes les connexions entrantes ou sortantes. Il faut ensuite autoriser manuellement certaiens connexions. 
 
 Pour refuser toutes les connexions par défaut, saisissez les lignes suivantes :
-```console
+
+```bash
 $ sudo ufw default deny incoming
 $ sudo ufw default allow outgoing
 ```
@@ -31,7 +32,11 @@ Pour autoriser le traf HTTP/HTTPS, il faut utiliser la commande `sudo ufw allow 
 
 Lorsque le pare-feu est configuré, il faut l'activer avec la commande `sudo ufw enable`.
 
+## Vérifier le pare-feu
+
+Pour vérifier le pare-feu, il faut utiliser la commande `sudo ufw status`. Cette commande affiche les règles du pare-feu et l'état du pare-feu.
 
 #### Liens utiles :
 - [UFW - Debian Wiki](https://wiki.debian.org/fr/UncomplicatedFirewall)
 - [Digital Ocean - How To Set Up a Firewall with UFW on Debian](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-debian-9)
+- [How to configure firewall on ubuntu using UFW](https://www.hostinger.com/tutorials/how-to-configure-firewall-on-ubuntu-using-ufw/)

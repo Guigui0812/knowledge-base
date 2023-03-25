@@ -5,8 +5,6 @@ categories: [sysadmin, securite]
 tags: [sysadmin, securite, antivirus, clamav, debian]
 ---
 
-## Installation de ClamAV
-
 ClamAV est un antivirus open-source. Il est disponible sous Debian et peut être installé avec la commande `sudo apt install clamav`.
 
 ## Configuration de ClamAV
