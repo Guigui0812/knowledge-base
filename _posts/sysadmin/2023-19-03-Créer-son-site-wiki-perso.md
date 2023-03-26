@@ -16,3 +16,4 @@ tags: [web development, documentation, wiki, jekyll, github, markdown]
 - [How to build an efficient personnal knowledge management system - axtonliu](https://axtonliu.medium.com/how-to-build-an-efficient-personal-knowledge-management-system-355332ae5991)
 - [Markdown Guide](https://www.markdownguide.org/)
 - [Chirpy - Jekyll Theme](https://chirpy.cotes.page/posts/getting-started/)
+- [Markdown in VScode - VScode](https://code.visualstudio.com/docs/languages/markdown#_markdown-preview)
