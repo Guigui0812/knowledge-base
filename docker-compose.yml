@@ -1,0 +1,17 @@
+version: "3"
+services:
+  jekyll_website:
+    image: my_knowledge-base
+    volumes:
+      - "./site:/srv/jekyll"
+    ports:
+      - 4000:4000
+   
+  nginx:
+    image: nginx
+    volumes:
+      - "./site/_site:/var/www/public"
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+    ports:
+      - 1061:1061
+    
