@@ -17,3 +17,4 @@ tags: [web development, documentation, wiki, jekyll, github, markdown]
 - [Markdown Guide](https://www.markdownguide.org/)
 - [Chirpy - Jekyll Theme](https://chirpy.cotes.page/posts/getting-started/)
 - [Markdown in VScode - VScode](https://code.visualstudio.com/docs/languages/markdown#_markdown-preview)
+- [A personnal git repo as a knowledge base wiki](https://dev.to/adam_b/a-personal-git-repo-as-a-knowledge-base-wiki-j51)

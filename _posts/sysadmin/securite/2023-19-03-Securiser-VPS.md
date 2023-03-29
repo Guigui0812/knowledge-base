@@ -42,13 +42,17 @@ Il est possible de désactiver l'authentification root pour SSH. Pour cela, il f
 
 Iptables est un pare-feu interne qui permet de bloquer les attaques par force brute. Il est possible d'installer iptables sous Debian avec la commande `sudo apt install iptables`. Il faut ensuite modifier le fichier de configuration `/etc/iptables/rules.v4` pour activer le filtrage SSH. Il faut ensuite redémarrer le service iptables avec la commande `sudo systemctl restart iptables`.
 
+Avec`sudo iptables -L -v`, il est possible de voir les règles actives.
+
 ### UFW
 
 Voir l'article à ce sujet [Déployer un pare-feu-UFW](./2023-19-03-Deployer-un-pare-feu-ufw.md).
 
 ## Fail2ban
 
-Fail2ban est un outil qui permet de bloquer les attaques par force brute. Il est possible d'installer Fail2ban sous Debian avec la commande `sudo apt install fail2ban`. Il faut ensuite modifier le fichier de configuration `/etc/fail2ban/jail.conf` pour activer le filtrage SSH. Il faut ensuite redémarrer le service Fail2ban avec la commande `sudo systemctl restart fail2ban`.
+Fail2ban est un outil qui permet de bloquer les attaques par force brute. Il est possible d'installer Fail2ban sous Debian avec la commande `sudo apt install fail2ban`. Il faut ensuite modifier le fichier de configuration `/etc/fail2ban/jail.conf` pour activer le filtrage SSH. Il faut ensuite redémarrer le service Fail2ban avec la commande `sudo systemctl restart fail2ban`. 
+
+Pour vérifier que Fail2ban fonctionne, utiliser la commande `sudo systemctl status fail2ban`.
 
 ## Utiliser SFTP
 
@@ -57,7 +61,6 @@ SFTP est normalement activé par défaut. Il est important de l'utiliser à la p
 ## Installer un antivirus
 
 [Antivirus ClamAV sous Debian](./2023-19-03-Antivirus-ClamAV-sous-Debian.md)
-
 
 ## Mettre à jour le système
 
