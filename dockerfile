@@ -1,11 +1,6 @@
 # Use the official Jekyll Docker image as the base image
 FROM ruby:3.0
 
-RUN addgroup -S wiki_users \
- && adduser -S wiki_user -G wiki_users
- 
-USER wiki_user
-
 # Install Jekyll and other dependencies
 RUN apt-get update && \
     apt-get install -y build-essential && \
@@ -14,19 +9,13 @@ RUN apt-get update && \
 # Set the working directory to the Jekyll site directory
 WORKDIR /srv/jekyll
 
-# Copy the Jekyll site files into the Docker image
-COPY . /srv/jekyll
+COPY Gemfile .
+COPY Gemfile.lock .
+COPY jekyll-theme-chirpy.gemspec .
 
-# Mount a volume for the generated site files
-VOLUME /srv/jekyll/_posts
+RUN bundle install
 
-# Expose port 4000
 EXPOSE 4000
 
-# Build the Jekyll site inside the Docker image
-RUN bundle
-
 # Start Jekyll using the same command as the `docker run` command
-CMD ["jekyll", "serve", "--watch", "--force_polling", "--host", "0.0.0.0"]
-
-
+CMD ["bundle", "exec", "jekyll", "serve", "--watch", "--force_polling", "--host", "0.0.0.0:4000"]
