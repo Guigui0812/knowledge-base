@@ -1,8 +1,8 @@
 version: "3"
 services:
   jekyll_website:
-    build: .
+    image: my-jekyll-site
     volumes:
-      - .:/srv/jekyll
+      - ".:/srv/jekyll"
     ports:
       - "4000:4000"
