@@ -1,8 +1,8 @@
 ---
 title: Crée son site wiki personnel
 date: 2023-03-19 00:00:00
-categories: [web development, documentation]
-tags: [web development, documentation, wiki, jekyll, github, markdown]
+categories: [documentation]
+tags: [web development, documentation, sysadmin,  wiki, jekyll, github, markdown]
 ---
 
 # En cours de rédaction
@@ -18,3 +18,4 @@ tags: [web development, documentation, wiki, jekyll, github, markdown]
 - [Chirpy - Jekyll Theme](https://chirpy.cotes.page/posts/getting-started/)
 - [Markdown in VScode - VScode](https://code.visualstudio.com/docs/languages/markdown#_markdown-preview)
 - [A personnal git repo as a knowledge base wiki](https://dev.to/adam_b/a-personal-git-repo-as-a-knowledge-base-wiki-j51)
+- [ Simple NGINX with Docker for beginners ](https://www.youtube.com/watch?v=qxPdd-geqqA)
