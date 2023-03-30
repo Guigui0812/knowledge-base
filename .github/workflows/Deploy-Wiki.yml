@@ -17,6 +17,6 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy site
+    - name: Deploy site to VPS
       run: 
         ssh -o StrictHostKeyChecking=no -p 1068 guillaume@guillaume-rohee.me "cd /srv/knowledge-base && docker-compose up -d"
