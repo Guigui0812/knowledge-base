@@ -13,3 +13,5 @@ networks:
   default:
     name: shared-network  
     external: true
+
+# Create a network with the name shared-network : docker network create shared-network
