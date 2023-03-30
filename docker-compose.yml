@@ -1,17 +1,15 @@
-version: "3"
+version: '3.8'
+
 services:
   jekyll_website:
     image: my-jekyll-site
+    container_name: jekyll_website
     volumes:
       - ".:/srv/jekyll"
     ports:
       - "4000:4000"
-  nginx:
-    image: nginx
-    volumes:
-      - "./_site/:/usr/share/nginx/html:ro"
-      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-    ports:
-      - "80:80"
-    depends_on:
-      - jekyll_website
+    
+networks:
+  default:
+    name: shared-network  
+    external: true
