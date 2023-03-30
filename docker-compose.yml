@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  jekyll_website:
+    image: my-jekyll-site
+    container_name: jekyll_website
+    volumes:
+      - ".:/srv/jekyll"
+    ports:
+      - "4000:4000"
+    
+networks:
+  default:
+    name: shared-network  
+    external: true
