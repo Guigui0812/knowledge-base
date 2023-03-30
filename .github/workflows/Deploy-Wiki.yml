@@ -12,11 +12,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: SSH key setup
-      uses: webfactory/ssh-agent@v0.5.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install SSH
+      run: sudo apt-get install -y sshpass
 
     - name: Deploy site to VPS
       run: 
+        eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
         ssh -o StrictHostKeyChecking=no -p 1068 guillaume@guillaume-rohee.me "cd /srv/knowledge-base && docker-compose up -d"
