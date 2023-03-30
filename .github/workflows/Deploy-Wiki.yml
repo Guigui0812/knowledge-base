@@ -19,5 +19,4 @@ jobs:
 
     - name: Deploy site
       run: 
-        eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
         ssh -o StrictHostKeyChecking=no guillaume@guillaume-rohee.me "cd /srv/knowledge-base && docker-compose up -d"
