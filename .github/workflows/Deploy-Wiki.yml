@@ -16,6 +16,4 @@ jobs:
       run: sudo apt-get install -y sshpass
 
     - name: Deploy site to VPS
-      run: 
-        eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-        ssh -o StrictHostKeyChecking=no -p 1068 guillaume@guillaume-rohee.me "cd /srv/knowledge-base && docker-compose up -d"
+      run: eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}" ssh -o StrictHostKeyChecking=no -p 1068 guillaume@guillaume-rohee.me "cd /srv/knowledge-base && docker-compose up -d"
