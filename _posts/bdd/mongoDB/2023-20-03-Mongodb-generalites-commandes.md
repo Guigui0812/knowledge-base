@@ -22,7 +22,11 @@ db.collection.find({id: 1})
 ```
 
 
+### Obtenir un élément d'une collection avec un filtre
 
+```mongodb
+db.collection.find({id: 1, name: "John"})
+```
 
 
 
