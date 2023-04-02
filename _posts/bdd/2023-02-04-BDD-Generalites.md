@@ -1,6 +1,6 @@
 ---
 title: Quelques généralités sur les bases de données
-date: 2023-03-20 00:00:00
+date: 2023-02-04 00:00:00
 categories: [database, nosql, bdd relationnelle]
 tags: [database, sql, nosql]
 ---
