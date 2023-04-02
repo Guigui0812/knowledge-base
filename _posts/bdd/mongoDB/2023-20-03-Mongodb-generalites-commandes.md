@@ -5,9 +5,51 @@ categories: [database, mongoDB]
 tags: [database, mongoDB, script, nosql]
 ---
 
+
+# MongoDB - Généralités
+
+MongoDB est une base de données NoSQL orientée document. MongoDB est une base de données open source, écrite en C++ et développée par MongoDB Inc. MongoDB est une base de données orientée document, ce qui signifie que les données sont stockées sous forme de documents JSON. MongoDB est distribuée sous licence AGPL.
+
+Ce SGBD offre une grande flexibilité et une grande performance (haute disponibilité, scalabilité horizontale, etc.). Elle repose sur les concepts de collections et de documents.
+
+## Concepts
+
+**Base de données MongoDB** : conteneur physique pour les collections. Chaque base possède son ensemble de fichiers. Un serveur MongoDB peut contenir plusieurs bases de données. Une base peut contenir plusieurs collections.
+
+**Collection MongoDB** : groupement de documents. C'est l'équivalent d'une table dans une base de données relationnelle. Une collection existe dans une seule base de données. Elles n'imposent pas de schéma de données. Généralement, une collection contient des documents qui ont des champs similaires ou connexes.
+
+**Document MongoDB** : enregistrement. C'est l'équivalent d'une ligne dans une base de données relationnelle. Un document est un ensemble de paires clé/valeur. Ils ont un schéma dynamique et les champspeuvent conteni différents types de données.
+
+## Syntaxe d'un document MongoDB
+
+```json
+{
+    "name": "John",
+    "age": 30,
+    "address": {
+        "street": "Main Street",
+        "city": "New York"
+    },
+    "hobbies": ["football", "basketball", "tennis"]
+}
+```
+
+MongoDB utilise le format JSON pour stocker les données. Les documents sont stockés sous forme de BSON (Binary JSON). BSON est un format de données binaires qui est plus efficace que le JSON car offre des fonctionnalités supplémentaires.
+
+Un document JSON représente un arbre dont les noeuds sont des paires clé/valeur ou des tableaux. 
+
+**Règles de syntaxe** :
+- Ne contient qu'une seule racine par document
+- tout ficher json est soit un objet ({...}) soit un tableau ([...])
+- Les virgules sont obligatoires entre les paires clé/valeur
+- Un objet peut contenir d'autres objets ou des tableaux.
+- Pas d'éléments croisés entre les objets et les tableaux
+- Un objet peut contenir plusieurs paires clé/valeur et plusieurs tableaux
+
+# Gérer des bases de données avec le shell mongo
+
 Le shell mongo est en charge de l'interpretation des commandes mongoDB. Il est possible de lancer le shell mongo en ligne de commande ou de lancer le shell mongo depuis un script.
 
-# Gérer les bases de données et les collections
 
 Plusieurs commandes sont disponibles pour gérer les bases de données et les collections dans mongoDB.
 
