@@ -9,7 +9,7 @@ Nginx permet de créer un reverse proxy. Un reverse proxy permet de rediriger le
 
 Docker est souvent utilisé pour lancer des applications. Il est donc possible de lancer un reverse proxy avec Docker. Pour cela, il faut utiliser l'image officielle de Nginx.
 
-## Lancer un reverse proxy avec Docker
+# Lancer un reverse proxy avec Docker
 
 Pour lancer un reverse proxy avec Docker, on peut utiliser un docker-compose.yml. Ce fichier permet de définir les services à lancer et de créer des volumes. Dans notre cas, on va créer un volume pour les fichiers de configuration de Nginx.
 
@@ -50,6 +50,82 @@ Il est possible de séparer les fichiers de configuration de Nginx. Pour cela, i
 - `reverse_proxy.conf` : fichier de configuration du reverse proxy
 - `service.conf` : fichier de configuration du service
 
+# Sécuriser un reverse proxy avec Nginx et Docker : Let's Encrypt
+
+Il est possible de sécuriser un reverse proxy avec Nginx et Docker en utilisant Let's Encrypt. Pour cela, il faut utiliser l'image officielle de Nginx et l'image officielle de Certbot.
+
+```yaml
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/letsencrypt
+      - ./html:/usr/share/nginx/html
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/letsencrypt
+      - ./html:/usr/share/nginx/html
+    command: certonly --webroot --webroot-path=/usr/share/nginx/html --email <email> --agree-tos --no-eff-email --force-renewal --staging -d <domain>
+```
+
+On peut ensuite créer le fichier de configuration de Nginx. Dans notre cas, on va créer un reverse proxy qui redirigera les requêtes vers un serveur web sur le port 8080.
+
+```nginx
+http {
+  server {
+    listen 80;
+    server_name <domain>;
+    location / {
+      proxy_pass http://localhost:8080;
+    }
+  }
+
+  server {
+    listen 443 ssl;
+    server_name <domain>;
+    ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<domain>/privkey.pem;
+    location / {
+      proxy_pass http://localhost:8080;
+    }
+  }
+}
+```
+
+Grâce à ce fichier de configuration, on peut accéder au serveur web sur le port 8080 via le reverse proxy sur le port 80 et 443.
+
+On peut évidemment ajouter une redirection HTTP vers HTTPS.
+
+```nginx
+server {
+  listen 80;
+  server_name <domain>;
+  return 301 https://$host$request_uri;
+}
+```
+
+Cela permet de sécuriser les communications entre le client et le serveur web puisque les communications sont chiffrées via SSL/TLS.
+
 #### Liens utiles
 
 - [Docker : Nginx en reverse proxy](https://www.grottedubarbu.fr/docker-nginx-reverse-proxy/)
+- [Using Free Let’s Encrypt SSL/TLS Certificates with NGINX](https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/?amp=1)
+- [Documentation certbot](https://eff-certbot.readthedocs.io/en/stable/install.html#running-with-docker)
+- [Setup SSL with Docker, NGINX and Lets Encrypt](https://www.programonaut.com/setup-ssl-with-docker-nginx-and-lets-encrypt/)
+- [Simplest HTTPS setup: Nginx Reverse Proxy+ Letsencrypt+ AWS Cloud + Docker](https://leangaurav.medium.com/simplest-https-setup-nginx-reverse-proxy-letsencrypt-ssl-certificate-aws-cloud-docker-4b74569b3c61)
+- [Nginx and Let’s Encrypt with Docker in Less Than 5 Minutes](https://leangaurav.medium.com/simplest-https-setup-nginx-reverse-proxy-letsencrypt-ssl-certificate-aws-cloud-docker-4b74569b3c61)
+- [HTTPS using Nginx and Let's encrypt in Docker](https://mindsers.blog/post/https-using-nginx-certbot-docker/)

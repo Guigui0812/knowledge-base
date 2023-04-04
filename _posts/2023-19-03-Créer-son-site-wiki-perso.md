@@ -231,3 +231,4 @@ Ce projet m'a permis de perfectionner mon usage de docker, de découvrir Jekyll 
 - [Simple NGINX with Docker for beginners ](https://www.youtube.com/watch?v=qxPdd-geqqA)
 - [Docker Compose and Jekyll](https://urre.me/writings/docker-compose-and-jekyll/)
 - [Building a blog with Jekyll, Docker and GitLab](https://voutzinos.com/blog/jekyll-docker-gitlab-blog/)
+- [Musing around a dockerfile for jekyll](https://blog.frankel.ch/musings-dockerfile-jekyll/)
