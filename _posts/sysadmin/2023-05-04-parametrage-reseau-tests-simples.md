@@ -1,5 +1,5 @@
 ---
-title: Créer d'un réseau virtuel de tests pour sysadmin
+title: Créer un labo virtuel de tests pour sysadmin
 date: 2023-04-05 00:00:00
 categories: [sysadmin, linux, network, pfsense, pare-feu]
 tags: [sysadmin, linux, terminal, pfsense, securité, virtualisation, tests, network, pare-feu, ESIEE Amiens]
