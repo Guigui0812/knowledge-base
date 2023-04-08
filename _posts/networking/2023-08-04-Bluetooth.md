@@ -5,6 +5,8 @@ categories: [IoT, Réseaux]
 tags: [objets connectés, sans fil, bluetooth]
 ---
 
+![Bluetooth](../../assets/com-sans-fil/Bluetooth-Logo.png)
+
 Bluetooth est une technologie de communication sans fil qui permet à des dispositifs électroniques de communiquer entre eux à courte distance. Elle utilise des ondes radio pour transférer des données entre les appareils, tels que des smartphones, des ordinateurs portables, des écouteurs sans fil, des haut-parleurs et d'autres gadgets électroniques.
 
 # Généralités
