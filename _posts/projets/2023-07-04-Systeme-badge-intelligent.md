@@ -329,6 +329,7 @@ Il ne faut pas oublier de paramétrer la sortie série en 115200 bauds et de met
 **Sortie série :**
 
 <img src="../../assets/com-sans-fil/TP-ComSF-SortieIDE.png" alt="Sortie série"/>
+
 <img src="../../assets/com-sans-fil/TP-ComSF-SortieIDE2.png" alt="Sortie série"/>
 
 ## Gestion des badges avec Node-RED
