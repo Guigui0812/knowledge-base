@@ -469,3 +469,10 @@ La LED est bleue si la carte est reconnue et qu'il s'agit d'une carte administra
 ## Conclusion
 
 Ce TP a permis de mettre en place une communication sans fil entre une carte ESP32 et un serveur MQTT afin de concevoir un systèmes de contrôle d'accès intelligent basé sur l'utilisation de badges RFID. La sécurité est assuré par le contrôle de la présence du badge dans la base de données à l'aide d'un flux Node-Red.
+
+#### Liens utiles : 
+
+- [Tutoriel UTC pour ESP32](https://fablabutc.fr/wp-content/uploads/2021/01/Tutoriel_ESP32.pdf)
+- [SQLite Browser](https://sqlitebrowser.org/dl/)
+- [Utiliser SQlite avec NodeRed](http://noderedguide.com/tutorial-sqlite-and-node-red/)
+- [Utiliser Node-Red](https://nodered.org/docs/getting-started/local)
