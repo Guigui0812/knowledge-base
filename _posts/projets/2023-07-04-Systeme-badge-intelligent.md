@@ -457,7 +457,7 @@ Le code permet de vérifier que le flag "*newBadge*" est levé. Si c'est le cas,
 
 La LED est rouge si la carte n'est pas reconnue : 
 
-<img src="../../assets/com-sans-fil/TP-ComSF-branchement1.jpg" alt="LED rouge" width="400" height="500" />
+<img src="../../assets/com-sans-fil/TP-ComSF-branchement.jpg" alt="LED rouge" width="400" height="500" />
 
 La LED est verte si la carte est reconnue :
 
