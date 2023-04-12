@@ -109,7 +109,7 @@ Un scatternet est un réseau Bluetooth composé de plusieurs piconets. C'est un 
 ![scatternet](../../assets/com-sans-fil/bluetooth/scatternet.png)
 
 Caractéristiques :
-- Topologie étoile / arbre
+- Topologie arbre
 - Maître / esclave
 - Le maître d'un piconet peut devenir l'esclave du maître d'un autre piconet
 - Un esclave peut être l'esclave de plusieurs maîtres
