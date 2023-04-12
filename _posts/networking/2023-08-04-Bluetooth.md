@@ -28,7 +28,7 @@ Il permet la connexion entre 2 équipements mobiles ou 1 mobile et un capteur. L
 
 ## Bandes de fréquences
 
-- 2402 - 2480 MHz (Europe) : 79 canaux
+- 2400 - 2483,5 MHz (Europe) : 79 canaux de 1 MHz
 - Puissance inférieure à 100 mW en intérieur et 10 mW à l'extérieur des bâtiments
 - Pas de licence nécessaire pour l'utilisation de la bande de fréquence
 - En France, on utilise que 23 fréquences différentes
