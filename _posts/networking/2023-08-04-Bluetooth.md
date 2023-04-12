@@ -157,6 +157,7 @@ Le temps de transmission est compté en slots de 625 µs. Pour un paquet de 240 
     - Un seul lien ACL possible  entre un maitre et un esclave
     - Renvoi du paquet si erreur de transmission
 
+
 ### Sécurité
 
 3 niveaux de sécurité :
@@ -169,3 +170,4 @@ Le temps de transmission est compté en slots de 625 µs. Pour un paquet de 240 
 Les données transmises peuvent être protégées par un FEC (Forward Error Correction) : 
 -  FEC 2/3 nécessite 3 bits pour en protéger 2 (160 bits utiles dans un paquet court)
 - FEC 1/3 nécessite 3 bits pour 1 protégé (80bits utiles dans un paquet court)
+
