@@ -135,6 +135,22 @@ Enfin, il faut redémarrer le serveur DHCP : `sudo systemctl restart isc-dhcp-se
 
 Pour la démonstration, on crée une nouvelle machine qui va se connecter au réseau virtuel. On peut voir que la machine virtuelle a bien récupéré une adresse IP du serveur DHCP.
 
+## Le serveur DNS
+
+Dans un premier temps, il faut installer le serveur DNS : `sudo apt-get install bind9`. Il faut également installer le paquet `dnsutils` pour pouvoir utiliser la commande `dig` : `sudo apt-get install dnsutils`. Ensuite, il faut se rendre dans le fichier de configuration du serveur DNS : `sudo nano /etc/bind/named.conf.options`. Il faut ensuite adapter la ligne suivante :
+
+```bash
+zone "grp08.lab" {
+  type master;
+  file "/etc/bind/db.grp08.lab";
+};
+```
+
+Il faut ensuite créer le fichier de configuration du domaine : `sudo nano /etc/bind/db.grp08.lab`. Il faut ensuite adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer. On peut simplement copier le fichier de configuration du domaine de la machine virtuelle template : `sudo cp /etc/bind/db.local /etc/bind/db.grp08.lab`. Ensuite, il faut adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer.
+
+Il faut ensuite redémarrer le serveur DNS : `sudo systemctl restart bind9`. On peut ensuite vérifier le statut du serveur DNS : `sudo systemctl status bind9`.
+
+
 #### Sources
 
 - Cours de l'ESIEE Amiens par Stéphane POMPORTES

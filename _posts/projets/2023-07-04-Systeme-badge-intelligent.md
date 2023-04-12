@@ -41,7 +41,7 @@ Les branchements pour la LED sont les suivants :
 - DIN -> D4 (PIN 4)
 
 Aperçu des branchements de la carte ESP32 :  
-<img src="../../assets/com-sans-fil/TP-ComSF-branchement1.jpg" alt="Branchements ESP32" width="400" height="500" />
+<img src="../../assets/com-sans-fil/TP-ComSF-branchement.jpg" alt="Branchements ESP32" width="400" height="500" />
 
 ## Modification du code source C de l'ESP32
 
