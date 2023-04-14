@@ -150,9 +150,79 @@ Il faut ensuite créer le fichier de configuration du domaine : `sudo nano /etc/
 
 Il faut ensuite redémarrer le serveur DNS : `sudo systemctl restart bind9`. On peut ensuite vérifier le statut du serveur DNS : `sudo systemctl status bind9`.
 
+## Le serveur LDAP
 
-#### Sources
+Le serveur LDAP est une serveur différent. Il faut donc cloner le template, paramétrer son IP et changer son nom. On peut ensuite installer le serveur LDAP : `sudo apt-get install slapd ldap-utils`. 
 
-- Cours de l'ESIEE Amiens par Stéphane POMPORTES
+Il faut aussi installer le paquet `dpkg-reconfigure` pour pouvoir utiliser la commande `dpkg-reconfigure slapd`. Cette commande permet de reconfigurer le LDAP si des éléments ont été omis lors de l'installation (par exemple, le mot de passe de l'administrateur LDAP, le nom du domaine, etc.).
+
+Pour vérifier que le serveur LDAP est bien installé, on peut utiliser la commande `ldapsearch -x -LLL -b dc=nom,dc=lab`. Cette commande permet de lister les éléments du LDAP.
+
+Pour la suite de la configuration du serveur LDAP, on peut utiliser Apache Directory Studio. Cet outil permet de gérer le LDAP et de créer des utilisateurs dans l'annuaire LDAP. Il faut télécharger le logiciel [Apache Directory Studio](https://directory.apache.org/studio/downloads.html). Il faut ensuite lancer le logiciel et se connecter au serveur LDAP. On peut ensuite créer un utilisateur dans le LDAP.
+
+**A savoir** : `Apache Diretory Studio` nécessite Java 11 ou plus. Il faut télécharger le JDK sur le site officiel, puis se rendre dans le répertoire `ProgramFiles` et modifier `ApacheDirectoryStudio.ini` pour ajouter le chemin vers le JDK : 
+
+```bash
+-vm
+C:\Program Files\Java\jdk-11.0.2\bin
+```
+
+Il faut ensuite créer les unités organisationnelles dans le LDAP. Pour cela, il faut constituer un fichier `base.ldif` de ce type :
+
+```bash
+dn: ou=Users,dc=ENT-8,dc=loc
+objectClass: organizationalUnit
+ou: Users
+
+dn: ou=Groups,dc=ENT-8,dc=loc
+objectClass: organizationalUnit
+ou: Groups
+
+dn: ou=Machines,dc=ENT-8,dc=loc
+objectClass: organizationalUnit
+ou: Machines
+```
+
+Ce fichier permet de créer les unités organisationnelles dans le LDAP. Il peut se situer dans le répertoire personnel de l'utilisateur ldap. 
+
+Il faut ensuite ajouter le fichier `base.ldif` dans le LDAP : `ldapadd -x -D "cn=admin,dc=ENT-8,dc=loc" -W -f base.ldif`. Il faut ensuite entrer le mot de passe de l'administrateur LDAP.
+
+La sortie de la commande doit ressembler à ceci :
+
+```bash
+adding new entry "ou=Users,dc=ENT-8,dc=loc"
+
+adding new entry "ou=Groups,dc=ENT-8,dc=loc"
+
+adding new entry "ou=Machines,dc=ENT-8,dc=loc"
+```
+
+Dorénavant, le LDAP est configuré. Il faut maintenant passer à la configuration des clients. Pour cela, il faut installer les ldapscripts : `sudo apt-get install ldapscripts` puis les configurer. Il faut ensuite créer un fichier de configuration pour les ldapscripts : `sudo nano /etc/ldapscripts/ldapscripts.conf`. Il peut être prudent de sauvegarder le fichier de configuration par défaut : `sudo cp /etc/ldapscripts/ldapscripts.conf /etc/ldapscripts/ldapscripts.conf.bck`. 
+
+Dans ce fichiers, plusieurs éléments à modifier :
+
+- Décommenter la ligne `SERVER=ldap://` puis ajouter l'adresse IP du serveur LDAP : `SERVER=ldap://<ip_address>`.
+- Décommmenter la ligne `SUFFIX=dc=example,dc=com` puis ajouter le nom du domaine : `SUFFIX=dc=ENT-8,dc=loc`.
+- Décommenter la ligne `GSUFFIX=ou=Groups`
+- Décommenter la ligne `USUFFIX=ou=Users`
+- Décommenter la ligne `MSUFFIX=ou=Machines`
+- Modifier la ligne `BINDDN=cn=admin,dc=example,dc=com` en `BINDDN=cn=admin,dc=ENT-8,dc=loc` (en fonction du nom du domaine). Ici, on pourrait utiliser un autre utilisateur que l'administrateur LDAP pour des raisons de sécurité.
+- Décommenter `USHELL=/bin/sh` et modifier le chemin pour `USHELL=/bin/bash` pour que les utilisateurs aient un shell bash.
+- Décommenter `UHOME=/home` et modifier le chemin pour `UHOME=/export/home` pour que les utilisateurs aient un répertoire personnel sur le serveur NFS.
+- Pour `CREATEHOMES=no`, il faut mettre `CREATEHOMES=yes` pour que les utilisateurs aient un répertoire personnel.
+
+Il faut ensuite mettre le mot de passe du compte LDAP dans `/etc/ldapscripts/ldapscripts.passwd`. On remplace `secrets` par le mot de passe du compte LDAP. Il faut ensuite s'assurer que seul le root a la persmission d'accéder au fichier. Pour s'en assurer on peut utiliser `sudo chmod 400 /etc/ldapscripts/ldapscripts.passwd`. En cas de problème, on peut utiliser la commande `sudo chmod 600 /etc/ldapscripts/ldapscripts.passwd` pour remettre les droits en écriture.
+
+Si un problème survient pour créer un utilisateur, on peut tenter de passer directement le mot de passe au LDAP. Pour cela, on utiiise `sudo sh -c 'echo -n "<password>" > /etc/ldapscripts/ldapscripts.passwd'`. On peut ensuite créer un groupe avec la commande `sudo ldapaddgroup <group_name>`. On peut ensuite créer un utilisateur avec la commande `sudo ldapadduser <user_name> <group_name>`.
+
+Il faut être vigilant : si un home directory a été paramétré, il faut s'assurer que le répertoire existe sur le serveur NFS. Pour cela, on peut utiliser la commande `sudo mkdir -p /export/home`. Si la commande intervient après la création de l'utilisateur, on peut le supprimer avec la commande `sudo ldapdeleteuser <user_name>`. Il faut ensuite le recréer.
+
+Il faut modifier le mot de passe de l'utilisateur LDAP car celui placé par défaut n'est pas connu. Pour cela, on peut utiliser la commande `sudo ldapsecpasswd`.
+
+#### Sources et documentations
+
+- Cours d'administration systèmes de Stéphane POMPORTES, enseignant chercheur à l'ESIEE Amiens
 - [Créer son lab virtuel avec VirtualBox et PfSense - Youtube IT Connect](https://www.youtube.com/watch?v=NzVDjNqchoc)
 - [Comment installer pfsense dans virtualbox pour créer un lab virtuel - IT Connect](https://www.it-connect.fr/comment-installer-pfsense-dans-virtualbox-pour-creer-un-lab-virtuel/)
+- [Install LDAP - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap)
+- [Service LDAP usage - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap-usage)
