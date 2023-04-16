@@ -137,20 +137,48 @@ Pour la démonstration, on crée une nouvelle machine qui va se connecter au ré
 
 ## Le serveur DNS
 
-Dans un premier temps, il faut installer le serveur DNS : `sudo apt-get install bind9`. Il faut également installer le paquet `dnsutils` pour pouvoir utiliser la commande `dig` : `sudo apt-get install dnsutils`. Ensuite, il faut se rendre dans le fichier de configuration du serveur DNS : `sudo nano /etc/bind/named.conf.options`. Il faut ensuite adapter la ligne suivante :
+Dans un premier temps, il faut installer le serveur DNS : `sudo apt-get install bind9`. Il faut également installer le paquet `dnsutils` pour pouvoir utiliser la commande `dig` : `sudo apt-get install dnsutils`. Ensuite, il faut se rendre dans le fichier de configuration du serveur DNS : `sudo nano /etc/bind/named.conf.local`. Il faut ensuite adapter la ligne suivante :
 
 ```bash
-zone "grp08.lab" {
+zone "example.com" {
   type master;
-  file "/etc/bind/db.grp08.lab";
+  file "/etc/bind/db.example.com";
 };
 ```
 
-Il faut ensuite créer le fichier de configuration du domaine : `sudo nano /etc/bind/db.grp08.lab`. Il faut ensuite adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer. On peut simplement copier le fichier de configuration du domaine de la machine virtuelle template : `sudo cp /etc/bind/db.local /etc/bind/db.grp08.lab`. Ensuite, il faut adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer.
+Il faut ensuite créer le fichier de configuration du domaine : `sudo nano /etc/bind/db.example.com`. Il faut ensuite adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer. On peut simplement copier le fichier de configuration du domaine de la machine virtuelle template : `sudo cp /etc/bind/db.local /etc/bind/db.example.com`. Ensuite, il faut adapter le fichier de configuration du domaine en fonction du réseau que l'on souhaite créer.
 
-Il faut ensuite redémarrer le serveur DNS : `sudo systemctl restart bind9`. On peut ensuite vérifier le statut du serveur DNS : `sudo systemctl status bind9`.
+Contenu du fichier de configuration du domaine :
+
+```bash
+;
+; BIND data file for example.com
+;
+$TTL    604800
+@       IN      SOA     example.com. root.example.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+@       IN      NS      ns.example.com.
+@       IN      A       192.168.1.10
+@       IN      AAAA    ::1
+ns      IN      A       192.168.1.10
+ldap    IN      A       192.168.1.11
+www     IN      A       192.168.1.10
+```
+
+A chaque modification il faut ensuite redémarrer le serveur DNS : `sudo systemctl restart bind9`. On peut ensuite vérifier le statut du serveur DNS : `sudo systemctl status bind9`.
+
+Pour vérifier que le serveur DNS est bien installé, on peut utiliser `nslookup`. On spécifie le serveur DNS que l'on souhaite utiliser (ici c'est 192.168.1.10) puis on demande l'adresse IP de l'adresse web que l'on souhaite consulter. Le serveur DNS va alors nous renvoyer l'adresse IP de l'adresse web que l'on souhaite consulter et indiquer si l'adresse web existe ou non.
+
+**Problème commun** : Parfois le pare-feu se plante sans raison. Cela a pour effet de casser le réseau virtuel. Il faut alors redémarrer le pare-feu pfSense via VirtualBox.
 
 ## Le serveur LDAP
+
+### Installation du serveur LDAP
 
 Le serveur LDAP est une serveur différent. Il faut donc cloner le template, paramétrer son IP et changer son nom. On peut ensuite installer le serveur LDAP : `sudo apt-get install slapd ldap-utils`. 
 
@@ -217,12 +245,165 @@ Si un problème survient pour créer un utilisateur, on peut tenter de passer di
 
 Il faut être vigilant : si un home directory a été paramétré, il faut s'assurer que le répertoire existe sur le serveur NFS. Pour cela, on peut utiliser la commande `sudo mkdir -p /export/home`. Si la commande intervient après la création de l'utilisateur, on peut le supprimer avec la commande `sudo ldapdeleteuser <user_name>`. Il faut ensuite le recréer.
 
-Il faut modifier le mot de passe de l'utilisateur LDAP car celui placé par défaut n'est pas connu. Pour cela, on peut utiliser la commande `sudo ldapsecpasswd`.
+Il faut modifier le mot de passe de l'utilisateur LDAP car celui placé par défaut n'est pas connu. Pour cela, on peut utiliser la commande `sudo ldapsetpasswd`.
+
+### Sécurisation du serveur LDAP
+
+Pour sécuriser le serveur LDAP, il faut utiliser TLS. D'abord on doit installer les paquets `gnu-tls-bin` et `ssl-cert` : `sudo apt-get install gnutls-bin ssl-cert`. 
+
+Il faut ensuite créer un certificat pour l'autorité de certification : `sudo certtool --generate-privkey --bits 4096 --outfile /etc/ssl/private/mycakey.pem`. 
+
+Dans un second temps, on crée un fichier `ca.info` en utilisant nano `sudo nano /etc/ssl/ca.info`. Le contenu sera le suivant : 
+
+```bash
+cn = Example Company
+ca
+cert_signing_key
+expiration_days = 3650
+```
+
+Il faut ensuite créer le certificat CA autosigné : 
+
+```bash	
+sudo certtool --generate-self-signed \
+--load-privkey /etc/ssl/private/mycakey.pem \
+--template /etc/ssl/ca.info \
+--outfile /usr/local/share/ca-certificates/mycacert.crt
+```
+
+Il faut ensuite faire `sudo update-ca-certificates` pour mettre à jour les certificats.
+
+Il faut ensuite créer une clé privée pour le serveur LDAP : `sudo certtool --generate-privkey --bits 2048 --outfile /etc/ldap/ldap01_slapd_key.pem`. Adaptez le nom du fichier en fonction de votre serveur (exemple : `random_name.pem`).
+
+Il faut ensuite créer un fichier `ldap.info` en utilisant nano `sudo nano /etc/ssl/ldap.info`. Le contenu sera le suivant : 
+
+```bash
+organization = Example Company
+cn = ldap01.example.com
+tls_www_server
+encryption_key
+signing_key
+expiration_days = 365
+```
+
+Il faut ensuite créer le certificat pour le serveur LDAP : 
+
+```bash
+sudo certtool --generate-certificate \
+--load-privkey /etc/ldap/ldap01_slapd_key.pem \
+--load-ca-certificate /etc/ssl/certs/mycacert.pem \
+--load-ca-privkey /etc/ssl/private/mycakey.pem \
+--template /etc/ssl/ldap01.info \
+--outfile /etc/ldap/ldap01_slapd_cert.pem
+```
+
+Remplacez le nom du fichier en fonction de votre serveur (exemple : `random_name.pem`). Il faut cependant faire attention au fait que la clé privée doit être la même que celle utilisée pour la création du certificat.
+
+Enfin, il faut ajuster les permissions : 
+  
+```bash
+sudo chgrp openldap /etc/ldap/ldap01_slapd_key.pem
+sudo chmod 0640 /etc/ldap/ldap01_slapd_key.pem
+```
+
+Il faut maintenant créer un fichier `certinfo.ldif` en utilisant nano `sudo nano /etc/ldap/certinfo.ldif`. Le contenu sera le suivant : 
+
+```bash
+dn: cn=config
+add: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/ssl/certs/mycacert.pem
+-
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ldap/ldap01_slapd_cert.pem
+-
+add: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/ldap/ldap01_slapd_key.pem
+```
+
+Il faut ensuite ajouter les informations au fichier de configuration du serveur LDAP : `sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f certinfo.ldif` (adapter le chemin du fichier en fonction de votre serveur).
+
+Grâce à ces étapes, le serveur LDAP est maintenant sécurisé et fonctionnel avec TLS. Nous allons pouvoir effectuer un test de connexion avec un client LDAP.
+
+### Configuration du client LDAP
+
+Pour les clients on utilise le SSSD. Ce service permet de gérer les utilisateurs et les groupes. Il faut installer les paquets `ldap-utils` et `sssd-ldap` : `sudo apt install sssd-ldap ldap-utils`.
+
+Il faut ensuite éditer le fichier de configuration du SSSD : `sudo nano /etc/sssd/sssd.conf`. Le contenu sera le suivant : 
+
+```bash
+[sssd]
+config_file_version = 2
+domains = example.com
+
+[domain/example.com]
+id_provider = ldap
+auth_provider = ldap
+ldap_uri = ldap://ldap01.example.com
+cache_credentials = True
+ldap_search_base = dc=example,dc=com
+```
+
+Il faut adapter les domaines à votre cas. 
+
+Il faut paramétrer les droits du fichier nouvellement créé : `sudo chmod 0600 /etc/sssd/sssd.conf`.
+
+Il faut ensuite redémarrer le service avec `sudo systemctl restart sssd.service`.
+
+Il faut maintenant rajouter le certificat créé sur le serveur LDAP au client. 
+
+Sur le serveur LDAP, on se place dans `/usr/local/share/ca-certificates/` avec `cd /usr/local/share/ca-certificates/` et on `cat` le fichier `mycacert.crt` pour récupérer le contenu du certificat. On copie le contenu du certificat.
+
+Sur le client, on se place dans `/usr/local/share/ca-certificates/` avec `cd /usr/local/share/ca-certificates/` et on `nano` le fichier `mycacert.crt`. On colle le contenu du certificat dans le fichier.
+
+Enfin, on met à jour les certificats avec `sudo update-ca-certificates`.
+
+On peut maintenant invoquer la commande : `ldapwhoami -x -ZZ -H ldap://ldap01.example.com` pour tester la connexion au serveur LDAP. Normalement, on devrait avoir un retour du type : `anonymous` puisque notre utilisateur admin n'est pas connu du LDAP.
+
+On peut maintenant vérifier que le service SSSD fonctionne : `getent passwd <utilisateur>` et `getent group <grp>`. Les informations des utilisateurs et des groupes devraient être affichées. On peut aussi vérifier qu'on peut se connecter avec un utilisateur du LDAP : `sudo login <utilisateur>`.
+
+## Serveur NFS
+
+### Configuration du serveur NFS
+
+Installation du serveur NFS : `sudo apt install nfs-kernel-server`.
+
+Démarrer le service NFS : `sudo systemctl start nfs-kernel-server.service`.
+
+Accéder à la configuration du serveur NFS : `sudo nano /etc/exports` et ajouter la ligne suivante : 
+
+```bash
+/export/home *(rw,async,no_subtree_check,no_root_squash)
+```
+
+Elle permet de partager le dossier `/export/home` avec tous les clients du réseau. On peut aussi ajouter des options supplémentaires comme `sync` pour synchroniser les données sur le disque dur.
+
+On peut maintenant confirmer les modifications : `sudo exportfs -a`.
+
+### Configuration du client NFS
+
+Installation du client NFS : `sudo apt install nfs-common`.
+
+Créer le dossier de montage : `sudo mkdir-p /export/home`.
+
+Monter le volume distant : `sudo mount ldap.ENT-8.loc:/export/home /export/home`.
+
+On peut vérifier que le montage est bien effectué avec `ls /export/home`. Le dossier devrait contenir les répertoires des utilisateurs du LDAP.
+
+Il faut maintenant gérer les droits d'accès afin que les utilisateurs LDAP ne puissent pas accéder aux fichiers des autres utilisateurs.
+
+Pour cela, sur le serveur LDAP, sur chaque répertoire, on va changer les droits d'accès : `sudo chmod 700 <repertoire>`. De cette manière, seul le propriétaire du répertoire aura les droits d'accès.
+
+
+# Conclusion
+
+Cet exercice permet d'avoir une vue d'ensemble de la mise en place d'un environnement de serveurs pour une entreprise. Il permet de comprendre les différents services et les différentes configurations à mettre en place pour que tout fonctionne correctement. Il permet également de se familiariser avec les commandes de base de Linux et de comprendre les différents fichiers de configuration.
 
 #### Sources et documentations
 
 - Cours d'administration systèmes de Stéphane POMPORTES, enseignant chercheur à l'ESIEE Amiens
 - [Créer son lab virtuel avec VirtualBox et PfSense - Youtube IT Connect](https://www.youtube.com/watch?v=NzVDjNqchoc)
 - [Comment installer pfsense dans virtualbox pour créer un lab virtuel - IT Connect](https://www.it-connect.fr/comment-installer-pfsense-dans-virtualbox-pour-creer-un-lab-virtuel/)
+- [Install DNS - Documentation Ubuntu](https://ubuntu.com/server/docs/service-domain-name-service-dns)
 - [Install LDAP - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap)
 - [Service LDAP usage - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap-usage)
+- [SSSD LDAP - Documentation Ubuntu](https://ubuntu.com/server/docs/service-sssd-ldap)
