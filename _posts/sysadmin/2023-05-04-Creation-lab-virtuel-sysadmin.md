@@ -407,3 +407,6 @@ Cet exercice permet d'avoir une vue d'ensemble de la mise en place d'un environn
 - [Install LDAP - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap)
 - [Service LDAP usage - Documentation Ubuntu](https://ubuntu.com/server/docs/service-ldap-usage)
 - [SSSD LDAP - Documentation Ubuntu](https://ubuntu.com/server/docs/service-sssd-ldap)
+- [Install NFS - Documentation Ubuntu](https://ubuntu.com/server/docs/service-nfs)
+- [DHCP - Documentation Ubuntu](https://ubuntu.com/server/docs/network-dhcp)
+- [Example de fichier netplan - Ubuntu](https://netplan.io/examples)
