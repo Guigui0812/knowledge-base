@@ -174,6 +174,12 @@ A chaque modification il faut ensuite redémarrer le serveur DNS : `sudo systemc
 
 Pour vérifier que le serveur DNS est bien installé, on peut utiliser `nslookup`. On spécifie le serveur DNS que l'on souhaite utiliser (ici c'est 192.168.1.10) puis on demande l'adresse IP de l'adresse web que l'on souhaite consulter. Le serveur DNS va alors nous renvoyer l'adresse IP de l'adresse web que l'on souhaite consulter et indiquer si l'adresse web existe ou non.
 
+```bash
+nslookup
+> server <adresse DNS>
+> www.example.com
+```
+
 **Problème commun** : Parfois le pare-feu se plante sans raison. Cela a pour effet de casser le réseau virtuel. Il faut alors redémarrer le pare-feu pfSense via VirtualBox.
 
 ## Le serveur LDAP
