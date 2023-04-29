@@ -13,7 +13,7 @@ tags: [objets connectés, rfid, esp32, node-red, mqtt, docker, Sqlite]
 Le TP proposé dans le cadre de la matière Communication sans fil consiste à mettre en place un système de badge intelligent en utilisant les technologies **RFID**, **MQTT**, **Node-Red**, **Sqlite** et une carte **ESP32**.
 
 **Plusieurs étapes devaient être réalisées** : 
-
+ 
 * Branchement des composants sur la carte
 * Modification du code source C de l'ESP32
 * Création d'un serveur Node-Red et création d'un flux pour la gestion des badges

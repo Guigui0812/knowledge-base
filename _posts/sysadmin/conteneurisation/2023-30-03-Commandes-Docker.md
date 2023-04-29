@@ -25,6 +25,14 @@ Pour lister les images, il faut utiliser la commande suivante :
 docker images
 ```
 
+## Télécharger une image
+
+Pour télécharger une image, il faut utiliser la commande suivante :
+
+```bash
+docker pull <image>
+```
+
 ### Lancer un conteneur
 
 Pour lancer un conteneur, il faut utiliser la commande suivante :
