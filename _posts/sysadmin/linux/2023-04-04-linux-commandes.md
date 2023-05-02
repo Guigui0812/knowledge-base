@@ -20,7 +20,14 @@ grep docker /etc/group
 ## Ajouter un utilisateur à un groupe
 
 ```bash
+usermod -aG <groupe> <utilisateur>
+```
 
+## Changer l'hostname
+
+```bash
+hostnamectl set-hostname <hostname>
+```
 
 https://www.hostinger.com/tutorials/linux-commands
 https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/
