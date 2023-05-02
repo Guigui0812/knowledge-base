@@ -51,6 +51,12 @@ Cependant, si le fichier `authorized_keys` n'existe pas, il faut le créer. Pour
 
 De même, si le serveur est paramétrer pour n'accepter que les connexions par clé SSH, il faut copier la clé générée sur le PC local dans le fichier `authorized_keys` du serveur afin de pouvoir s'y connecter depuis le PC local.
 
+## Ajouter la clé à l'agent SSH
+
+Il est possible d'ajouter la clé à l'agent SSH afin de ne pas avoir à saisir la passphrase à chaque fois que l'on se connecte au serveur. Pour cela, il faut utiliser la commande `ssh-add`.
+
+il faut d'abord démarrer l'agent SSH en tapant `eval "$(ssh-agent -s)"`. Ensuite, il faut ajouter la clé à l'agent SSH en tapant `ssh-add ~/.ssh/id_rsa`. Il est possible de vérifier que la clé a bien été ajoutée à l'agent SSH en tapant `ssh-add -l`.
+
 ## Désactiver la connexion par mot de passe pour un utilisateur
 
 Il est possible de désactiver la connexion par mot de passe pour un utilisateur. Pour cela, il faut modifier le fichier `/etc/ssh/sshd_config` et remplacer la ligne `PasswordAuthentication yes` par `PasswordAuthentication no`.
