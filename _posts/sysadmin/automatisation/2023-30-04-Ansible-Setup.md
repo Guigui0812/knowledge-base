@@ -11,7 +11,7 @@ Ansible est un outil d'automatisation open-source qui permet de déployer des ap
 
 ## Installation
 
-L'installation d'Ansible peut être un peu particulière selon la distribution Linux utilisée. Pour Debian, il ne suffit pas d'exécuter la commande `apt install ansible`. Il faut ajouter le dépôt `ppa:ansible/ansible` et installer le paquet `ansible` :
+L'installation d'Ansible peut être un peu particulière selon la distribution Linux utilisée. Il faut ajouter le dépôt `ppa:ansible/ansible` et installer le paquet `ansible` :
 
 ```bash
 sudo apt install software-properties-common
@@ -21,14 +21,16 @@ sudo apt install ansible
 
 Il est important de suivre cette étape, car sinon il n'y aura pas les fichiers de configuration nécessaires à Ansible dans `/etc/ansible`.
 
-## Configuration
+## Configuration d'un laboratoire Ansible
 
 Pour utiliser Ansible, il faut à minima : 
 
 - Un serveur Ansible (appelé *control node*)
 - Un ou plusieurs serveurs cibles (appelés *managed nodes*)
 
-Pour que Ansible puisse se connecter aux serveurs cibles, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
+Pour cela, j'ai créé un control node et 4 managed nodes sur mon serveur Proxmox. Les serveurs cibles sont des serveurs Ubuntu 2.04. Le serveur Ansible est un serveur Ubuntu 2.04 également.
+
+Evidemment, Ansible doit pouvoir se connecter aux serveurs cibles. Pour cela, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
 
 **Rappel** : Pour générer une paire de clés SSH, il faut exécuter la commande `ssh-keygen` sur le serveur Ansible. Pour mettre la clé publique sur le serveur cible, il faut exécuter la commande `ssh-copy-id <user>@<ip>` sur le serveur Ansible.
 
