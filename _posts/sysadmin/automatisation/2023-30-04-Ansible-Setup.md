@@ -47,3 +47,15 @@ Il faut ajouter le serveur cible dans la section `[servers]` :
 [servers]
 <ip>
 ```
+
+Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exécuter la commande `ansible all -m ping`. Si la connexion fonctionne, on devrait avoir un résultat similaire à celui-ci :
+
+```bash
+<ip> | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+## Création d'un laboratoire Ansible
+
