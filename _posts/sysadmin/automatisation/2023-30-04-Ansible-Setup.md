@@ -1,10 +1,6 @@
 ---
 title: Installer et configurer Ansible
-<<<<<<< HEAD
 date: 2023-05-05 00:00:00  
-=======
-date: 2023-01-05 00:00:00  
->>>>>>> ab9f228e8a4a04d3b4b17fee934b7c925348d2cf
 categories: [sysadmin, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
@@ -15,7 +11,7 @@ Ansible est un outil d'automatisation open-source qui permet de déployer des ap
 
 ## Installation
 
-L'installation d'Ansible peut être un peu particulière selon la distribution Linux utilisée. Il faut ajouter le dépôt `ppa:ansible/ansible` et installer le paquet `ansible` :
+L'installation d'Ansible peut être un peu particulière selon la distribution Linux utilisée. Pour Debian, il ne suffit pas d'exécuter la commande `apt install ansible`. Il faut ajouter le dépôt `ppa:ansible/ansible` et installer le paquet `ansible` :
 
 ```bash
 sudo apt install software-properties-common
@@ -25,18 +21,16 @@ sudo apt install ansible
 
 Il est important de suivre cette étape, car sinon il n'y aura pas les fichiers de configuration nécessaires à Ansible dans `/etc/ansible`.
 
-## Configuration d'un laboratoire Ansible
+## Configuration
 
 Pour utiliser Ansible, il faut à minima : 
 
 - Un serveur Ansible (appelé *control node*)
 - Un ou plusieurs serveurs cibles (appelés *managed nodes*)
 
-Pour cela, j'ai créé un control node et 4 managed nodes sur mon serveur Proxmox. Les serveurs cibles sont des serveurs Ubuntu 2.04. Le serveur Ansible est un serveur Ubuntu 2.04 également.
+Pour que Ansible puisse se connecter aux serveurs cibles, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
 
-Evidemment, Ansible doit pouvoir se connecter aux serveurs cibles. Pour cela, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
-
-**Rappel** : Pour générer une paire de clés SSH, il faut exécuter la commande `ssh-keygen` sur le serveur Ansible. Pour mettre la clé publique sur le serveur cible, il faut exécuter la commande `ssh-copy-id <user>@<ip>` sur le serveur Ansible (plus d'informations [ici](https://guillaume-rohee.me/posts/Generer-et-utiliser-une-cle-ssh-pour-serveur/)).
+**Rappel** : Pour générer une paire de clés SSH, il faut exécuter la commande `ssh-keygen` sur le serveur Ansible. Pour mettre la clé publique sur le serveur cible, il faut exécuter la commande `ssh-copy-id <user>@<ip>` sur le serveur Ansible.
 
 Lorsque les clés sont ajoutées, il faut tester la connexion SSH depuis le serveur Ansible vers le serveur cible :
 
@@ -52,10 +46,4 @@ Il faut ajouter le serveur cible dans la section `[servers]` :
 ```bash
 [servers]
 <ip>
-```
-
-On peut tester la connexion avec la commande `ansible all -m ping` :
-
-```bash
-ansible all -m ping
 ```
