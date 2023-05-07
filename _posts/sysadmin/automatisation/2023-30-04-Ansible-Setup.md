@@ -1,6 +1,6 @@
 ---
 title: Installer et configurer Ansible
-date: 2023-03-25 00:00:00  
+date: 2023-05-05 00:00:00  
 categories: [sysadmin, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
