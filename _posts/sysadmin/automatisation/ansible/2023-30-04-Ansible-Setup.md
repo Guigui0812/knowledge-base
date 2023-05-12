@@ -1,5 +1,5 @@
 ---
-title: Installer et configurer Ansible
+title: Présentation, installation et configuration d'Ansible
 date: 2023-05-05 00:00:00  
 categories: [sysadmin, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
@@ -22,6 +22,8 @@ sudo apt install ansible
 Il est important de suivre cette étape, car sinon il n'y aura pas les fichiers de configuration nécessaires à Ansible dans `/etc/ansible`.
 
 ## Configuration
+
+### Configuration du serveur Ansible
 
 Pour utiliser Ansible, il faut à minima : 
 
@@ -48,6 +50,20 @@ Il faut ajouter le serveur cible dans la section `[servers]` :
 <ip>
 ```
 
+On peut créer des groupes de serveurs en ajoutant des sections dans le fichier `/etc/ansible/hosts`. Par exemple, pour créer un groupe `web` :
+
+```bash
+[web]
+<ip> <hostname>
+
+[bdd]
+<ip> <hostname>
+```
+
+Un serveur peut appartenir à plusieurs groupes. Par exemple un groupe `servers` général et un groupe `web` plus spécifique. Ceci est utile pour exécuter des commandes sur un groupe de serveurs spécifique (par exemple pour déployer une application web sur les serveurs du groupe `web` et mettre à jour les paquets sur tous les serveurs du groupe `servers`).
+
+## Test de la connexion SSH
+
 Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exécuter la commande `ansible all -m ping`. Si la connexion fonctionne, on devrait avoir un résultat similaire à celui-ci :
 
 ```bash
@@ -56,6 +72,4 @@ Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exéc
     "ping": "pong"
 }
 ```
-
-## Création d'un laboratoire Ansible
 

@@ -36,3 +36,9 @@ New-NetFireWallRule -DisplayName <nom de la règle> -Direction Inbound -LocalPor
 ```
 
 De cette manière, grâce à ces règles, on peut accéder aux serveurs cibles depuis le serveur WSL.
+
+#### Liens utiles
+
+- [WSL 2 Port Forwarding : comment accéder à sa machine virtuelle à distance ?](https://www.it-connect.fr/wsl-2-port-forwarding-comment-acceder-a-sa-machine-virtuelle-a-distance/)
+- [Accessing network applications with WSL](https://learn.microsoft.com/en-us/windows/wsl/networking#accessing-a-wsl-2-distribution-from-your-local-area-network-lan)
+- [Port Forwarding WSL 2 to Your LAN](https://jwstanly.com/blog/article/Port+Forwarding+WSL+2+to+Your+LAN/)
