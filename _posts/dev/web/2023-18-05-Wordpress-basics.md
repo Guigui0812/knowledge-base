@@ -54,3 +54,6 @@ Cependant, il y a des soucis de performance avec **Wordpress** sous **Docker** a
 #### Liens utiles
 
 - [Wordpress - Docker Hub](https://hub.docker.com/_/wordpress)
+- [Contact Form 7 - Wordpress Plugin](https://contactform7.com/)
+- [Customize contact form 7](https://powerpackelements.com/how-to-customize-contact-form-7-with-elementor/)
+- [Add Recaptcha to Contact Form 7](https://contactform7.com/recaptcha/)
