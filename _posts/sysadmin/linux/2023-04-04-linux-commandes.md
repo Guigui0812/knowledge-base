@@ -23,11 +23,58 @@ grep docker /etc/group
 
 # La gestion des groupes et utilisateurs
 
+## Créer un nouvel utilisateur
+
+```bash
+useradd <utilisateur>
+```
+
+Cette commande ne crée pas le répertoire personnel de l'utilisateur. Il faut utiliser la commande `mkhomedir_helper` pour le créer.
+
+On peut créer automatiquement le répertoire personnel de l'utilisateur en utilisant l'option `-m` :
+
+```bash
+useradd -m <utilisateur>
+```
+
+On peut également créer le répertoire personnel de l'utilisateur en utilisant l'option `-m` et en spécifiant son nom :
+
+```bash
+useradd -m -d /home/<utilisateur> <utilisateur>
+```
+
 ## Ajouter un utilisateur à un groupe
 
 ```bash
 usermod -aG <groupe> <utilisateur>
 ```
+
+## Changer le mot de passe d'un utilisateur
+
+```bash
+passwd <utilisateur>
+```
+
+## Créer le répertoire personnel d'un utilisateur
+
+```bash
+mkhomedir_helper <utilisateur>
+```
+
+Il arrive que le répertoire personnel d'un utilisateur ne soit pas créé lors de la création de l'utilisateur. Dans ce cas, il est possible de le créer avec cette commande. De cette manière, l'utilisateur pourra se connecter en SSH et aura les droits sur son répertoire personnel.
+
+## Se connecter en tant qu'utilisateur
+
+```bash
+su - <utilisateur>
+```
+
+## Créer un groupe
+
+```bash
+groupadd <groupe>
+```
+
 
 # Les commandes de gestion du système
 
@@ -84,6 +131,9 @@ Il est nécessaire d'installer le paquet `dnsutils` :
 nslookup <nom de domaine>
 ```
 
-https://www.hostinger.com/tutorials/linux-commands
-https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/
-[How to Install and Use dig and nslookup Commands in Linux](https://www.tecmint.com/install-dig-and-nslookup-in-linux/)
+#### Liens et ressources
+
+- [Les commandes de base - Hostinger](https://www.hostinger.com/tutorials/linux-commands)
+- [Redirection de sorties de commandes](https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/)
+- [How to Install and Use dig and nslookup Commands in Linux](https://www.tecmint.com/install-dig-and-nslookup-in-linux/)
+- [Créer un utilisateur et son répertoire personnel](https://linuxopsys.com/topics/create-home-directory-existing-user-linux)
