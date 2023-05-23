@@ -75,6 +75,29 @@ su - <utilisateur>
 groupadd <groupe>
 ```
 
+## Lister les groupes
+
+```bash
+cat /etc/group
+```
+
+## Lister les utilisateurs
+
+```bash
+cat /etc/passwd
+```
+
+## Lister les utilisateurs d'un groupe
+
+```bash
+grep <groupe> /etc/group
+```
+
+## Lister les groupes d'un utilisateur
+
+```bash
+groups <utilisateur>
+```
 
 # Les commandes de gestion du système
 
@@ -137,3 +160,6 @@ nslookup <nom de domaine>
 - [Redirection de sorties de commandes](https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/)
 - [How to Install and Use dig and nslookup Commands in Linux](https://www.tecmint.com/install-dig-and-nslookup-in-linux/)
 - [Créer un utilisateur et son répertoire personnel](https://linuxopsys.com/topics/create-home-directory-existing-user-linux)
+- [Lister les groupes](https://linuxize.com/post/how-to-list-groups-in-linux/)
+- [Top 50+ Linux Commands You MUST Know - Digital Ocean](https://www.digitalocean.com/community/tutorials/linux-commands)
+- 
