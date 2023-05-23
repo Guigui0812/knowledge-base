@@ -154,6 +154,38 @@ Il est nécessaire d'installer le paquet `dnsutils` :
 nslookup <nom de domaine>
 ```
 
+# Gestion des paquets
+
+## Installer un paquet
+
+```bash
+apt install <paquet>
+```
+
+## Mettre à jour la liste des paquets
+
+```bash
+apt update
+```
+
+## Mettre à jour les paquets
+
+```bash
+apt upgrade
+```
+
+## Mettre à jour les paquets et le système
+
+```bash
+apt full-upgrade
+```
+
+## Supprimer un paquet
+
+```bash
+apt remove <paquet>
+```
+
 #### Liens et ressources
 
 - [Les commandes de base - Hostinger](https://www.hostinger.com/tutorials/linux-commands)
