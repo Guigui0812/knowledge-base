@@ -5,7 +5,9 @@ categories: [veille]
 tags: [veille, tutoriels, outils]
 ---
 
-## Blogs
+## Blogs et sites web
+
+Plutôt que d'accumuler des favoris dans mon navigateur, je préfère les lister ici. Cela me permet de les retrouver plus facilement et de les partager.
 
 ### Blogs DevOps et SysOps
 
@@ -16,18 +18,15 @@ tags: [veille, tutoriels, outils]
 
 ### Blogs Dev
 
-#### Généralistes
+- [Je suis un dev](https://www.jesuisundev.com/) : un blog généraliste sur le développement
+- [Developpez.com](https://www.developpez.com/) : le site de référence pour les développeurs
+- [Le site de Jean-Michel Doudoux](https://www.jmdoudoux.fr/) : le blog de Jean-Michel Doudoux, auteur de référence sur Java
 
-- [Je suis un dev](https://www.jesuisundev.com/)
-- [Developpez.com](https://www.developpez.com/)
+## Outils en ligne
 
-#### Langages
+Quelques outils en ligne à retenir que ce soit pour le développement, l'administration système ou la sécurité.
 
-- [Le blog de Jean-Michel Doudoux - Java](https://www.jmdoudoux.fr/)
-
-
-
-
-## Outils
-
-
+- [HTML color codes](https://htmlcolorcodes.com/) : pour trouver les codes couleurs HTML
+- [Regex101](https://regex101.com/) : pour tester des regex
+- [Calculateur de masque de sous-réseau - CNRS](https://cric.grenoble.cnrs.fr/Administrateurs/Outils/CalculMasque/) : pour calculer le masque de sous-réseau
+- [Convertisseur binaire - hexadécimal - décimal](https://sebastienguillon.com/test/javascript/convertisseur.html) : pour convertir des nombres binaires, hexadécimaux et décimaux
