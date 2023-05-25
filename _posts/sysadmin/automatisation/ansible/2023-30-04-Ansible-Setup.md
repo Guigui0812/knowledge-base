@@ -73,3 +73,40 @@ Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exéc
 }
 ```
 
+## Exécution de commandes
+
+Pour exécuter une commande sur tous les serveurs du groupe `servers`, il faut exécuter la commande `ansible servers -a "<commande>"`. Par exemple, pour mettre à jour tous les serveurs du groupe `servers` :
+
+```bash
+ansible servers -a "apt update && apt upgrade -y"
+```
+
+## Exécution de playbooks
+
+Un playbook est un fichier YAML qui contient une liste de tâches à exécuter. Pour exécuter un playbook, il faut utiliser la commande `ansible-playbook <playbook>.yml`. Par exemple, pour exécuter le playbook `test.yml` :
+
+```bash
+ansible-playbook test.yml
+```
+
+Cependant, il peut être nécessaire d'avoir des droits `sudo` pour exécuter certaines tâches. Pour cela, il faut ajouter `become: yes` dans le playbook. Par exemple :
+
+De plus, un mot de passe peut être demandé pour exécuter certaines tâches. Pour cela, il faut ajouter `become_method: sudo` dans le playbook. Par exemple :
+
+```yaml
+- name: Test
+  hosts: servers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Test
+      command: apt update && apt upgrade -y
+```
+
+Dans ce cas, il faut exécuter la commande `ansible-playbook <playbook>.yml --ask-become-pass`.
+
+#### Liens et ressources
+
+- [Ansible Documentation](https://docs.ansible.com/)
+- [Install Docker on Debian with Ansible](https://yasha.solutions/install-docker-on-debian-with-ansible/)
+- 

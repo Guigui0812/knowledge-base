@@ -215,7 +215,7 @@ Mon objectif prochain est d'automatiser le déploiement du site. Pour cela, j'ai
 
 ### Conclusion
 
-Ce projet m'a permis de perfectionner mon usage de docker, de découvrir Jekyll et la mise en place un reverse proxy. Ce site a vocation à évoluer et à devenir un site de documentation pour mes futurs projets et ma veille technologique.
+Ce projet m'a permis de perfectionner mon usage de docker, de découvrir Jekyll et la mise en place d'un reverse proxy. Ce site a vocation à évoluer et à devenir un site de documentation pour mes futurs projets et ma veille technologique. C'est toujours plus agréable de lire un article sur un site web que sur un fichier texte, et en plus cela permet de partager mes connaissances avec d'autres personnes.
 
 #### Liens utiles :
 
