@@ -56,3 +56,4 @@ En suivant les principes du Clean Code, les développeurs peuvent produire un co
 
 - [The Hitchhiker's Guide to Python](https://docs.python-guide.org/writing/style/)
 - [Transforming Code into Beautiful, Idiomatic Python - YouTube](https://www.youtube.com/watch?v=OSGv2VnC0go)
+- [Cours "Ecrivez du code python maintenable" - OpenClassRoom](https://openclassrooms.com/fr/courses/7160741-ecrivez-du-code-python-maintenable)

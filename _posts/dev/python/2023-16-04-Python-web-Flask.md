@@ -1,7 +1,7 @@
 ---
 title: Flask pour développer des applications web en Python
 date: 2023-04-16 00:00:00
-categories: [dev, web, python]
+categories: [dev, python]
 tags: [framework, web, python, flask]
 ---
 

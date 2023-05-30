@@ -1,7 +1,7 @@
 ---
 title: Les commandes et outils à connaître sous Linux
 date: 2023-03-30 00:00:00
-categories: [sysadmin, linux]
+categories: [devops, linux]
 tags: [sysadmin, linux, commandes, shell, terminal]
 ---
 

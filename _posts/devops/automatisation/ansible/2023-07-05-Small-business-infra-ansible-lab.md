@@ -1,7 +1,7 @@
 ---
 title: Projet Ansible - Automatisation de la mise en place d'une infrastructure pour une petite entreprise
 date: 2023-05-05 00:00:00  
-categories: [sysadmin, automatisation, ansible, devops]
+categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops, infrastructure, entreprise]
 ---
 

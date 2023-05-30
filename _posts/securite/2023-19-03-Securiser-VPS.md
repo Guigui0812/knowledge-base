@@ -1,7 +1,7 @@
 ---
 title: Sécuriser un VPS Debian
 date: 2023-03-19 00:00:00  
-categories: [devops, securite]
+categories: [securite]
 tags: [sysadmin, securite, debian, vps, ssh, fail2ban, iptables]
 ---
 
