@@ -1,7 +1,7 @@
 ---
 title: Tailwindcss pour des styles rapides
 date: 2023-03-20 00:00:00
-categories: [web, css, framework]
+categories: [dev, web]
 tags: [dev, web, css, framework, tailwindcss, design, style]
 ---
 

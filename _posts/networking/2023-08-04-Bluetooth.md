@@ -1,7 +1,7 @@
 ---
 title: Généralités sur le Bluetooth
 date: 2023-04-08 00:00:00
-categories: [IoT, Réseaux]
+categories: [Réseau, IoT]
 tags: [objets connectés, sans fil, bluetooth]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: TP Communication sans fil - Système de badge intelligent
 date: 2023-04-07 00:00:00
-categories: [projets, ESIEE, IoT]
+categories: [projets]
 tags: [objets connectés, rfid, esp32, node-red, mqtt, docker, Sqlite]
 ---
 

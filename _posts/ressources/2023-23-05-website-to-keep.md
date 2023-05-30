@@ -1,7 +1,7 @@
 ---
 title: Quelques sites web à garder sous le coude
 date: 2023-05-23 00:00:00
-categories: [veille]
+categories: [ressources]
 tags: [veille, tutoriels, outils]
 ---
 
@@ -25,6 +25,7 @@ Des blogs et sites web sur le développement.
 - [Je suis un dev](https://www.jesuisundev.com/) : un blog généraliste sur le développement
 - [Developpez.com](https://www.developpez.com/) : le site de référence pour les développeurs
 - [Le site de Jean-Michel Doudoux](https://www.jmdoudoux.fr/) : le blog de Jean-Michel Doudoux, auteur de référence sur Java
+- [Le site Pierre Giraud](https://www.pierre-giraud.com/) : le blog de Pierre Giraud sur le développement web
 
 ## Outils en ligne
 
@@ -36,3 +37,4 @@ Quelques outils en ligne à retenir que ce soit pour le développement, l'admini
 - [Convertisseur binaire - hexadécimal - décimal](https://sebastienguillon.com/test/javascript/convertisseur.html) : pour convertir des nombres binaires, hexadécimaux et décimaux
 - [Piskel](https://www.piskelapp.com/) : pour créer des sprites et des animations
 - [Draw.io](https://app.diagrams.net/) : pour créer des diagrammes
+- [Whatsmydns](https://www.whatsmydns.net/) : pour vérifier la propagation DNS

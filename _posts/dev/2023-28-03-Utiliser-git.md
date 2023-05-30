@@ -1,7 +1,7 @@
 ---
 title: Configurer et utiliser git
 date: 2023-03-28 00:00:00
-categories: [git, dev, devops]
+categories: [dev]
 tags: [devops, dev, git, ci/cd]
 ---
 

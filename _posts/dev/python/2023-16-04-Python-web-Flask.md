@@ -110,8 +110,6 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify, s
 from .models import User
 from .controller import create_user, get_user
 
-from 
-
 # Route for the home page
 @app.route('/')
 def index():

@@ -1,7 +1,7 @@
 ---
 title: Notes sur Wordpress
 date: 2023-05-18 00:00:00
-categories: [dev, web, wordpress]
+categories: [dev, web]
 tags: [dev, web, wordpress]
 ---
 

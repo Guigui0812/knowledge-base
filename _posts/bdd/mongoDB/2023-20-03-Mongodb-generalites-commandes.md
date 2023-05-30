@@ -1,7 +1,7 @@
 ---
 title: MongoDB - Commandes du shell mongo
 date: 2023-03-20 00:00:00
-categories: [database, mongoDB]
+categories: [Bases de donnée, mongoDB]
 tags: [database, mongoDB, script, nosql]
 ---
 

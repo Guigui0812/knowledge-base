@@ -1,7 +1,7 @@
 ---
 title: Crée son site wiki personnel avec Jekyll
 date: 2023-03-19 00:00:00
-categories: [documentation, projets]
+categories: [projets]
 tags: [web development, documentation, sysadmin,  wiki, jekyll, github, markdown]
 ---
 
