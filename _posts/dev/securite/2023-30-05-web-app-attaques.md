@@ -1,6 +1,6 @@
 ---
 title: Les attaques d'applications web
-date: 2023-03-28 00:00:00
+date: 2023-05-30 00:00:00
 categories: [dev, securité]
 tags: [dev, bonnes pratiques, sécurité, web, attaques]
 ---

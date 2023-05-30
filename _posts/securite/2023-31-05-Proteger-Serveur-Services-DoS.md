@@ -1,6 +1,6 @@
 ---
 title: Protéger un serveur et ses services contre les attaques DoS
-date: 2023-03-19 00:00:00
+date: 2023-05-31 00:00:00
 categories: [securite]
 tags: [securite, serveur, dos, attaque]
 ---

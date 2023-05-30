@@ -1,6 +1,6 @@
 ---
 title: Généralités et bonnes pratiques de développement sécurisé
-date: 2023-03-28 00:00:00
+date: 2023-05-30 00:00:00
 categories: [dev, securité]
 tags: [dev, bonnes pratiques, sécurité, développement sécurisé]
 ---
