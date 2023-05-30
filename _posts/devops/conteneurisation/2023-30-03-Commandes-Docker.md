@@ -1,7 +1,7 @@
 ---
 title: Commandes de base pour Docker
 date: 2023-03-30 00:00:00
-categories: [devops, conteneurisation, Docker]
+categories: [devops, conteneurisation, docker]
 tags: [devops, conteneurisation, Docker]
 ---
 

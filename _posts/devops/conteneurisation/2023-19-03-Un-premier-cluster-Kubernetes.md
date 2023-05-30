@@ -1,7 +1,7 @@
 ---
 title: Un premier cluster Kubernetes
 date: 2023-03-24 00:00:00
-categories: [devops, conteneurisation, orchestration]
+categories: [devops, conteneurisation, orchestration, kubernetes]
 tags: [devops, kubernetes, docker, conteneurisation, orchestration, cluster, cloud]
 ---
 

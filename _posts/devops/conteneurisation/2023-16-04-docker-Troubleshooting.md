@@ -1,7 +1,7 @@
 ---
 title: Solutions à des problèmes rencontrés avec Docker
 date: 2023-03-24 00:00:00
-categories: [sysadmin, conteneurisation, docker, troubleshooting]
+categories: [devops, conteneurisation, docker]
 tags: [devops, docker, troubleshooting, conteneurisation, sysadmin]
 ---
 

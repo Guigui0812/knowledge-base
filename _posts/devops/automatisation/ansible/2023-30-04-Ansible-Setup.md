@@ -1,7 +1,7 @@
 ---
 title: Présentation, installation et configuration d'Ansible
 date: 2023-05-05 00:00:00  
-categories: [sysadmin, automatisation, ansible]
+categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
 
