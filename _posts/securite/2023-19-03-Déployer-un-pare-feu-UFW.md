@@ -1,7 +1,7 @@
 ---
 title: Mettre en place un pare-feu avec UFW sous Debian
 date: 2023-03-19 00:00:00
-categories: [sysadmin, securite]
+categories: [securite]
 tags: [sysadmin, securite, pare-feu, ufw, debian]
 ---
 

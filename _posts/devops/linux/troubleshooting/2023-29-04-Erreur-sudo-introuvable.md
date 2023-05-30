@@ -1,7 +1,7 @@
 ---
 title: Erreur sudo introuvable
 date: 2023-03-30 00:00:00
-categories: [sysadmin, linux, troubleshooting]
+categories: [devops, linux, troubleshooting]
 tags: [sysadmin, linux, troubleshooting, sudo, shell, terminal]
 ---
 

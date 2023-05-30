@@ -1,7 +1,7 @@
 ---
 title: Générer et utiliser une clé SSH pour accéder à un serveur
 date: 2023-03-24 00:00:00
-categories: [sysadmin, securite]
+categories: [devops, securite]
 tags: [sysadmin, securite, ssh, cle, serveur]
 ---
 

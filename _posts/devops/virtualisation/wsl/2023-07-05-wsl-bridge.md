@@ -1,7 +1,7 @@
 ---
 title: Créer un bridge pour WSL
 date: 2023-05-07 00:00:00
-categories: [sysadmin, virtualisation, WSL]
+categories: [devops, virtualisation, WSL]
 tags: [sysadmin, virtualisation, WSL, Windows, Linux]
 ---
 

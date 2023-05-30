@@ -1,12 +1,11 @@
 ---
-title: TP Communication sans fil - Système de badge intelligent
+title: Système de badge intelligent
 date: 2023-04-07 00:00:00
 categories: [projets]
 tags: [objets connectés, rfid, esp32, node-red, mqtt, docker, Sqlite]
 ---
 
-**Groupe** : FOURNET Paul - ROHEE Guillaume  
-**Date** : 07/04/2023
+Ce projet a été réalisé dans le cadre de la matière Communication sans fil du cycle ingénieur spécialité Informatique de l'ESIEE Amiens.
 
 # Rapport de TP - Système de badge intelligent
 

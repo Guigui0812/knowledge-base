@@ -1,7 +1,7 @@
 ---
 title: Configurer le réseau sur debian
 date: 2023-04-30 00:00:00
-categories: [sysadmin, linux]
+categories: [devops, linux]
 tags: [sysadmin, linux, reseau, debian]
 ---
 

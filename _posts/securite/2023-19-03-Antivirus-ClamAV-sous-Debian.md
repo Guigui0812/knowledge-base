@@ -1,7 +1,7 @@
 ---
 title: Utiliser l'antivirus ClamAV sous Debian
 date: 2023-03-19 00:00:00  
-categories: [sysadmin, securite]
+categories: [securite]
 tags: [sysadmin, securite, antivirus, clamav, debian]
 ---
 

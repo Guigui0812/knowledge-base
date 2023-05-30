@@ -1,7 +1,7 @@
 ---
 title: Quelques notes sur Proxmox
 date: 2023-03-30 00:00:00
-categories: [sysadmin, virtualisation]
+categories: [devops, virtualisation]
 tags: [sysadmin, virtualisation, proxmox, linux, stockage]
 ---
 

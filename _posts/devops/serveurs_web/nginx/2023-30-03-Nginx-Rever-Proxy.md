@@ -1,7 +1,7 @@
 ---
 title: Créer un reverse proxy avec Nginx et Docker
 date: 2023-03-30 00:00:00
-categories: [sysadmin, nginx, reverse_proxy, docker]
+categories: [devops, serveurs web, nginx]
 tags: [serveurs_web, nginx, reverse_proxy, docker]
 ---
 

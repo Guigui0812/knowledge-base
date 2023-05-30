@@ -1,7 +1,7 @@
 ---
 title: Machines virtuelles avec la même ip en DHCP
 date: 2023-05-02 00:00:00
-categories: [sysadmin, linux, troubleshooting, virtualisation]
+categories: [devops, linux, troubleshooting]
 tags: [sysadmin, linux, troubleshooting, virtualisation, dhcp, virtualbox, proxmox]
 ---
 
