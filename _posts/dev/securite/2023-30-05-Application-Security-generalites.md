@@ -107,7 +107,52 @@ En suivant ces normes de sécurité, les développeurs renforcent la sécurité 
 
 # Mise à jour des dépendances
 
+Certaines vulnérabilités peuvent être introduites dans les applications web par des dépendances tierces. Il est donc important de maintenir à jour celles utilisées dans les applications afin de s'assurer qu'elles ne contiennent pas de vulnérabilités connues. 
 
+Par exemple, en janvier 2021, la faille ***Log4Shell*** a été découverte dans la bibliothèque ***Log4j***. Cette faille permettait à un attaquant d'exécuter du code arbitraire à distance sur un serveur. Elle a été corrigée dans la version 2.15.0 de la bibliothèque. Lors de sa découverte, cette CVE a été classée comme critique. De très nombreuses applications, notamment dans le secteur financier, utilisaient cette bibliothèque et étaient donc vulnérables.
+
+Il est donc important de maintenir à jour les dépendances utilisées afin de s'assurer qu'elles ne contiennent pas de vulnérabilités connues.
+
+# Sécuriser les environnements de développement et de production
+
+## Sécuriser les environnements de développement
+
+Les environnements de développement sont souvent moins sécurisés que les environnements de production. Il est donc important de prendre des mesures pour les sécuriser et réduire les risques d'attaques.
+
+***Quelques bonnes pratiques pour sécuriser les environnements de développement*** :
+
+- Gérer les droits d'accès : Il est important de limiter l'accès aux environnements de développement aux personnes qui en ont besoin. Il est également recommandé de limiter les droits d'accès aux ressources et aux données sensibles.
+- Utiliser des données de test : Il est recommandé d'utiliser des données de test pour les environnements de développement. Cela permet de réduire les risques liés à la divulgation de données sensibles.
+- S'assurer que les images Docker sont sécurisées : Il est important de s'assurer que les images Docker utilisées dans les environnements de développement sont sécurisées. Il est recommandé d'utiliser des images officielles et de les mettre à jour régulièrement.
+
+## Sécuriser les environnements de production
+
+Les environnements de production sont les plus sensibles et les plus critiques. Il est donc important de prendre des mesures pour les sécuriser et réduire les risques d'attaques.
+
+***Plusieurs moyens permettent de sécuriser les environnements de production*** :
+
+- Miser sur l'observabilité : Il est important de surveiller les environnements de production afin de détecter les attaques et les vulnérabilités. Il est recommandé d'utiliser des outils d'observabilité tels que Prometheus, Grafana, etc. Cela permet de détecter une augmentation du nombre de requêtes, des erreurs, etc.
+- Mettre en place des outils de détection d'intrusion : Il est recommandé de mettre en place des outils de détection d'intrusion permettant d'empêcher différentes attaques, telles que les attaques par force brute ou par déni de service (DoS). On peut par exemple mettre en place des outils tels que **Fail2ban**, **OSSEC**, etc.
+- S'assurer que l'ensemble des microservices sont sécurisés : s'assurer que l'ensemble des microservices sont sécurisés, à jour et correctement configurés. Cela vaut pour les bases de données, les outils de logs... Il est également recommandé de mettre en place des outils de sécurité tels que **Istio**, **Linkerd**, etc.
+
+# L'importance des tests 
+
+Une application correctement développée est une application qui a été testée à plusieurs reprises. Il est donc important de mettre en place des tests unitaires, des tests d'intégration et des tests de bout en bout. C'est ici que la démarche DevOps prend tout son sens. En effet, les tests doivent être automatisés et exécutés à chaque fois qu'un changement est apporté au code source de l'application. De cette façon, on limite le risque de pousser un code vulnérable en production.
+
+**Plusieurs tests à mettre en place** :
+
+- **Tests unitaires** : Les tests unitaires permettent de tester les différentes unités de code de l'application. Ils permettent de s'assurer que chaque unité de code fonctionne correctement et qu'elle renvoie les résultats attendus.
+- **Tests d'intégration** : Les tests d'intégration permettent de tester l'application dans son ensemble. Ils permettent de s'assurer que les différentes unités de code fonctionnent bien ensemble et qu'elles collaborent correctement.
+- **Tests de bout en bout** : Ici on va tester l'applications comme le ferait un utilisateur. On va simuler des actions et vérifier que l'application fonctionne correctement. C'est le rôle des **ingénieurs QA** (Quality Assurance). Ils vont tester l'application et s'assurer qu'elle répond au cahier des charges. Ces ingénieurs utilisent des outils DevOps comme **Jenkins** ou **GitLab CI** pour automatiser les tests, mais aussi des outils comme **Selenium** pour simuler les actions d'un utilisateur.
+- **Tests de sécurité** : Les tests de sécurité permettent de s'assurer que l'application est sécurisée. Ils permettent de détecter les vulnérabilités et les failles de sécurité. On va pouvoir utiliser des outils comme *Niktto* pour analyser la présence de vulnérabilités sur le serveur, ou encore *OWASP ZAP* pour analyser les vulnérabilités de l'application.
+
+# Conclusion
+
+Face à la multiplication des attaques et des vulnérabilités, le développement logiciel a évolué pour intégrer la sécurité dès le début du cycle de développement. Les entreprises, notamment les plus importantes, investissent massivement dans le développement de solutions informatiques, mais elles souhaitent également s'assurer que ces solutions sont sécurisées. 
+
+Evidemment, la sécurisation des processus de développement et de déploiement est un travail chronophage et assez couteux. Dans un but de rationnalisation, de nouvelles approches ont vu le jour. Ces approches consistent à intégrer la sécurité dans les processus de développement et de déploiement. On parle alors de ***DevSecOps***. Cela permet de réduire le temps et les coûts liés à la sécurité en impliquant les équipes de sécurité dès le début du cycle de développement, et en automatisant tout ce qui peut l'être.
+
+Enfin, il faut garder à l'esprit qu'il est bien plus pratique de corriger des failles lors de la phase de développement que lors de la phase de production. 
 
 #### Quelques liens utiles
 

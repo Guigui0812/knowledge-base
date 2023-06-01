@@ -122,3 +122,4 @@ def index():
 - [Les sessions en Flask](https://pythonbasics.org/flask-sessions/)
 - [Générer une clé pour l'appication Flask](https://randomkeygen.com/)
 - [Cours Flask - OpenClassroom](https://openclassrooms.com/fr/courses/4425066-concevez-un-site-avec-flask)
+- [The Flask Mega-Tutorial - Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
