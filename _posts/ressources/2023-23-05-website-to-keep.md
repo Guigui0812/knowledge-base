@@ -38,3 +38,21 @@ Quelques outils en ligne à retenir que ce soit pour le développement, l'admini
 - [Piskel](https://www.piskelapp.com/) : pour créer des sprites et des animations
 - [Draw.io](https://app.diagrams.net/) : pour créer des diagrammes
 - [Whatsmydns](https://www.whatsmydns.net/) : pour vérifier la propagation DNS
+- [Hosting Checker](https://hostingchecker.com/) : pour vérifier l'hébergement d'un site web
+- 
+## Images, icônes et polices
+
+### Images
+
+- [Unsplash](https://unsplash.com/) : des photos libres de droits
+- [Pixabay](https://pixabay.com/fr/) : des photos libres de droits
+- [Pexels](https://www.pexels.com/fr-fr/) : des photos libres de droits
+
+### Icônes
+
+- [Font Awesome](https://fontawesome.com/) : des icônes libres de droits
+- [Flaticon](https://www.flaticon.com/) : des icônes libres de droits
+
+### Polices
+
+- [Google Fonts](https://fonts.google.com/) : des polices libres de droits

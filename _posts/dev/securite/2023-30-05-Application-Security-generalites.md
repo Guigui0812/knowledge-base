@@ -161,3 +161,4 @@ Enfin, il faut garder à l'esprit qu'il est bien plus pratique de corriger des f
 - [La sécurité du cycle de développement logiciel - RedHat](https://www.redhat.com/fr/topics/security/software-development-lifecycle-security#cycle-de-d%C3%A9veloppement-logiciel-s%C3%A9curis%C3%A9)
 - [What is an Intrusion Detection System? - Palo Alto](https://www.paloaltonetworks.com/cyberpedia/what-is-an-intrusion-detection-system-ids)
 - [What is IDS and IPS? - Juniper Networks](https://www.juniper.net/us/en/research-topics/what-is-ids-ips.html)
+- [Log4Shell : causes et conséquences de la vulnérabilité Java  - IONOS](https://www.ionos.fr/digitalguide/serveur/securite/vulnerabilite-log4shell/)
