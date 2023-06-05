@@ -157,3 +157,5 @@ Face à l'augmentation de ces attaques, il existe aujourd'hui des outils spécia
 - [Mitigation de DDoS - Wikipédia](https://fr.wikipedia.org/wiki/Mitigation_de_DDoS)
 - [What is a denial of service attack (DoS) ? - Paloalto](https://www.paloaltonetworks.com/cyberpedia/what-is-a-denial-of-service-attack-dos)
 - [What is a Botnet? - Paloalto](https://www.paloaltonetworks.com/cyberpedia/what-is-botnet)
+- [Own a WiFi network with Python! - David Bombal](https://www.youtube.com/watch?v=XUncozRGbcs)
+- [How to DDoS | DoS and DDoS attack tools - Cloudflare](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/how-to-ddos/)

@@ -54,11 +54,24 @@ On peut créer des groupes de serveurs en ajoutant des sections dans le fichier 
 
 ```bash
 [web]
-<ip> <hostname>
+<ip>
 
 [bdd]
-<ip> <hostname>
+<ip>
 ```
+
+Il est possible de perfectionner ce fichier d'inventaire en ajoutant des variables comme suit : 
+
+```bash
+[web]
+<ip>
+
+[web:vars]
+ansible_ssh_user=<ssh_user>
+ansible_ssh_private_key_file=<path_to_ssh_key>
+```
+
+Ajouter des variable est utile pour ne pas avoir à les spécifier à chaque fois que l'on exécute une commande ou un playbook. 
 
 Un serveur peut appartenir à plusieurs groupes. Par exemple un groupe `servers` général et un groupe `web` plus spécifique. Ceci est utile pour exécuter des commandes sur un groupe de serveurs spécifique (par exemple pour déployer une application web sur les serveurs du groupe `web` et mettre à jour les paquets sur tous les serveurs du groupe `servers`).
 
@@ -72,6 +85,8 @@ Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exéc
     "ping": "pong"
 }
 ```
+
+Si un mot de passe et un utilisateur sont demandés, il faut ajouter les variables `ansible_ssh_user` et `ansible_ssh_pass` dans le fichier d'inventaire (voir ci-dessous) ou les spécifier dans la commande `ansible all -m ping -u <user> -ask-pass`.
 
 ## Exécution de commandes
 
@@ -109,4 +124,5 @@ Dans ce cas, il faut exécuter la commande `ansible-playbook <playbook>.yml --as
 
 - [Ansible Documentation](https://docs.ansible.com/)
 - [Install Docker on Debian with Ansible](https://yasha.solutions/install-docker-on-debian-with-ansible/)
-- 
+- [Define ssh key per host using ansible_ssh_private_key_file](https://www.cyberciti.biz/faq/define-ssh-key-per-host-using-ansible_ssh_private_key_file/)
+- [How to Pass Ansible Username And Password ?](https://linuxhint.com/pass-ansible-username-and-password/)

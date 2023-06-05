@@ -23,5 +23,11 @@ Pour cela, il faut suivre [cet article](../../2023-05-05-Ansible-Setup.md) qui e
 
 ## Configuration du serveur DNS/DHCP
 
+Il est possible de configurer de nombreux services avec Ansible. Dans un premier temps je vais commencer par le serveur DNS/DHCP.
+
+Il y a plusieurs manières d'utiliser ***Ansible*** pour configurer un serveur. Mon choix est de créer un playbook par service. Cela permet de séparer les tâches et de pouvoir les réutiliser plus facilement. Chaque playbook est lié à un répertoire dans lequel sont présents certains fichiers de configuration qu'il faut copier sur le serveur cible.
+
+## Déployer un serveur DHCP
+
 
 
