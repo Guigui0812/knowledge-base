@@ -109,3 +109,13 @@ Pour récupérer les différences entre les fichiers, il faut utiliser la comman
 ```bash
 git diff
 ```
+
+### Appliquer la modification d'un .gitignore
+
+Pour appliquer la modification d'un `.gitignore`, il faut utiliser la commande `git rm`.
+
+```bash
+git rm -r --cached .
+git add .
+git commit -m "Message du commit"
+```

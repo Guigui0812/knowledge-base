@@ -51,8 +51,12 @@ Pour exécuter la commande, il faut se placer dans le dossier du projet où se t
 
 Il ne reste plus qu'à intégrer les classes *Tailwindcss* dans le code HTML. Par exemple, pour créer un bouton avec un fond rouge et un texte blanc, il suffit d'ajouter la classe `bg-red-500` au bouton et la classe `text-white` au texte. La syntaxe est intuitive et facile à retenir. Il suffit de lire la documentation pour comprendre comment utiliser les classes.
 
+
+
+
 ## Documentation et liens utiles
 
 - [Tailwindcss - Documentation](https://v2.tailwindcss.com/docs)
 - [Tailwindcss - Installation](https://v2.tailwindcss.com/docs/installation)
 - [Tailwindcss - Configuration](https://v2.tailwindcss.com/docs/configuration)
+- [Flowbite - Tailwindcss Layouts examples](https://flowbite.com/)
