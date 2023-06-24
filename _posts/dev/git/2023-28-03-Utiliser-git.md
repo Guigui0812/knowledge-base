@@ -46,73 +46,29 @@ git config --global user.email "john.doe@test.com"
 
 ## Utilisation
 
-### Initialiser un dépôt
+### Basic commands
 
-Pour initialiser un dépôt, il faut se placer dans le dossier du projet et exécuter la commande `git init`.
+|Command|Purpose|
+|---|---|
+|`git init`|Initializes a new git repository|
+|`git add <file>`|Adds a file to the staging area|
+|`git commit -m "Message"`|Commits the changes|
+|`git push`|Pushes the changes to the remote repository|
+|`git pull`|Pulls the changes from the remote repository|
+|`git status`|Shows the status of the working tree|
+|`git log`|Shows the commit history|
+|`git diff`|Shows the differences between commits, branches, etc.|
+|`git branch`|Shows the branches|
+|`git checkout <branch>`|Switches to the specified branch|
+|`git merge <branch>`|Merges the specified branch into the current branch|
+|`git clone <url>`|Clones the specified repository|
+|`git remote add <name> <url>`|Adds a remote repository|
+|`git remote -v`|Shows the remote repositories|
+|`git remote remove <name>`|Removes the specified remote repository|
 
-```bash
-git init
-```
+### Some useful tips
 
-### Ajouter des fichiers
-
-Pour ajouter des fichiers au dépôt, il faut utiliser la commande `git add`.
-
-```bash
-git add <fichier>
-```
-
-### Commiter des fichiers
-
-Pour commiter des fichiers, il faut utiliser la commande `git commit`.
-
-```bash
-git commit -m "Message du commit"
-```
-
-### Pousser des fichiers
-
-Pour pousser des fichiers sur le dépôt distant, il faut utiliser la commande `git push`.
-
-```bash
-git push
-```
-
-### Récupérer des fichiers
-
-Pour récupérer des fichiers depuis le dépôt distant, il faut utiliser la commande `git pull`.
-
-```bash
-git pull
-```
-
-### Récupérer l'historique des commits
-
-Pour récupérer l'historique des commits, il faut utiliser la commande `git log`.
-
-```bash
-git log
-```
-
-### Récupérer l'état des fichiers
-
-Pour récupérer l'état des fichiers, il faut utiliser la commande `git status`.
-
-```bash
-git status
-```
-
-### Récupérer les différences entre les fichiers
-
-Pour récupérer les différences entre les fichiers, il faut utiliser la commande `git diff`.
-
-```bash
-git diff
-```
-
-### Appliquer la modification d'un .gitignore
-
-Pour appliquer la modification d'un `.gitignore`, il faut utiliser la commande `git rm`.
+To apply the changes of the `.gitignore` file, you can use the following commands:
 
 ```bash
 git rm -r --cached .
