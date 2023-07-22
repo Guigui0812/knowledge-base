@@ -25,13 +25,30 @@ First, I need to create a specific user for Plex. I created a `plex.yml` file wi
         state: present
         password: "{{ 'password' | password_hash('sha512') }}" 
 
-  - name: get plex user id 
-    shell:
-        cmd: id -u plex
-        register: plex_user_id
+  - name : create the plex directory
+    file:
+        path: "./plex"
+        state: directory
+        owner: plex
+        group: plex
+
+  - name : create the config file
+    file:
+        path: "./plex/.env"
+        state: touch
+
+  - shell: id -u plex
+    register: plex_user_id
+  - name: write plex user id to the config file
+    lineinfile:
+        line: "PLEX_UID={{ plex_user_id.stdout }}"
+        path: ./plex/.env
+
+  - shell: cat ./plex/.env
+    register: plex_env
 
   - debug:
-        var: plex_user_id.stdout
+        msg: "{{ plex_env.stdout_lines }}"
 ```
 
 It's important to create a specific user for Plex, because it will be easier to manage permissions and security.
