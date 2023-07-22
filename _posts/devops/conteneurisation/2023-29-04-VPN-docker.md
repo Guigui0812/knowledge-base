@@ -119,7 +119,6 @@ Il faut ensuite récupérer le certificat de l'utilisateur :
 docker-compose run --rm openvpn ovpn_getclient <nom de l'utilisateur> > <nom de l'utilisateur>.ovpn
 ```
 
-
 #### Liens et ressources : 
 
 - [Un serveur openVPN en 5 minutes avec Docker](https://www.grottedubarbu.fr/serveur-openvpn-5-minutes-docker/)
