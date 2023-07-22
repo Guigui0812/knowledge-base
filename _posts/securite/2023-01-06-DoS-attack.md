@@ -159,3 +159,4 @@ Face à l'augmentation de ces attaques, il existe aujourd'hui des outils spécia
 - [What is a Botnet? - Paloalto](https://www.paloaltonetworks.com/cyberpedia/what-is-botnet)
 - [Own a WiFi network with Python! - David Bombal](https://www.youtube.com/watch?v=XUncozRGbcs)
 - [How to DDoS | DoS and DDoS attack tools - Cloudflare](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/how-to-ddos/)
+- [What is IDS and IPS? - Juniper](https://www.juniper.net/us/en/research-topics/what-is-ids-ips.html)
