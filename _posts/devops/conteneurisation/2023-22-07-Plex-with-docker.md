@@ -23,38 +23,146 @@ First, I need to create a specific user for Plex. I created a `plex.yml` file wi
     user:
         name: plex
         state: present
-        password: "{{ 'password' | password_hash('sha512') }}" 
-
-  - name : create the plex directory
-    file:
-        path: "./plex"
-        state: directory
-        owner: plex
-        group: plex
-
-  - name : create the config file
-    file:
-        path: "./plex/.env"
-        state: touch
-
-  - shell: id -u plex
-    register: plex_user_id
-  - name: write plex user id to the config file
-    lineinfile:
-        line: "PLEX_UID={{ plex_user_id.stdout }}"
-        path: ./plex/.env
-
-  - shell: cat ./plex/.env
-    register: plex_env
-
-  - debug:
-        msg: "{{ plex_env.stdout_lines }}"
+        password: "{{ 'password' | password_hash('sha512') }}"  
 ```
 
 It's important to create a specific user for Plex, because it will be easier to manage permissions and security.
+
+## Create the directories for Plex and copy the configuration files
+
+I create a `.env` file with the following content:
+
+```bash
+TZ=Europe/Paris
+DATADIR=/media
+SERVER_IP=<ip_de_mon_serveur>
+```	
+
+Then, I add a few lines to the `plex.yml` file to add the directories and copy the configuration files:
+
+```yaml
+- name: create the plex directory
+  file:
+      path: "./plex"
+      state: directory
+      owner: plex
+      group: plex
+
+- name: copy the config file
+  copy:
+      src: .env
+      dest: "./plex/.env"
+      owner: plex
+      group: plex
+      mode: 0644
+```
+
+As the `.env` is still incomplete, I need to add some informations. But these informations are the PUID and PGID of the user `plex`. As these informations can change from one server to another, I decided to automate the process. 
+
+So I add these lines to retrieve the PUID and PGID of the user `plex` and add them to the `.env` file :
+
+```yaml
+- shell: id -u plex
+    register: plex_user_id
+
+- name: write plex gid to the .env config file
+  lineinfile:
+      line: "PLEX_UID={{ plex_user_id.stdout }}"
+      path: ./plex/.env
+
+- name: wirte plex gid to the .env config file
+  lineinfile:
+      line: "PLEX_GID={{ plex_user_id.stdout }}"
+      path: ./plex/.env
+
+- shell: cat ./plex/.env
+  register: plex_env
+
+- debug:
+      msg: "{{ plex_env.stdout_lines }}"
+```
 
 ## Plex and docker-compose
 
 To install Plex, I used docker-compose. I created a `docker-compose.yml` file with the following content:
 
 ```yaml
+version: '3'
+services:
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    restart: unless-stopped
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    volumes:
+      - ./plex/config:/config
+      - /media:/media
+      - ./plex/transcode:/transcode
+    environment:
+      TZ: $TZ
+      PLEX_UID: $PLEX_UID
+      PLEX_GID: $PLEX_GID
+      ADVERTISE_IP: http://$SERVER_IP:32400/
+```
+
+The lines with `$` are variables. These variables are defined in the `.env` file. 
+
+For the directories : 
+
+- `./plex/config:/config` : this is the directory where the configuration files of Plex will be stored.
+- `/media:/media` : this is the directory where my media files are stored.
+- `.plex/transcode:/transcode` : this is the directory where the transcoded files will be stored.
+
+## Execute the docker-compose file with Ansible
+
+It's possible to execute the docker-compose file with Ansible. I added these lines to the `plex.yml` file:
+
+```yaml
+- name: copy the docker compose file
+  copy:
+      src: docker-compose.yml
+      dest : ./plex/docker-compose.yml
+
+- name: execute the docker compose
+  docker_compose:
+      project_src: ./plex
+      state: present
+```
+
+## Execute the playbook
+
+To execute the playbook, I use the following command:
+
+```bash
+ansible-playbook plex.yml --ask-become-pass
+```
+
+Unfortunately, I have an error when I execute the playbook because of the `docker_compose` module. So I decided to execute the docker-compose file manually and I encountered the following error:
+
+```bash
+Removing plex
+Recreating a78ebe4b1913_plex ... error
+
+ERROR: for a78ebe4b1913_plex  Cannot start service plex: cgroups: cgroup mountpoint does not exist: unknown
+
+ERROR: for plex  Cannot start service plex: cgroups: cgroup mountpoint does not exist: unknown
+ERROR: Encountered errors while bringing up the project.
+```
+
+After some research, I found that the solution of this problem is to execute theses commands:
+
+```bash
+sudo mkdir /sys/fs/cgroup/systemd
+sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
+```
+
+After executing these commands, I can execute the docker-compose file without any problem. And so, I can execute the playbook without any problem too.
