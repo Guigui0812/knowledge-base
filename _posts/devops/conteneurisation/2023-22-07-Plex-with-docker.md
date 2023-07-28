@@ -92,7 +92,7 @@ services:
   plex:
     image: plexinc/pms-docker
     container_name: plex
-    restart: unless-stopped
+    restart: always
     ports:
       - "32400:32400/tcp"
       - "3005:3005/tcp"
@@ -108,10 +108,11 @@ services:
       - /media:/media
       - ./plex/transcode:/transcode
     environment:
-      TZ: $TZ
-      PLEX_UID: $PLEX_UID
-      PLEX_GID: $PLEX_GID
-      ADVERTISE_IP: http://$SERVER_IP:32400/
+      - TZ="${TZ}"
+      - PLEX_UID="${PLEX_UID}"
+      - PLEX_GID="${PLEX_GID}"
+      - PLEX_CLAIM="${CLAIM}"
+      - ADVERTISE_IP="http://${SERVER_IP}:32400/"
 ```
 
 The lines with `$` are variables. These variables are defined in the `.env` file. 
@@ -166,3 +167,12 @@ sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 ```
 
 After executing these commands, I can execute the docker-compose file without any problem. And so, I can execute the playbook without any problem too.
+
+#### Useful links and resources
+
+- [Plex Media Server- Official Docker Image](https://hub.docker.com/r/plexinc/pms-docker)
+- [4 Ways to Install Plex (one is unexpected) - Techno Tim](https://www.youtube.com/watch?v=MG_1XQxWns0)
+- [Error's solution "cgroups: cgroup mountpoint does not exist: unknown"](https://github.com/docker/for-linux/issues/219)
+- [Set up Plex Server with Docker Compose - The Smarthome Book](https://www.thesmarthomebook.com/2022/01/18/set-up-plex-server-with-docker-compose/)
+- [Use environment variables in Docker Compose - Stackoverflow](https://stackoverflow.com/questions/29377853/how-can-i-use-environment-variables-in-docker-compose)
+- [Docker Compose - Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/docker_compose_module.html)
