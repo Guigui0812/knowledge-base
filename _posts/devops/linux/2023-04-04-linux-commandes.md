@@ -107,6 +107,12 @@ groups <utilisateur>
 hostnamectl set-hostname <hostname>
 ```
 
+## Monter un disque réseau
+
+```bash
+sudo mount -t cifs -o username=<utilisateur>,password=<mot de passe> //<adresse IP>/<partage> /mnt/<point de montage>
+```
+
 # Les commandes de gestion du réseau
 
 Pour ces commandes il est nécessaire d'installer plusieurs paquets :

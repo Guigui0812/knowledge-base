@@ -105,7 +105,7 @@ services:
       - "32414:32414/udp"
     volumes:
       - ./plex/config:/config
-      - /media:/media
+      - <media_directory>:/media
       - ./plex/transcode:/transcode
     environment:
       - TZ="${TZ}"
@@ -113,15 +113,36 @@ services:
       - PLEX_GID="${PLEX_GID}"
       - PLEX_CLAIM="${CLAIM}"
       - ADVERTISE_IP="http://${SERVER_IP}:32400/"
+    network_mode: host
 ```
 
 The lines with `$` are variables. These variables are defined in the `.env` file. 
+
+Somes explanations about the docker-compose file :
+- `image: plexinc/pms-docker` : this is the official image of Plex.
+- `restart: always` : this is to restart the container if it stops, for any reason.
+- `ports` : these are the ports used by Plex. I used the default ports.
+- `volume` : these are the volumes used by Plex to keep the data persistent. I used the default volumes.
+- `environment` : these are the environment variables used by Plex. It's used to customize the configuration of Plex.
+- `network_mode: host` : this is to use the host network. This type of network allows to use the network of the host. It's useful to use the network of the host, without having to configure the network of the container. It's needed in this configuration to use the Plex server outside of the local network.
 
 For the directories : 
 
 - `./plex/config:/config` : this is the directory where the configuration files of Plex will be stored.
 - `/media:/media` : this is the directory where my media files are stored.
 - `.plex/transcode:/transcode` : this is the directory where the transcoded files will be stored.
+
+## Map a network drive for the media files
+
+TO manage the media files, I thought it would be easier to host them on a share attached to my NAS. So I created a share on my NAS and I mapped it on my server. 
+
+I used the following command to map the network drive:
+
+```bash
+sudo mount -t cifs -o username=<username>,password=<password> //<ip_of_the_nas>/<share_name> /media
+```
+
+When the disk is mappaed, the content of the share is available in the `/media` directory. So the plex library will be `/media`. That allows me to manage the media files from my NAS when I want to add new files.
 
 ## Execute the docker-compose file with Ansible
 
@@ -167,6 +188,10 @@ sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 ```
 
 After executing these commands, I can execute the docker-compose file without any problem. And so, I can execute the playbook without any problem too.
+
+Unfortunately, it's a temporary solution. To make it permanent, I had to completely reinstall docker. I followed the procedure in the [documentation](https://docs.docker.com/engine/install/debian/).
+
+
 
 #### Useful links and resources
 
