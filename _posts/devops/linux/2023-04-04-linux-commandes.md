@@ -63,6 +63,24 @@ mkhomedir_helper <utilisateur>
 
 Il arrive que le répertoire personnel d'un utilisateur ne soit pas créé lors de la création de l'utilisateur. Dans ce cas, il est possible de le créer avec cette commande. De cette manière, l'utilisateur pourra se connecter en SSH et aura les droits sur son répertoire personnel.
 
+## Obtenir l'UID d'un utilisateur
+
+```bash
+id -u <utilisateur>
+```
+
+## Obtenir le GID d'un utilisateur
+
+```bash
+id -g <utilisateur>
+```
+
+Also 
+
+```bash
+getent group <utilisateur>
+```
+
 ## Se connecter en tant qu'utilisateur
 
 ```bash
