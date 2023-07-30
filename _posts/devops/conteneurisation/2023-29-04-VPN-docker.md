@@ -123,3 +123,4 @@ docker-compose run --rm openvpn ovpn_getclient <nom de l'utilisateur> > <nom de 
 
 - [Un serveur openVPN en 5 minutes avec Docker](https://www.grottedubarbu.fr/serveur-openvpn-5-minutes-docker/)
 - [Image Docker kylemanna/openvpn](https://hub.docker.com/r/kylemanna/openvpn)
+- [How to quickly set up an OpenVPN server on your VPS](https://blog.oyam.dev/quick-openvpn-server/)

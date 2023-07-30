@@ -191,8 +191,6 @@ After executing these commands, I can execute the docker-compose file without an
 
 Unfortunately, it's a temporary solution. To make it permanent, I had to completely reinstall docker. I followed the procedure in the [documentation](https://docs.docker.com/engine/install/debian/).
 
-
-
 #### Useful links and resources
 
 - [Plex Media Server- Official Docker Image](https://hub.docker.com/r/plexinc/pms-docker)
@@ -201,3 +199,5 @@ Unfortunately, it's a temporary solution. To make it permanent, I had to complet
 - [Set up Plex Server with Docker Compose - The Smarthome Book](https://www.thesmarthomebook.com/2022/01/18/set-up-plex-server-with-docker-compose/)
 - [Use environment variables in Docker Compose - Stackoverflow](https://stackoverflow.com/questions/29377853/how-can-i-use-environment-variables-in-docker-compose)
 - [Docker Compose - Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/docker_compose_module.html)
+- [How to manage docker-compose with ansible ? - Xavki](https://xavier-pestel.medium.com/how-to-manage-docker-compose-with-ansible-c08933ba88a8)
+- [Ways to set environment variables in Compose - Docker Documentation](https://docs.docker.com/compose/environment-variables/set-environment-variables/)
