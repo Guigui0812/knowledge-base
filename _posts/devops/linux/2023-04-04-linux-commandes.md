@@ -131,6 +131,20 @@ hostnamectl set-hostname <hostname>
 sudo mount -t cifs -o username=<utilisateur>,password=<mot de passe> //<adresse IP>/<partage> /mnt/<point de montage>
 ```
 
+But this is not persistent. You'll have to modify the `/etc/fstab` file to make it persistent.
+
+Open the file `/etc/fstab` :
+
+```bash
+sudo nano /etc/fstab
+```
+
+Add the following line :
+
+```bash
+//<adresse IP>/<partage> /mnt/<point de montage> cifs username=<utilisateur>,password=<mot de passe> 0 0
+```
+
 # Les commandes de gestion du réseau
 
 Pour ces commandes il est nécessaire d'installer plusieurs paquets :

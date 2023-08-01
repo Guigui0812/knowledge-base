@@ -1,7 +1,7 @@
 ---
-title: Installation de Plex avec Docker et Ansible
+title: Création d'un serveur multimédia avec Docker et Ansible
 date: 2023-07-22 00:00:00
-categories: [devops, conteneurisation, docker]
+categories: [projets]
 tags: [devops, conteneurisation, docker, linux, ansible, home-server]
 ---
 
@@ -190,6 +190,10 @@ sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 After executing these commands, I can execute the docker-compose file without any problem. And so, I can execute the playbook without any problem too.
 
 Unfortunately, it's a temporary solution. To make it permanent, I had to completely reinstall docker. I followed the procedure in the [documentation](https://docs.docker.com/engine/install/debian/).
+
+## Use Jellyfin instead of Plex
+
+An open source alternative to Plex is Jellyfin. I decided to use Jellyfin instead of Plex because it's open source. I used the same procedure as for Plex to install Jellyfin. 
 
 #### Useful links and resources
 
