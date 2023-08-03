@@ -67,3 +67,34 @@ Variables can be declared in multiple places:
 - in variables files : by using `--vars-file` or `-var-file`
 
 Use variables effectively will make playbooks easier to use by adding flexibility and reusability. They will also be easier to maintain because you will only need to change the value of a variable in one place, not directly in the playbook.
+
+## Use `Ansible Vault`
+
+`Ansible Vault` is a tool to encrypt sensitive data. It's a good practice to use it to encrypt your variables files. It will make your playbooks more secure.
+
+To use it, you need to create a file with the sensitive data. Then, you need to encrypt it with the following command:
+
+```bash
+ansible-vault encrypt my_file.yml
+```
+
+To decrypt the file, you need to use the following command:
+
+```bash
+ansible-vault decrypt my_file.yml
+```
+
+To use the encrypted file in a playbook, you need to add the following line:
+
+```yaml
+---
+- name: my playbook
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - my_file.yml
+```
+
+Even if you use `Ansible Vault`, it's important to not commit the encrypted file in your repository. You can use a `.gitignore` file to avoid it.
