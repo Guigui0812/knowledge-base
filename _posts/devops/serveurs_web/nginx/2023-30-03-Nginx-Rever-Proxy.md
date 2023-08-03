@@ -120,6 +120,18 @@ server {
 
 Cela permet de sécuriser les communications entre le client et le serveur web puisque les communications sont chiffrées via SSL/TLS.
 
+# Automatiser le renouvellement du certificat SSL/TLS
+
+Le certificat SSL/TLS est valable 90 jours. Il faut donc le renouveler régulièrement. Pour cela, on peut utiliser un cronjob chargé de renouveler le certificat SSL/TLS.
+
+Dans le but de certifier notre domaine, nous avons utiliser certbot dans un container docker décrit dans un `docker-compose.yml`. Nous avons donc accès à la commande `certbot` dans ce container. Nous pouvons donc créer un cronjob chargé de relancer notre container `certbot` tous les 2 mois.
+
+```yaml
+0 0 1 */2 * /usr/bin/docker compose -f <path_to_container>/docker-compose.yml up certbot
+```
+
+Ce job permet donc d'arrêter de se soucier du renouvellement du certificat SSL/TLS.
+
 #### Liens utiles
 
 - [Docker : Nginx en reverse proxy](https://www.grottedubarbu.fr/docker-nginx-reverse-proxy/)
