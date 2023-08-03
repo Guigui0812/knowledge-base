@@ -53,3 +53,17 @@ To use this role in a playbook, you need to add the following lines:
 This is a good way to optimize your playbooks and make them easier to read, but also reusable. 
 
 For exampe, if you often need to install `docker` on your servers, you can create a role to install it. Then, you can use it in all your playbooks that need this package.
+
+## Use variables
+
+As Ansible is an automation tool, it's important to use variables. It will make your playbooks easier to read and to maintain, but also reusable as the values can change from one server to another.
+
+Variables can be declared in multiple places:
+- in the playbook
+- in roles
+- in the inventory
+- encrypted variables : by using `ansible-vault` 
+- in the command line : by using `--extra-vars` or `-e`
+- in variables files : by using `--vars-file` or `-var-file`
+
+Use variables effectively will make playbooks easier to use by adding flexibility and reusability. They will also be easier to maintain because you will only need to change the value of a variable in one place, not directly in the playbook.
