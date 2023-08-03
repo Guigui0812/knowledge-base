@@ -206,4 +206,4 @@ An open source alternative to Plex is Jellyfin. I decided to use Jellyfin instea
 - [How to manage docker-compose with ansible ? - Xavki](https://xavier-pestel.medium.com/how-to-manage-docker-compose-with-ansible-c08933ba88a8)
 - [Ways to set environment variables in Compose - Docker Documentation](https://docs.docker.com/compose/environment-variables/set-environment-variables/)
 - [linuxserver/plex - linuxserver.io](https://docs.linuxserver.io/images/docker-plex)
-
+- [Jellyfin - Official installation](https://jellyfin.org/docs/general/installation/container/)
