@@ -97,4 +97,6 @@ To use the encrypted file in a playbook, you need to add the following line:
     - my_file.yml
 ```
 
+When you will run the playbook, you will be asked to enter the password to decrypt the file.
+
 Even if you use `Ansible Vault`, it's important to not commit the encrypted file in your repository. You can use a `.gitignore` file to avoid it.

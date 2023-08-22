@@ -21,6 +21,12 @@ grep <motif> <fichier>
 grep docker /etc/group
 ```
 
+## Télécharger un fichier
+
+```bash
+wget <url>
+```
+
 # La gestion des groupes et utilisateurs
 
 ## Créer un nouvel utilisateur
