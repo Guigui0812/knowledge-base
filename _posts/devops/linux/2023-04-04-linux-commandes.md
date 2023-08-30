@@ -11,6 +11,8 @@ Notes sur les commandes et outils à connaître sous Linux.
 
 ## Rechercher une ligne dans un fichier
 
+Pour rechercher une ligne dans un fichier, on peut utiliser la commande `grep` :
+
 ```bash
 grep <motif> <fichier>
 ```
@@ -23,9 +25,13 @@ grep docker /etc/group
 
 ## Télécharger un fichier
 
+our télécharger un fichier quelconque sur internet, on peut utiliser la commande `wget` :
+
 ```bash
 wget <url>
 ```
+
+
 
 # La gestion des groupes et utilisateurs
 
