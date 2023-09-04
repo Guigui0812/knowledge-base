@@ -30,6 +30,8 @@ Pour utiliser Ansible, il faut à minima :
 - Un serveur Ansible (appelé *control node*)
 - Un ou plusieurs serveurs cibles (appelés *managed nodes*)
 
+#### Configuration SSH
+
 Pour que Ansible puisse se connecter aux serveurs cibles, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
 
 **Rappel** : Pour générer une paire de clés SSH, il faut exécuter la commande `ssh-keygen` sur le serveur Ansible. Pour mettre la clé publique sur le serveur cible, il faut exécuter la commande `ssh-copy-id <user>@<ip>` sur le serveur Ansible.
@@ -40,14 +42,16 @@ Lorsque les clés sont ajoutées, il faut tester la connexion SSH depuis le serv
 ssh <user>@<ip>
 ```
 
-Si la clé fonctionne, on peut ajouter le serveur cible dans le fichier `/etc/ansible/hosts`. Pour cela, on utilise `sudo nano /etc/ansible/hosts`.
-```
+#### Configuration du fichier d'inventaire
+
+Si la clé fonctionne, on peut ajouter le serveur cible dans le fichier d'inventaire `/etc/ansible/hosts`. 
 
 Il faut ajouter le serveur cible dans la section `[servers]` :
 
 ```bash
 [servers]
 <ip>
+<nom_de_domaine>
 ```
 
 On peut créer des groupes de serveurs en ajoutant des sections dans le fichier `/etc/ansible/hosts`. Par exemple, pour créer un groupe `web` :
@@ -55,6 +59,7 @@ On peut créer des groupes de serveurs en ajoutant des sections dans le fichier 
 ```bash
 [web]
 <ip>
+<nom_de_domaine>
 
 [bdd]
 <ip>
@@ -74,6 +79,14 @@ ansible_ssh_private_key_file=<path_to_ssh_key>
 Ajouter des variable est utile pour ne pas avoir à les spécifier à chaque fois que l'on exécute une commande ou un playbook. 
 
 Un serveur peut appartenir à plusieurs groupes. Par exemple un groupe `servers` général et un groupe `web` plus spécifique. Ceci est utile pour exécuter des commandes sur un groupe de serveurs spécifique (par exemple pour déployer une application web sur les serveurs du groupe `web` et mettre à jour les paquets sur tous les serveurs du groupe `servers`).
+
+Il est possible de mettre en place des inventaires personnalisés. Pour cela, il faut créer un fichier d'inventaire du type `inventory.yaml`. 
+
+Pour l'utiliser, il faut spécifier son chemin lors de l'exécution d'une commande ou d'un playbook : 
+
+```bash
+ansible all -i /home/user/inventory -m ping
+```
 
 ## Test de la connexion SSH
 
