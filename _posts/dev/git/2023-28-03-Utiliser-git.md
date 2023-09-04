@@ -68,10 +68,30 @@ git config --global user.email "john.doe@test.com"
 
 ### Some useful tips
 
-To apply the changes of the `.gitignore` file, you can use the following commands:
+#### Appliquer les changements du fichier `.gitignore`
+
+Pour appliquer les changements du fichier `.gitignore`, il faut utiliser la commande suivante :
 
 ```bash
 git rm -r --cached .
 git add .
 git commit -m "Message du commit"
 ```
+
+## Les bonnes pratiques
+
+Afin d'utiliser `git` correctement, il est important de suivre les bonnes pratiques.
+
+### Les branches
+
+Chaque modification doit être effectuée dans une branche. Il est important de ne pas modifier la branche `main` directement. Il faut créer une branche à partir de la branche `main` et effectuer les modifications dans cette branche. Une fois les modifications terminées, il faut créer une pull request et demander à un autre développeur de valider la pull request. Une fois la pull request validée, il faut merger la branche dans la branche `main`.
+
+### Les commits
+
+Dans une même branche il est important de réaliser des commits régulièrement. Il faut éviter de faire un seul commit avec toutes les modifications. Il faut faire un commit pour chaque modification. Il est important de donner un nom explicite au commit afin de pouvoir comprendre les modifications effectuées.
+
+Plusieurs raisons : 
+- Revenir en arrière sur une modification
+- Historiser les modifications
+
+Il faut évidemment trouver un bon équilibre entre le nombre de commits et la taille des commits. Il faut éviter de faire un commit pour chaque caractère modifié. Il faut également éviter de faire un seul commit avec toutes les modifications. L'historique de code doit avoir du sens : une nouvelle fonctionnalité, une correction de bug, etc.
