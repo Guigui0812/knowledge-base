@@ -1,5 +1,5 @@
 ---
-title: Linux : concepts et généralités
+title: concepts et généralités
 date: 2023-03-30 00:00:00
 categories: [devops, linux]
 tags: [sysadmin, linux]
