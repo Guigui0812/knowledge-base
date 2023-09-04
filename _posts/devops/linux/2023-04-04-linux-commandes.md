@@ -46,6 +46,7 @@ Quelques commandes parmi les plus utiles pour gérer les groupes et les utilisat
 | `groups` | Lister les groupes d'un utilisateur | `groups <utilisateur>` |
 
 
+
 ## Créer un nouvel utilisateur
 
 ```bash
