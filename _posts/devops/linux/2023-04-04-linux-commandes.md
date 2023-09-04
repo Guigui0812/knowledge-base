@@ -9,31 +9,42 @@ Notes sur les commandes et outils à connaître sous Linux.
 
 # Les commandes de fichier  
 
-## Rechercher une ligne dans un fichier
+De nombreuses commandes permettent de manipuler des fichiers et des répertoires.
 
-Pour rechercher une ligne dans un fichier, on peut utiliser la commande `grep` :
-
-```bash
-grep <motif> <fichier>
-```
-
-**Exemple :**
-
-```bash
-grep docker /etc/group
-```
-
-## Télécharger un fichier
-
-our télécharger un fichier quelconque sur internet, on peut utiliser la commande `wget` :
-
-```bash
-wget <url>
-```
-
+| -------- | ----------- | ------- |
+| `cat` | Afficher le contenu d'un fichier | `cat /etc/passwd` |
+| `cp` | Copier un fichier | `cp ~/test ~/tmp` |
+| `mv` | Déplacer un fichier | `mv ~/test /tmp` |
+| `rm` | Supprimer un fichier | `rm ~/test` |
+| `touch` | Créer un fichier | `touch ~/test` |
+| `mkdir` | Créer un répertoire | `mkdir /tmp/test` | 
+| `rmdir` | Supprimer un répertoire | `rmdir /tmp/test` |
+| `ls` | Lister le contenu d'un répertoire | `ls /tmp` |
+| `find` | Rechercher un fichier | `find / -name test.txt` |
+| `grep` | Rechercher une ligne dans un fichier | `grep docker /etc/group` |
+| `wget` | Télécharger un fichier | `wget https://www.google.com` |
 
 
 # La gestion des groupes et utilisateurs
+
+En tant que système multi-utilisateurs, Linux permet de créer des groupes et des utilisateurs. Les groupes permettent de regrouper des utilisateurs et de leur donner des droits communs. Les utilisateurs peuvent appartenir à plusieurs groupes.
+
+Quelques commandes parmi les plus utiles pour gérer les groupes et les utilisateurs : 
+
+| Commande | Description | Exemple |
+| -------- | ----------- | ------- |
+| `useradd` | Créer un nouvel utilisateur | `useradd <utilisateur>` |
+| `usermod` | Modifier un utilisateur | `usermod -aG <groupe> <utilisateur>` |
+| `passwd` | Changer le mot de passe d'un utilisateur | `passwd <utilisateur>` |
+| `mkhomedir_helper` | Créer le répertoire personnel d'un utilisateur | `mkhomedir_helper <utilisateur>` |
+| `id` | Obtenir l'UID ou le GID d'un utilisateur | `id -u <utilisateur>` ou `id -g <utilisateur>` |
+| `su` | Se connecter en tant qu'utilisateur | `su - <utilisateur>` |
+| `groupadd` | Créer un groupe | `groupadd <groupe>` |
+| `cat /etc/group` | Lister les groupes | `cat /etc/group` |
+| `cat /etc/passwd` | Lister les utilisateurs | `cat /etc/passwd` |
+| `grep` | Lister les utilisateurs d'un groupe | `grep <groupe> /etc/group` |
+| `groups` | Lister les groupes d'un utilisateur | `groups <utilisateur>` |
+
 
 ## Créer un nouvel utilisateur
 
