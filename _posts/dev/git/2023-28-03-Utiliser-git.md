@@ -95,3 +95,11 @@ Plusieurs raisons :
 - Historiser les modifications
 
 Il faut évidemment trouver un bon équilibre entre le nombre de commits et la taille des commits. Il faut éviter de faire un commit pour chaque caractère modifié. Il faut également éviter de faire un seul commit avec toutes les modifications. L'historique de code doit avoir du sens : une nouvelle fonctionnalité, une correction de bug, etc.
+
+### Les pull requests
+
+Une pull request est une demande de validation de modifications. Une pull request doit être créée pour chaque modification. Une pull request doit être validée par un autre développeur. Une fois la pull request validée, il faut merger la branche dans la branche `main`.
+
+Il s'agit d'un mécanisme de sécurité et de qualité. Il permet de s'assurer que les modifications sont valides et qu'elles ne cassent pas le code existant.
+
+**Attention** : il faut éviter de valider ses propres pull requests. Il faut demander à un autre développeur de valider la pull request. Même les meilleurs développeurs peuvent faire des erreurs.
