@@ -1,6 +1,6 @@
 ---
 title: Ansible automation lab - Small business infrastructure
-date: 2023-22-08 00:00:00  
+date: 2023-08-22 00:00:00  
 categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops, infrastructure]
 ---
