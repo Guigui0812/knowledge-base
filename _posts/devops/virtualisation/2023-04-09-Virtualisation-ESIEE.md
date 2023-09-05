@@ -102,8 +102,12 @@ Fournir des machines qui vont serveur d'interfaces pour se connecter à des post
 
 ## Cloud Computing
 
+
+Définition des termes IAAS / PAAS / SAAS
+
 AWS : IAAS / PAAS
 Azure : IAAS / PAAS
+Ikoula : IAAS
 Office 365 : SAAS
 OVH : IAAS / PAAS
 Google Apps : SAAS
@@ -125,3 +129,32 @@ L'architecture de Hyper-V est très complexe (voir schéma). C'est organisé en 
 
 ...
 
+# Le stockage
+
+Pourquoi virtualiser le stockage ? Pour la fiabilité, assurer l'évolutivité et assurer une haute disponibilité.
+
+### DAS
+
+Direct Attached Storage : stockage directement connecté à la machine. Pas d'agent réseau. 
+
+### NAS
+
+Network Attached Storage : stockage connecté au réseau.
+
+On ne travaille qu'au niveau des fichiers, pas au niveau des blocs.
+
+### SAN
+
+C'est le système de fichier qui reconstruit le fichier. On travaille au niveau des blocs qui sont envoyés et reçus par le SAN dans les disques virtuels.
+
+## Système de stockage RAID
+
+Vérifier le nombre minimal de disques requis. 
+
+Possibilité de combiner les RAID.
+
+Exemple : 
+
+Avec 12 disques on va faire un RAID 510 ()
+
+RAID 0 + 
