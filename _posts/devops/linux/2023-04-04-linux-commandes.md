@@ -44,6 +44,7 @@ Quelques commandes parmi les plus utiles pour gérer les groupes et les utilisat
 | `cat /etc/passwd` | Lister les utilisateurs | `cat /etc/passwd` |
 | `grep` | Lister les utilisateurs d'un groupe | `grep <groupe> /etc/group` |
 | `groups` | Lister les groupes d'un utilisateur | `groups <utilisateur>` |
+| `userdel` | Supprimer un utilisateur | `userdel <utilisateur>` |
 
 
 

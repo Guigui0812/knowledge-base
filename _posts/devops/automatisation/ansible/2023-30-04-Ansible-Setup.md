@@ -11,6 +11,26 @@ Ansible est un outil d'automatisation open-source qui permet de déployer des ap
 
 ## Installation
 
+### Prérequis
+
+Dans un premier temps, il faut s'assurer que Python est installé sur le serveur Ansible. Pour cela, il faut exécuter la commande `python --version`. Si Python n'est pas installé, il faut l'installer avec la commande :
+
+```bash	
+apt install python
+```
+
+**Remarque** : On peut penser à installer `virtualenv` pour créer un environnement virtuel Python. Pour cela, il faut exécuter la commande suivante :
+
+```bash
+apt install python3-virtualenv
+```
+
+L'intérêt sera de cloisonner l'environnement Ansible afin d'éviter la dépréciation automatique de certains scripts Ansible.
+
+### Installation d'Ansible
+
+#### Basique
+
 L'installation d'Ansible peut être un peu particulière selon la distribution Linux utilisée. Pour Debian, il ne suffit pas d'exécuter la commande `apt install ansible`. Il faut ajouter le dépôt `ppa:ansible/ansible` et installer le paquet `ansible` :
 
 ```bash
@@ -21,16 +41,31 @@ sudo apt install ansible
 
 Il est important de suivre cette étape, car sinon il n'y aura pas les fichiers de configuration nécessaires à Ansible dans `/etc/ansible`.
 
-## Configuration
+Une fois Ansible installé, il faut vérifier que la commande `ansible --version` fonctionne. Si c'est le cas, on peut passer à la configuration d'Ansible.
 
-### Configuration du serveur Ansible
+#### Avec un environnement virtuel
+
+Si l'on souhaite installer Ansible dans un environnement virtuel, il faut exécuter les commandes suivantes :
+
+```bash
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install ansible
+```
+
+On peut ensuite vérifier que la commande `ansible --version` fonctionne. Si c'est le cas, on peut passer à la configuration d'Ansible.
+
+## Configuration
 
 Pour utiliser Ansible, il faut à minima : 
 
 - Un serveur Ansible (appelé *control node*)
 - Un ou plusieurs serveurs cibles (appelés *managed nodes*)
 
-#### Configuration SSH
+### Préparation du serveur Ansible
+
+
+### Configuration SSH
 
 Pour que Ansible puisse se connecter aux serveurs cibles, il faut que les serveurs cibles soient accessibles en SSH depuis le serveur Ansible. Il faut donc que les serveurs cibles aient un serveur SSH installé et configuré. Il faut également mettre en place une paire de clés SSH pour chaque serveur cible et les ajouter au serveur Ansible.
 
@@ -42,7 +77,9 @@ Lorsque les clés sont ajoutées, il faut tester la connexion SSH depuis le serv
 ssh <user>@<ip>
 ```
 
-#### Configuration du fichier d'inventaire
+S'il y a un mot de passe à saisir, il ne faut pas oublier d'utiliser l'option `--ask-pass` lors de l'exécution d'une commande ou d'un playbook Ansible.
+
+### Configuration du fichier d'inventaire
 
 Si la clé fonctionne, on peut ajouter le serveur cible dans le fichier d'inventaire `/etc/ansible/hosts`. 
 
@@ -80,7 +117,7 @@ Ajouter des variable est utile pour ne pas avoir à les spécifier à chaque foi
 
 Un serveur peut appartenir à plusieurs groupes. Par exemple un groupe `servers` général et un groupe `web` plus spécifique. Ceci est utile pour exécuter des commandes sur un groupe de serveurs spécifique (par exemple pour déployer une application web sur les serveurs du groupe `web` et mettre à jour les paquets sur tous les serveurs du groupe `servers`).
 
-Il est possible de mettre en place des inventaires personnalisés. Pour cela, il faut créer un fichier d'inventaire du type `inventory.yaml`. 
+Il est possible de mettre en place des inventaires personnalisés. Pour cela, il faut créer un fichier d'inventaire du type `inventory.ini`. 
 
 Pour l'utiliser, il faut spécifier son chemin lors de l'exécution d'une commande ou d'un playbook : 
 
@@ -88,7 +125,7 @@ Pour l'utiliser, il faut spécifier son chemin lors de l'exécution d'une comman
 ansible all -i /home/user/inventory -m ping
 ```
 
-## Test de la connexion SSH
+### Test de la connexion SSH
 
 Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exécuter la commande `ansible all -m ping`. Si la connexion fonctionne, on devrait avoir un résultat similaire à celui-ci :
 
@@ -101,7 +138,9 @@ Pour tester la connexion SSH depuis Ansible vers le serveur cible, on peut exéc
 
 Si un mot de passe et un utilisateur sont demandés, il faut ajouter les variables `ansible_ssh_user` et `ansible_ssh_pass` dans le fichier d'inventaire (voir ci-dessous) ou les spécifier dans la commande `ansible all -m ping -u <user> -ask-pass`.
 
-## Exécution de commandes
+## Utilisation d'Ansible
+
+### Exécution de commandes
 
 Pour exécuter une commande sur tous les serveurs du groupe `servers`, il faut exécuter la commande `ansible servers -a "<commande>"`. Par exemple, pour mettre à jour tous les serveurs du groupe `servers` :
 
@@ -109,7 +148,7 @@ Pour exécuter une commande sur tous les serveurs du groupe `servers`, il faut e
 ansible servers -a "apt update && apt upgrade -y"
 ```
 
-## Exécution de playbooks
+### Exécution de playbooks
 
 Un playbook est un fichier YAML qui contient une liste de tâches à exécuter. Pour exécuter un playbook, il faut utiliser la commande `ansible-playbook <playbook>.yml`. Par exemple, pour exécuter le playbook `test.yml` :
 
@@ -139,3 +178,5 @@ Dans ce cas, il faut exécuter la commande `ansible-playbook <playbook>.yml --as
 - [Install Docker on Debian with Ansible](https://yasha.solutions/install-docker-on-debian-with-ansible/)
 - [Define ssh key per host using ansible_ssh_private_key_file](https://www.cyberciti.biz/faq/define-ssh-key-per-host-using-ansible_ssh_private_key_file/)
 - [How to Pass Ansible Username And Password ?](https://linuxhint.com/pass-ansible-username-and-password/)
+- [How To Set Up Ansible Inventories](https://www.digitalocean.com/community/tutorials/how-to-set-up-ansible-inventories)
+- [Utilisez Ansible pour automatiser vos tâches de configuration - OpenClassrooms](https://openclassrooms.com/fr/courses/2035796-utilisez-ansible-pour-automatiser-vos-taches-de-configuration)

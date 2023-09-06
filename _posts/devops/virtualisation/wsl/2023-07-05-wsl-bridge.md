@@ -21,7 +21,7 @@ On va ainsi pouvoir créer des règles :
 netsh interface portproxy add v4tov4 listenport=<port sur la machine Windows> listenaddress=0.0.0.0 connectport=<port de destination sur la machine Linux> connectaddress=<adresse IP machine Linux>
 ```
 
-Ici, on a créé une règle qui redirige le port de la machine hôte vers le port de la machine Linux.
+Ici, on a créé une règle qui redirige le port de la machine hôte vers le port de la machine Linux. Il faut s'assurer que les ports soient libres sur la machine hôte et sur la machine Linux.
 
 ## Création des règles pare-feu
 
