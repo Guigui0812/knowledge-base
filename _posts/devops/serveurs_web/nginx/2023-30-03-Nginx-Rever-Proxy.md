@@ -211,6 +211,12 @@ Ce job permet donc d'arrêter de se soucier du renouvellement du certificat SSL/
 
 #### Liens utiles
 
+- [Docker documentation](https://docs.docker.com/)
+- [NGINX Reverse Proxy - Nginx Doc](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
+- [Configure NGINX as a Reverse Proxy with Docker Compose file - Medium](https://umasrinivask.medium.com/configure-nginx-as-a-reverse-proxy-with-docker-compose-file-4ebba2b75c89)
+- [Docker compose : NGINX reverse proxy with multiple containers -BogoToBogo](https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php)
+- [Nginx: configuration as reverse proxy - RDR-IT](https://rdr-it.com/en/nginx-configuration-as-reverse-proxy/)
+- [How To Configure Nginx as a Reverse Proxy on Ubuntu 22.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04)
 - [Docker : Nginx en reverse proxy](https://www.grottedubarbu.fr/docker-nginx-reverse-proxy/)
 - [Using Free Let’s Encrypt SSL/TLS Certificates with NGINX](https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/?amp=1)
 - [Documentation certbot](https://eff-certbot.readthedocs.io/en/stable/install.html#running-with-docker)
