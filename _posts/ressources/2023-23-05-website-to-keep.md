@@ -1,5 +1,5 @@
 ---
-title: Quelques sites web à garder sous le coude
+title: Quelques sites web intéressants à retenir
 date: 2023-05-23 00:00:00
 categories: [ressources]
 tags: [veille, tutoriels, outils]

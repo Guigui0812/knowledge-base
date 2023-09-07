@@ -1,5 +1,5 @@
 ---
-title: Créer un reverse proxy avec Nginx et Docker
+title: Créer un reverse proxy avec nginx et docker
 date: 2023-03-30 00:00:00
 categories: [devops, serveurs web, nginx]
 tags: [serveurs_web, nginx, reverse_proxy, docker]
@@ -7,14 +7,75 @@ tags: [serveurs_web, nginx, reverse_proxy, docker]
 
 Nginx permet de créer un reverse proxy. Un reverse proxy permet de rediriger les requêtes HTTP/HTTPS qu'il reçoit. Par exemple, si on a un serveur web sur le port 80 et un serveur web sur le port 8080, on peut créer un reverse proxy sur le port 80 qui redirigera les requêtes vers le serveur web sur le port 8080.
 
-Docker est souvent utilisé pour lancer des applications. Il est donc possible de lancer un reverse proxy avec Docker. Pour cela, il faut utiliser l'image officielle de Nginx.
+J'ai choisi d'utiliser `docker` afin de configurer un reverse proxy avec Nginx. Cela permet de créer un environnement isolé et de ne pas avoir à installer Nginx sur la machine hôte. De plus, on va pouvoir rediriger le trafic vers un autre conteneur docker hébergé sur la même machine.
+
+# Fonctionnement et configuration de Nginx
+
+`Nginx` est configurable par l'intermédiaire de ses fichiers de configuration stockés dans `/etc/nginx`. En utilisant `docker`, je vais donc devoir monter un volume pour pouvoir modifier les fichiers de configuration de `Nginx`.
+
+Le fichier de configuration se présente comme suit : 
+
+```nginx
+worker_processes 1; # nombre de processus à lancer
+
+# bloc events : définition des événements (nombre de connexions simultanée, délai d'attente, ...)
+events {
+  worker_connections 1024; # nombre de connexions simultanées
+}
+
+# Bloc http : définition des serveurs web
+http {
+
+  # Bloc server : définition d'un serveur web
+  server {
+    listen 80; # port d'écoute
+
+    # Bloc location : définition d'une ressource (chemin d'accès)
+    location / { 
+      proxy_pass http://localhost:8080; # redirection vers un autre serveur web
+
+      # Définition des en-têtes HTTP à envoyer pour le reverse proxy
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+    }
+  }
+}
+```
+
+Le bloc de configuration ci-dessus permet donc de générer un reverse proxy basique qui va rediriger le trafic du port `80` vers le `8080` sur la même machine.
+
+Les directives `proxy_set_header` permettent de définir les en-têtes HTTP à envoyer pour le reverse proxy. Dans notre cas, on va envoyer les en-têtes `Host`, `X-Real-IP`, `X-Forwarded-For` et `X-Forwarded-Proto`. Ces en-têtes permettent de conserver les informations de la requête initiale : 
+- `Host` : permet de transférer le nom original de l'hôte qui a envoyé la requête
+- `X-Real-IP` : permet de transférer l'adresse IP du client 
+- `X-Forwarded-For` : permet d'ajouter l'adresse IP du client à la liste des adresses IP qui ont envoyé la requête afin de suivre le chemin (client -> reverse proxy -> serveur web)
+- `X-Forwarded-Proto` : permet au backend de connaître le protocole utilisé par le client (HTTP ou HTTPS par exemple si on a besoin de savoir si la requête est sécurisée ou non)
+
+Dans le bloc `http`, on peut évidemment enchaîner les blocs `server` afin de créer plusieurs serveurs web. On peut également créer plusieurs blocs `location` afin de rediriger le trafic vers plusieurs serveurs web en fonction du chemin d'accès. 
+
+En fonction des besoins, on peut séparer les fichiers de configuration de `Nginx` dans plusieurs fichiers. Pour cela, il faut créer un dossier `conf.d` et ajouter les fichiers de configuration dans ce dossier. On pourrait donc avoir une organisation comme suit :
+- `default.conf` : fichier de configuration par défaut
+- `reverse_proxy.conf` : fichier de configuration du reverse proxy
+- `service1.conf` : fichier de configuration du service 1
+- `service2.conf` : fichier de configuration du service 2
+
+`Nginx` est donc très modulable et permet de s'adapter à de nombreux cas d'usages. 
 
 # Lancer un reverse proxy avec Docker
 
-Pour lancer un reverse proxy avec Docker, on peut utiliser un docker-compose.yml. Ce fichier permet de définir les services à lancer et de créer des volumes. Dans notre cas, on va créer un volume pour les fichiers de configuration de Nginx.
+Même s'il est possible d'utiliser `nginx` directement sur le système, j'ai choisi de conteneuriser le reverse proxy avec `docker`. Cela permet de créer un environnement isolé et de rediriger le trafic vers un autre conteneur hébergé sur la même machine.
+
+Il est possible de lancer le conteneur directement `docker run` : 
+
+```bash
+docker run -d -p 80:80 --name nginx-rp --network host -v <path_to_nginx.conf>:/etc/nginx/nginx.conf nginx:latest 
+```
+
+Cependant, je préfère utiliser `docker-compose` afin de pouvoir définir les services à lancer et de créer des volumes grâce à un fichier de configuration `yaml`. Ce fichier permet de définir les services à lancer et de créer des volumes. Dans notre cas, on va créer un volume pour les fichiers de configuration de `nginx``.
 
 ```yaml
-version: '3.7'
+version: '3.8'
 
 services:
   nginx:
@@ -24,31 +85,47 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf # fichier de configuration de Nginx monté en volume
+    network_mode: host # permet de rediriger le trafic vers un autre conteneur docker hébergé sur la même machine
 ```
 
-On peut ensuite créer le fichier de configuration de Nginx. Dans notre cas, on va créer un reverse proxy qui redirigera les requêtes vers un serveur web sur le port 8080.
+Grâce au mode `host`, on peut rediriger le trafic vers un autre conteneur docker hébergé sur la même machine. De manière alternative, on peut créer un réseau docker et ajouter les deux conteneurs au réseau. Pour cela, il faut préalablement créer un réseau docker.
 
-```nginx
-events {
-  worker_connections 1024;
-}
-
-http {
-  server {
-    listen 80;
-    location / {
-      proxy_pass http://localhost:8080;
-    }
-  }
-}
+```bash
+docker network create <network_name>
 ```
 
-Il est possible de séparer les fichiers de configuration de Nginx. Pour cela, il faut créer un dossier `conf.d` et ajouter les fichiers de configuration dans ce dossier : 
+Ensuite, il faut spécifier le réseau dans le fichier de configuration `yaml` des deux conteneurs.
 
-- `default.conf` : fichier de configuration par défaut
-- `reverse_proxy.conf` : fichier de configuration du reverse proxy
-- `service.conf` : fichier de configuration du service
+```yaml
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf # fichier de configuration de Nginx monté en volume
+    networks:
+      - <network_name>
+  service1:
+    image: service1:latest
+    container_name: service1
+    restart: always
+    networks:
+      - <network_name>
+
+networks:
+  <network_name>:
+    external: true
+```
+
+Dans ce cas, on peut rediriger le trafic vers le conteneur `service1` en utilisant le nom du conteneur comme nom de domaine. Par exemple, si le conteneur `service1` écoute sur le port `8080`, on peut rediriger le trafic vers ce conteneur en utilisant l'URL `http://service1:8080`.
+
+Il n'y a pas forcément de meilleure solution entre les deux. Cela dépend des usages. Dans notre cas, on va utiliser le mode `host` puisque le conteneur `nginx` va rediriger le trafic vers un autre conteneur docker hébergé sur la même machine.
 
 # Sécuriser un reverse proxy avec Nginx et Docker : Let's Encrypt
 
