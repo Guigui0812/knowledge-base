@@ -40,4 +40,6 @@ Grâce à cette commande adhoc, on peut copier la clé publique sur tous les ser
 #### Sources et liens utiles
 
 - [Introduction to ad hoc commands - Ansible Doc](https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html)
-- - [Utilisez Ansible pour automatiser vos tâches de configuration - OpenClassrooms](https://openclassrooms.com/fr/courses/2035796-utilisez-ansible-pour-automatiser-vos-taches-de-configuration)
+- [ansible.builtin.user module - Ansible Doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html)
+- [Utilisez Ansible pour automatiser vos tâches de configuration - OpenClassrooms](https://openclassrooms.com/fr/courses/2035796-utilisez-ansible-pour-automatiser-vos-taches-de-configuration)
+- [Ansible Guide: The Ad-Hoc Command](https://www.howtoforge.com/ansible-guide-ad-hoc-command/)

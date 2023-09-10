@@ -5,9 +5,7 @@ categories: [devops, conteneurisation, docker]
 tags: [devops, conteneurisation, docker, linux, réseau, vpn, openvpn]
 ---
 
-Utiliser un VPN est devenu indispensable pour protéger sa vie privée sur internet ou pour accéder à son réseau local depuis l'extérieur.
-
-Il existe de nombreux fournisseurs de VPN, mais il est également possible de créer son propre VPN. Dans ce tutoriel, nous allons voir comment créer un VPN avec Docker.
+Utiliser un VPN est devenu indispensable pour protéger sa vie privée sur internet ou pour accéder à son réseau local depuis l'extérieur. Il existe de nombreux fournisseurs de VPN, mais il est également possible de créer son propre VPN et de le conteneuriser avec Docker.
 
 ## Prérequis
 
