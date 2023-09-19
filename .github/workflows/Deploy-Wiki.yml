@@ -17,4 +17,4 @@ jobs:
       run: sudo apt-get install -y sshpass
 
     - name: Rebuild the website on the server
-      run: eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"; ssh -o StrictHostKeyChecking=no -p 1068 github-actions@guillaume-rohee.me "cd /home/guillaume/srv/knowledge-base && git pull && docker-compose up -d"
+      run: eval "$(ssh-agent -s)" && ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"; ssh -o StrictHostKeyChecking=no -p 1068 github-actions@guillaume-rohee.fr "cd /home/guillaume/srv/knowledge-base && git pull && docker-compose up -d"
