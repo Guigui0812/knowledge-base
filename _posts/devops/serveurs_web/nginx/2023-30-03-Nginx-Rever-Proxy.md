@@ -5,13 +5,13 @@ categories: [devops, serveurs web, nginx]
 tags: [serveurs_web, nginx, reverse_proxy, docker]
 ---
 
-Nginx permet de créer un reverse proxy. Un reverse proxy permet de rediriger les requêtes HTTP/HTTPS qu'il reçoit. Par exemple, si on a un serveur web sur le port 80 et un serveur web sur le port 8080, on peut créer un reverse proxy sur le port 80 qui redirigera les requêtes vers le serveur web sur le port 8080.
+`Nginx` permet de créer un **reverse proxy** afin de rediriger les requêtes HTTP/HTTPS qu'il reçoit vers d'autres serveurs. Cela permet par exemple de rediriger les requêtes vers des conteneurs `Docker` exposant leurs applications sur un port. De cette manière, on va pouvoir interroger plusieurs services conteneurisés et hébergés sur un ou plusieurs serveurs. 
 
-J'ai choisi d'utiliser `docker` afin de configurer un reverse proxy avec Nginx. Cela permet de créer un environnement isolé et de ne pas avoir à installer Nginx sur la machine hôte. De plus, on va pouvoir rediriger le trafic vers un autre conteneur docker hébergé sur la même machine.
+J'ai choisi d'utiliser `docker` afin de configurer `nginx` en mode **reverse proxy**, qui redirigera le trafic vers différents services.  
 
-# Fonctionnement et configuration de Nginx
+## Fonctionnement et configuration de Nginx
 
-`Nginx` est configurable par l'intermédiaire de ses fichiers de configuration stockés dans `/etc/nginx`. En utilisant `docker`, je vais donc devoir monter un volume pour pouvoir modifier les fichiers de configuration de `Nginx`.
+`nginx` est configurable par l'intermédiaire de ses fichiers de configuration stockés dans `/etc/nginx`. En utilisant `docker`, il faut donc monter un **volume** embarquant les fichiers de configuration afin de les monter dans le répertoire mentionné. 
 
 Le fichier de configuration se présente comme suit : 
 
@@ -52,19 +52,19 @@ Les directives `proxy_set_header` permettent de définir les en-têtes HTTP à e
 - `X-Forwarded-For` : permet d'ajouter l'adresse IP du client à la liste des adresses IP qui ont envoyé la requête afin de suivre le chemin (client -> reverse proxy -> serveur web)
 - `X-Forwarded-Proto` : permet au backend de connaître le protocole utilisé par le client (HTTP ou HTTPS par exemple si on a besoin de savoir si la requête est sécurisée ou non)
 
-Dans le bloc `http`, on peut évidemment enchaîner les blocs `server` afin de créer plusieurs serveurs web. On peut également créer plusieurs blocs `location` afin de rediriger le trafic vers plusieurs serveurs web en fonction du chemin d'accès. 
+Dans le bloc `http`, on peut évidemment enchaîner les blocs `server` afin de configurer plusieurs serveurs web. Dans ceux-ci, on utilisera un bloc `location` afin de rediriger le trafic vers un certain contenu, ou simplement vers un autre serveur en moed **reverse proxy**. 
 
-En fonction des besoins, on peut séparer les fichiers de configuration de `Nginx` dans plusieurs fichiers. Pour cela, il faut créer un dossier `conf.d` et ajouter les fichiers de configuration dans ce dossier. On pourrait donc avoir une organisation comme suit :
+En fonction des besoins, on peut séparer les fichiers de configuration de `Nginx` dans plusieurs fichiers ou utiliser un seul fichier de configuration. Pour cela, il faut créer un dossier `conf.d` et ajouter les fichiers de configuration dans ce dossier. On pourrait donc avoir une organisation comme suit :
 - `default.conf` : fichier de configuration par défaut
 - `reverse_proxy.conf` : fichier de configuration du reverse proxy
 - `service1.conf` : fichier de configuration du service 1
 - `service2.conf` : fichier de configuration du service 2
 
-`Nginx` est donc très modulable et permet de s'adapter à de nombreux cas d'usages. 
+`nginx` est donc très modulable et permet de s'adapter à de nombreux cas d'usages. 
 
-# Lancer un reverse proxy avec Docker
+## Lancer un reverse proxy avec Docker
 
-Même s'il est possible d'utiliser `nginx` directement sur le système, j'ai choisi de conteneuriser le reverse proxy avec `docker`. Cela permet de créer un environnement isolé et de rediriger le trafic vers un autre conteneur hébergé sur la même machine.
+Même s'il est possible d'utiliser `nginx` directement sur le système, j'ai choisi de conteneuriser le reverse proxy avec `docker`. Cela permet de créer un environnement isolé, et de relancer le service sur demande. De plus, on pourra plus tard utiliser `certbot` afin de générer des **certificats ssl* pour sécuriser le trafic sur le serveur. 
 
 Il est possible de lancer le conteneur directement `docker run` : 
 
@@ -89,13 +89,15 @@ services:
     network_mode: host # permet de rediriger le trafic vers un autre conteneur docker hébergé sur la même machine
 ```
 
-Grâce au mode `host`, on peut rediriger le trafic vers un autre conteneur docker hébergé sur la même machine. De manière alternative, on peut créer un réseau docker et ajouter les deux conteneurs au réseau. Pour cela, il faut préalablement créer un réseau docker.
+Grâce au mode `host`, on peut rediriger le trafic vers un autre conteneur docker hébergé sur la même machine. 
+
+De manière alternative, et afin de respecter la philosophie de `docker`, il est possible d'utiliser un **réseau docker** et ajouter les deux conteneurs au réseau. Pour cela, il faut préalablement le créer : 
 
 ```bash
 docker network create <network_name>
 ```
 
-Ensuite, il faut spécifier le réseau dans le fichier de configuration `yaml` des deux conteneurs.
+Ensuite, il faut spécifier le réseau dans le fichier de configuration `yaml` :
 
 ```yaml
 version: '3.8'
@@ -123,13 +125,15 @@ networks:
     external: true
 ```
 
-Dans ce cas, on peut rediriger le trafic vers le conteneur `service1` en utilisant le nom du conteneur comme nom de domaine. Par exemple, si le conteneur `service1` écoute sur le port `8080`, on peut rediriger le trafic vers ce conteneur en utilisant l'URL `http://service1:8080`.
+Dans ce cas, on peut rediriger le trafic vers le conteneur `service1` en utilisant le nom du conteneur comme nom de domaine. Par exemple, si le conteneur `service1` écoute sur le port `8080`, on peut rediriger le trafic vers ce conteneur en utilisant l'URL `http://service1:8080` qui est donc le nom du conteneur. 
 
 Il n'y a pas forcément de meilleure solution entre les deux. Cela dépend des usages. Dans notre cas, on va utiliser le mode `host` puisque le conteneur `nginx` va rediriger le trafic vers un autre conteneur docker hébergé sur la même machine.
 
-# Sécuriser un reverse proxy avec Nginx et Docker : Let's Encrypt
+## Sécuriser un reverse proxy avec Nginx et Docker : Let's Encrypt
 
-Il est possible de sécuriser un reverse proxy avec Nginx et Docker en utilisant Let's Encrypt. Pour cela, il faut utiliser l'image officielle de Nginx et l'image officielle de Certbot.
+Lorsque le **reverse proxy** est fonctionnel, il peut être souhaitable de sécuriser le trafic à l'aide d'un **certificat ssl**. Je vais générer un certificat via l'autorité `letsencrypt` et grâce à l'outil en ligne de commande `certbot` qui permet de générer facilement les certificats de sécurité pour le serveur. 
+
+Afin de générer le certificat, il faut ajouter un nouveau conteneur `certbot` dans le fichier `yaml` : 
 
 ```yaml
 version: '3.7'
@@ -159,59 +163,90 @@ services:
     command: certonly --webroot --webroot-path=/usr/share/nginx/html --email <email> --agree-tos --no-eff-email --force-renewal --staging -d <domain>
 ```
 
-On peut ensuite créer le fichier de configuration de Nginx. Dans notre cas, on va créer un reverse proxy qui redirigera les requêtes vers un serveur web sur le port 8080.
+La dernière ligne du `docker-compose.yml` est très importante : il s'agit de la commande qui permet de générer le certificat. 
 
-```nginx
-http {
-  server {
-    listen 80;
-    server_name <domain>;
-    location / {
-      proxy_pass http://localhost:8080;
-    }
-  }
+**Remarque** : afin de faire des tests, il faut utiliser l'option `--dry-run`. Dans le cas inverse, l'autorité `letsencrypt` risque de bloquer la génération pendant un certain temps.
 
-  server {
-    listen 443 ssl;
-    server_name <domain>;
-    ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/<domain>/privkey.pem;
-    location / {
-      proxy_pass http://localhost:8080;
-    }
-  }
-}
-```
+Avant de démarrer le conteneur `certbot`, il faut s'assurer que l'autorité pourra accéder au serveur via le protocole `http` afin d'authentifier les certificats générés. Pour cela, il faut ajouter les lignes suivantes et ne pas mentionner le protocole `ssl`. 
 
-Grâce à ce fichier de configuration, on peut accéder au serveur web sur le port 8080 via le reverse proxy sur le port 80 et 443.
-
-On peut évidemment ajouter une redirection HTTP vers HTTPS.
+Le fichier de configuration `nginx` doit se présenter comme suit : 
 
 ```nginx
 server {
-  listen 80;
-  server_name <domain>;
-  return 301 https://$host$request_uri;
+    listen 80;
+    listen [::]:80;
+
+    server_name example.org www.example.org;
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://example.org$request_uri;
+    }
 }
 ```
 
-Cela permet de sécuriser les communications entre le client et le serveur web puisque les communications sont chiffrées via SSL/TLS.
+Cette configuration permettra à l'autorité de valider les certificats. Si le fichier mentionne ces certificats avant la procédure de vérification, il y aura une erreur et le serveur web sera inaccessible. 
 
-# Automatiser le renouvellement du certificat SSL/TLS
+Afin de générer les certificats et les faire valider par `letsencrypt`, il suffit d'exécuter un `docker compose up -d` puisque tout est géré via `docker`. Afin de vérifier la bonne exécution du processus, on peut utiliser `docker logs <conteneur`. 
 
-Le certificat SSL/TLS est valable 90 jours. Il faut donc le renouveler régulièrement. Pour cela, on peut utiliser un cronjob chargé de renouveler le certificat SSL/TLS.
+Une fois validé, on peut configurer le `https` via `ssl` et rediriger le trafic du port `80` vers le port `443` : 
 
-Dans le but de certifier notre domaine, nous avons utiliser certbot dans un container docker décrit dans un `docker-compose.yml`. Nous avons donc accès à la commande `certbot` dans ce container. Nous pouvons donc créer un cronjob chargé de relancer notre container `certbot` tous les 2 mois.
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
 
-```yaml
-0 0 1 */2 * /usr/bin/docker compose -f <path_to_container>/docker-compose.yml up certbot
+    server_name example.org www.example.org;
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://example.org$request_uri;
+    }
+}
+
+server {
+    listen 443 default_server ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name example.org;
+
+    ssl_certificate /etc/nginx/ssl/live/example.org/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/example.org/privkey.pem;
+    
+    location / {
+    	proxy_pass http://localhost:8080; # redirection vers un autre serveur web
+
+      # Définition des en-têtes HTTP à envoyer pour le reverse proxy
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
 ```
 
-Ce job permet donc d'arrêter de se soucier du renouvellement du certificat SSL/TLS.
+Cette configuration permet de rediriger le trafic `http` vers `https` en utilisant les certificats générés via le conteneur `certbot`. 
+
+## Automatiser le renouvellement du certificat SSL/TLS
+
+Le certificat SSL/TLS est valable 90 jours. Il faut donc le renouveler régulièrement mais c'est évidemment contraignant et chronophage. Pour cela, on peut créer un `cron job` :
+
+```yaml
+0 0 1 */2 * /usr/bin/docker compose --rm certbot renew
+```
 
 #### Liens utiles
 
 - [Docker documentation](https://docs.docker.com/)
+- [HTTPS using Nginx and Let's encrypt in Docker](https://mindsers.blog/post/https-using-nginx-certbot-docker/)
 - [NGINX Reverse Proxy - Nginx Doc](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 - [Configure NGINX as a Reverse Proxy with Docker Compose file - Medium](https://umasrinivask.medium.com/configure-nginx-as-a-reverse-proxy-with-docker-compose-file-4ebba2b75c89)
 - [Docker compose : NGINX reverse proxy with multiple containers -BogoToBogo](https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php)
@@ -223,4 +258,3 @@ Ce job permet donc d'arrêter de se soucier du renouvellement du certificat SSL/
 - [Setup SSL with Docker, NGINX and Lets Encrypt](https://www.programonaut.com/setup-ssl-with-docker-nginx-and-lets-encrypt/)
 - [Simplest HTTPS setup: Nginx Reverse Proxy+ Letsencrypt+ AWS Cloud + Docker](https://leangaurav.medium.com/simplest-https-setup-nginx-reverse-proxy-letsencrypt-ssl-certificate-aws-cloud-docker-4b74569b3c61)
 - [Nginx and Let’s Encrypt with Docker in Less Than 5 Minutes](https://leangaurav.medium.com/simplest-https-setup-nginx-reverse-proxy-letsencrypt-ssl-certificate-aws-cloud-docker-4b74569b3c61)
-- [HTTPS using Nginx and Let's encrypt in Docker](https://mindsers.blog/post/https-using-nginx-certbot-docker/)

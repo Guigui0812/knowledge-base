@@ -157,4 +157,12 @@ Exemple :
 
 Avec 12 disques on va faire un RAID 510 ()
 
-RAID 0 + 
+
+## Green IT
+
+Intérêt de la virtu pour ça : revendre des équipements un peu moins puissant à d'autres entreprises avec des besoins moins importants.
+
+On est capable de recycler les machines physiques grâce à la virtualisation car on décorelle le système d'exploitation de la machine physique, on peut utiliser la machine en support d'une infrastructure.
+
+Cependant y a du green washing: certaines entreprises disent que c'est plus facile à recycler, mais c'est pas vrai car c'est exactement la même chose qu'un serveur physique.
+

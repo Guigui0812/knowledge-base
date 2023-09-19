@@ -39,7 +39,8 @@ Quelques outils en ligne à retenir que ce soit pour le développement, l'admini
 - [Draw.io](https://app.diagrams.net/) : pour créer des diagrammes
 - [Whatsmydns](https://www.whatsmydns.net/) : pour vérifier la propagation DNS
 - [Hosting Checker](https://hostingchecker.com/) : pour vérifier l'hébergement d'un site web
-- 
+- [Cronitor](https://crontab.guru/) : outil pour générer des crontabs
+
 ## Images, icônes et polices
 
 ### Images
