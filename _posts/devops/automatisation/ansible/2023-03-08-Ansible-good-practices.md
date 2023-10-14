@@ -1,5 +1,5 @@
 ---
-title: Good practices and tricks with Ansible
+title: Ansible - Les bonnes pratiques
 date: 2023-08-03 00:00:00
 categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops, infrastructure, entreprise]

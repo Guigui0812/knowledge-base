@@ -5,37 +5,102 @@ categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
 
-Si la configuration d'Ansible est un peu longue, il est possible d'utiliser des commandes adhoc pour effectuer des tâches simples. Cela permet de gagner du temps et de ne pas avoir à créer un playbook pour une tâche simple.
+Si Ansible est connu pour ses `playbooks` et l'écriture de `roles` réutilisables, il est également possible d'exécuter des commandes directement sur les serveurs. Ces commandes sont appelées `commandes adhoc`. Ces commandes peuvent être utilisées pour effectuer des tâches simples et non récurrentes, ne nécessitant donc pas l'écriture d'un `playbook` ou d'un `role`. Par exemple on va pouvoir utiliser ces commandes pour mettre à jour les serveurs, créer des utilisateurs, etc.
 
-Typiquement, on va pouvoir créer des utilisateurs, leur octroyer des droits, générer des clés SSH, etc. L'intérêt c'est de configurer plusieurs serveurs en même temps avec une seule commande.
+## Les caractéristiques des commandes adhoc
 
-Pour facilier la configuration, on va toujours utiliser l'utilisateur `root` pour se connecter aux serveurs dans un premier temps. Ensuite, on pourra créer un utilisateur avec les droits sudo qui sera utilisé par `ansible` pour les commandes adhoc et les playbooks.
+### Idempotence
 
-## Créer un utilisateur
+Les commandes adhoc sont idempotentes. Cela signifie que si on exécute deux fois la même commande, la deuxième fois, la commande ne fera rien. Par exemple, si on exécute la commande `apt update` deux fois, la deuxième fois, la commande ne fera rien car le système est déjà à jour.
 
-Pour créer un utilisateur, il faut exécuter la commande suivante :
+### Exécution en parallèle
 
-```bash
-ansible -i <inventory> -m user -a 'name=<user_name> state=present groups="sudo,<user_name>" append=yes' --become --ask-become-pass -u <default_user> --ask-pass <group>
-```
+Les commandes adhoc sont exécutées en parallèle sur tous les serveurs du groupe. Cela permet d'optimiser le temps d'exécution des commandes.
 
-Ici, nous avons créer un utilisateur `user_name` qui appartient au groupe `sudo` et à son propre groupe. Il faut bien penser à ajouter l'utilisateur au groupe `sudo` pour qu'il puisse utiliser la commande `sudo` lors de l'exécution des playbooks.
+### Possibilité de tester les commandes
 
-## Générer une clé SSH
-
-Afin de générer une clé SSH et la copier sur un ensemble de serveurs qui seront administrés par Ansible, il faut d'abord générer une clé SSH sur le serveur Ansible avec la commande suivante :
+Il est possible de tester les commandes avant de les exécuter. Pour cela, il faut ajouter l'option `--check` à la commande. Par exemple, pour tester la commande `apt update` :
 
 ```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/<key_name>
+ansible servers -a "apt update" --check
 ```
 
-Lorsqu'elle est générée, il faut copier la clé publique sur les serveurs cibles avec l'aide d'Ansible :
+Cette fonctionnalité permet de vérifier que la commande fonctionne correctement avant de l'exécuter. Cela est très utile dans le cas de commandes complexes.
+
+
+## Utilisation des commandes adhoc
+
+L'utilisation des commmandes est très simple. Pour exécuter une commande sur un groupe de serveur <group>, il faut utiliser la commande `ansible <group> -a "<commande>"`. Par exemple, pour exécuter la commande `apt update` sur tous les serveurs du groupe `servers` :
 
 ```bash
-ansible -i <inventory> -m authorized_key -a 'user=<user_name> key="{{ lookup("file", "~/.ssh/<key_name>.pub") }}"' --become --ask-become-pass -u <default_user> --ask-pass <group>
+ansible servers -a "apt update"
 ```
 
-Grâce à cette commande adhoc, on peut copier la clé publique sur tous les serveurs cibles en une seule commande.
+On peut distinguer deux types de commandes adhoc : les **commandes** et les **modules**.
+
+Pour exécuter une **commande**, on utilise l'option `-a` de la commande `ansible` comme présenté ci-dessus. 
+
+Pour exécuter un **module**, on utilise l'option `-m` de la commande `ansible` :
+
+```bash
+ansible servers -m <module> -a "<arguments>"
+```
+
+Par exemple, pour installer le paquet `docker` sur tous les serveurs du groupe `servers` :
+
+```bash
+ansible servers -b -m apt -a "name=docker state=latest"
+```
+
+Parfois, certains **commandes** et **modules** peuvent nécessiter une élévation de privilèges. Pour cela, il faut ajouter l'option `-b` à la commande `ansible`. Par exemple, pour installer le paquet `docker` sur tous les serveurs du groupe `servers` :
+
+```bash
+ansible servers -b -m apt -a "name=docker state=latest"
+```
+
+Si on souhaite tester la commande sur un hôte précis avant de l'exécuter sur tous les serveurs du groupe, on peut utiliser l'option `-l` de la commande `ansible`. Par exemple, pour tester la commande `apt update` sur le serveur `server1` :
+
+```bash
+ansible servers -b -m apt -a "name=docker state=latest" -l server1
+```
+
+## Cas d'usage
+
+### Mettre à jour les serveurs
+
+Pour mettre à jour tous les serveurs du groupe `servers`, on peut utiliser la commande `apt update` :
+
+```bash
+ansible servers -a "apt update && apt upgrade -y"
+```
+
+On peut également mettre à jour tous les paquets installés en utilisant le module `apt` :
+
+```bash
+ansible servers -m apt -a "upgrade=yes"
+```
+
+### Créer un utilisateur
+
+Pour créer un utilisateur sur tous les serveurs du groupe `servers`, on peut utiliser la commande `useradd` :
+
+```bash
+ansible servers -a "useradd -m -s /bin/bash <username>"
+```
+
+On peut également utiliser le module `user` :
+
+```bash
+ansible servers -m user -a "name=<username> state=present"
+```
+
+### Vérifier la connectivité
+
+Pour vérifier la connectivité avec tous les serveurs du groupe `servers`, on peut utiliser le module `ping` :
+
+```bash
+ansible servers -m ping
+```
 
 #### Sources et liens utiles
 

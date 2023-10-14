@@ -20,7 +20,7 @@ Enfin, on peut préciser le fichier dans lequel la clé privée sera enregistré
 ### Exemple : 
 
 ```bash
-ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+ssh-keygen -t rsa -b 2048
 ```
 
 ## Ajouter une clé SSH au serveur
@@ -30,7 +30,7 @@ Pour ajouter une clé SSH au serveur, il faut utiliser la commande `ssh-copy-id`
 Exemple : 
 
 ```bash
-ssh-copy-id -i ~/.ssh/mykey user@host
+ssh-copy-id -i ~/.ssh/mykey.pub user@host
 ```
 
 Cependant, si le fichier `authorized_keys` n'existe pas, il faut le créer. Pour cela, il faut utiliser suivre les étapes suivantes : 
