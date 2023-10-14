@@ -5,7 +5,9 @@ categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
 
-Les `playbooks` sont des fichiers YAML qui permettent d'automatiser des tâches complexes et récurrentes. Ils sont au coeur d'Ansible et permettent de décrire l'état souhaité des serveurs. 
+Les `playbooks` sont des fichiers `YAML` qui permettent d'automatiser des tâches complexes et récurrentes. Ils sont au coeur d'Ansible et permettent de décrire l'état souhaité des serveurs. 
+
+Ils sont exécutés par la commande `ansible-playbook` qui permet d'exécuter les instructions décrites dans le fichier `YAML` via `SSH` sur les serveurs cibles.
 
 ## Les caractéristiques des playbooks
 
@@ -25,35 +27,101 @@ Il est possible de tester les playbooks avant de les exécuter. Pour cela, il fa
 ansible-playbook test.yml --check
 ```
 
-L'intérêt de cette fonctionnalité est de vérifier que le playbook fonctionne correctement avant de l'exécuter. Cela est très utile dans le cas de playbooks complexes.
+L'intérêt de cette fonctionnalité est de vérifier que le playbook fonctionne correctement avant de l'exécuter. Cela est très utile dans le cas de playbooks qui installent des paquets assez lourds ou qui modifient des fichiers de configuration.
 
 ## Structure d'un playbook
 
 Un `playbook` est composés de `plays` qui sont des listes de tâches à exécuter sur un groupe de serveurs. Chaque `play` est composé de `tasks` qui sont des tâches à exécuter sur les cibles. Chaque `task` est composée de `modules` qui représentent les instructions à exécuter.
 
+De manière générale, un `playbook` est structuré de la manière suivante :
 
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
 
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+```
 
-### Exécution de playbooks
+On peut trouver plusieurs `tasks` dans un `play` :
 
-Un playbook est un fichier YAML qui contient une liste de tâches à exécuter. Pour exécuter un playbook, il faut utiliser la commande `ansible-playbook <playbook>.yml`. Par exemple, pour exécuter le playbook `test.yml` :
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+    - name: <name>
+      <module>: <arguments>
+```
+
+On peut trouver plusieurs `plays` dans un `playbook` :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+
+- name: <name>
+    hosts: <hosts>
+    become: yes
+    become_method: sudo
+    
+    tasks:
+        - name: <name>
+        <module>: <arguments>
+    ```
+```
+
+## Les modules
+
+Les `modules` sont les instructions qui permettent d'effectuer des actions sur les serveurs. Ils sont au coeur d'Ansible et permettent d'automatiser des tâches complexes et récurrentes. Il existe de nombreux modules qui permettent de gérer les paquets, les services, les fichiers, les utilisateurs, les groupes, etc.
+
+On peut retrouver ces modules sur le site officiel d'Ansible : [Collection Index - Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/index.html). Dans cette rubrique, on peut retrouver tous les modules disponibles par catégorie (cloud, network, system, etc.).
+
+## Exécution d'un playbook
+
+Pour exécuter un `playbook`, il faut utiliser la commande `ansible-playbook`. Par exemple, pour exécuter le playbook `test.yml` :
 
 ```bash
 ansible-playbook test.yml
 ```
 
-Cependant, il peut être nécessaire d'avoir des droits `sudo` pour exécuter certaines tâches. Pour cela, il faut ajouter `become: yes` dans le playbook. Par exemple :
+On peut utiliser de très nombreuses options avec la commande `ansible-playbook`. La liste des options est disponible dans la documentation officielle : [ansible-playbook - Ansible Documentation](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html).
 
-De plus, un mot de passe peut être demandé pour exécuter certaines tâches. Pour cela, il faut ajouter `become_method: sudo` dans le playbook. Par exemple :
+De manière générale, on utilise les options suivantes :
+- `-i` : permet de spécifier le fichier d'inventaire à utiliser
+- `-l` : permet de spécifier les serveurs cibles
+- `-u` : permet de spécifier l'utilisateur à utiliser pour se connecter aux serveurs cibles
+- `-b` : permet d'activer l'élévation de privilèges
+- `-K` : permet de demander le mot de passe de l'utilisateur pour se connecter aux serveurs cibles
+- `--ask-become-pass` : permet de demander le mot de passe de l'utilisateur pour l'élévation de privilèges
+- `--ask-pass` : permet de demander le mot de passe de l'utilisateur pour se connecter aux serveurs cibles
+- `--check` : permet de tester le playbook sans l'exécuter
+- `--syntax-check` : permet de vérifier la syntaxe du playbook
+- `--become` : permet d'activer l'élévation de privilèges
 
-```yaml
-- name: Test
-  hosts: servers
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Test
-      command: apt update && apt upgrade -y
+La syntaxe de la commande `ansible-playbook` est la suivante :
+
+```bash
+ansible-playbook <playbook> [options]
 ```
 
-Dans ce cas, il faut exécuter la commande `ansible-playbook <playbook>.yml --ask-become-pass`.
+#### Liens et ressources utiles :
+
+- [Ansible Documentation](https://docs.ansible.com/ansible/latest/index.html)
+- [Ansible Documentation - Collection Index](https://docs.ansible.com/ansible/latest/collections/index.html)
