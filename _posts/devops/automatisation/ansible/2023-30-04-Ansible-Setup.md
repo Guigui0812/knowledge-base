@@ -1,11 +1,9 @@
 ---
-title: Présentation, installation et configuration d'Ansible
+title: Ansible - Installation et configuration
 date: 2023-05-05 00:00:00  
 categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
-
-## Présentation
 
 Ansible est un outil d'automatisation open-source qui permet de déployer des applications, de gérer des configurations et d'orchestrer des tâches sur plusieurs serveurs en même temps. Il permet de gagner du temps et de l'argent en automatisant des tâches répétitives. Il n'utilise aucun agent sur les serveurs cibles, mais uniquement `SSH` pour se connecter et exécuter des tâches en utilisant `python`. Les tâches exécutées par Ansible sont appelées des *playbooks*, qui se composent de *modules*. Ces modules peuvent être assemblés pour créer des *rôles* qui sont des unités de configuration réutilisables.
 
@@ -126,7 +124,7 @@ Ici, nous avons créer un utilisateur `user_name` qui appartient au groupe `sudo
 Afin de générer une clé SSH et la copier sur un ensemble de serveurs qui seront administrés par Ansible, il faut d'abord générer une clé SSH sur le serveur Ansible avec la commande suivante :
 
 ```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/<key_name>
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/<key_name>
 ```
 
 Lorsqu'elle est générée, il faut copier la clé publique sur les serveurs cibles avec l'aide d'Ansible :
@@ -219,3 +217,4 @@ On peut aussi lister les modules disponibles sur le **control node** avec la com
 - [How to Pass Ansible Username And Password ?](https://linuxhint.com/pass-ansible-username-and-password/)
 - [How To Set Up Ansible Inventories](https://www.digitalocean.com/community/tutorials/how-to-set-up-ansible-inventories)
 - [Utilisez Ansible pour automatiser vos tâches de configuration - OpenClassrooms](https://openclassrooms.com/fr/courses/2035796-utilisez-ansible-pour-automatiser-vos-taches-de-configuration)
+- [Ansible Quick Start - Linux Academy](https://lucid.app/lucidchart/0c4c899b-39e1-430e-8186-c8b8812b6888/view?page=0Hmu9fbwitfV#)

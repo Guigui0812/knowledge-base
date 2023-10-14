@@ -121,7 +121,48 @@ La syntaxe de la commande `ansible-playbook` est la suivante :
 ansible-playbook <playbook> [options]
 ```
 
+## Utiliser des variables
+
+Il est possible d'utiliser des variables dans les `playbooks`. Cela permet de les rendre plus flexibles et réutilisables. Il existe plusieurs types de variables : les variables globales, les variables de groupe, les variables d'hôte et les variables de rôle.
+
+### Les variables globales
+
+Les variables globales sont des variables qui sont définies dans le fichier `ansible.cfg`. Elles sont utilisées par tous les `playbooks` et tous les `roles`. Elles sont définies dans la section `[defaults]` du fichier `ansible.cfg`.
+
+### Les variables de groupe
+
+Les variables de groupe sont des variables qui sont définies dans le fichier d'inventaire. Elles sont utilisées par tous les `playbooks` et tous les `roles`. Elles sont définies dans la section `[group_vars]` du fichier d'inventaire.
+
+### Les variables d'hôte
+
+Les variables d'hôte sont des variables qui sont définies dans le fichier d'inventaire. Elles sont utilisées par tous les `playbooks` et tous les `roles`. Elles sont définies dans la section `[host_vars]` du fichier d'inventaire.
+
+### Les variables de rôle
+
+Les variables de rôle sont des variables qui sont définies dans le dossier `vars` du `role`. Elles sont utilisées par le `role` dans lequel elles sont définies. Elles sont définies dans le fichier `main.yml` du dossier `vars` du `role`.
+
+### Les variables du playbook
+
+Les variables du playbook sont des variables qui sont définies dans le `playbook`. Elles sont utilisées par le `playbook` dans lequel elles sont définies. Elles sont définies dans la section `vars` du `playbook` : 
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  vars:
+    <variable>: <value>
+
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+```
+
 #### Liens et ressources utiles :
 
 - [Ansible Documentation](https://docs.ansible.com/ansible/latest/index.html)
 - [Ansible Documentation - Collection Index](https://docs.ansible.com/ansible/latest/collections/index.html)
+- [Ansible Documentation - ansible-playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html)
+- [Ansible Documentation - Variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)
