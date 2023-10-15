@@ -125,6 +125,27 @@ ansible-playbook <playbook> [options]
 
 Il est possible d'utiliser des variables dans les `playbooks`. Cela permet de les rendre plus flexibles et réutilisables. Il existe plusieurs types de variables : les variables globales, les variables de groupe, les variables d'hôte et les variables de rôle.
 
+Pour les variables, l'option importante est `-e` car elle permet de les définir. Par exemple, pour définir la variable `foo` avec la valeur `bar` :
+
+```bash
+ansible-playbook test.yml -e "foo=bar"
+```
+
+On pourra ensuite utiliser cette variable dans le playbook :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      debug:
+        msg: "foo: {{ foo }}"
+```
+
 ### Les variables globales
 
 Les variables globales sont des variables qui sont définies dans le fichier `ansible.cfg`. Elles sont utilisées par tous les `playbooks` et tous les `roles`. Elles sont définies dans la section `[defaults]` du fichier `ansible.cfg`.
@@ -159,6 +180,49 @@ Les variables du playbook sont des variables qui sont définies dans le `playboo
     - name: <name>
       <module>: <arguments>
 ```
+
+### Stocker le résultat d'un module dans une variable
+
+Il est possible de stocker le résultat d'un module dans une variable. Pour cela, il faut utiliser l'option `register` :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+      register: <variable>
+```
+
+Cela est très utile pour utiliser le résultat d'un module dans un autre module. 
+
+### Les ansibles facts
+
+Les `ansible facts` sont des variables qui sont définies par Ansible. Elles sont automatiquement découvertes par **Ansible** sauf si on désactive cette fonctionnalité avec l'option `gather_facts: no` dans le `playbook`.
+
+Par exemple, on peut récupérer le nom de l'hôte avec la variable `ansible_hostname` :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      debug:
+        msg: "Hostname: {{ ansible_hostname }}"
+```
+
+## Les handlers
+
+
+
 
 #### Liens et ressources utiles :
 
