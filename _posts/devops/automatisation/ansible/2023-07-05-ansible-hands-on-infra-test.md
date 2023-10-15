@@ -1,5 +1,5 @@
 ---
-title: Ansible automation lab - Small business infrastructure
+title: Ansible - Hands-on - Mettre en place une infrastructure de test
 date: 2023-08-22 00:00:00  
 categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops, infrastructure]
