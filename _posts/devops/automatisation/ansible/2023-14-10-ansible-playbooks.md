@@ -1,6 +1,6 @@
 ---
 title: Ansible - Les playbooks
-date: 2023-09-10 00:00:00  
+date: 2023-10-09 00:00:00  
 categories: [devops, automatisation, ansible]
 tags: [sysadmin, automatisation, ansible, devops]
 ---
@@ -221,7 +221,49 @@ Par exemple, on peut récupérer le nom de l'hôte avec la variable `ansible_hos
 
 ## Les handlers
 
+Les `handlers` sont des tâches qui sont exécutées uniquement si une `task` a modifié l'état d'un serveur. Ils sont très utiles pour redémarrer un service uniquement si une `task` a modifié un fichier de configuration.
 
+Pour utiliser un `handler`, il faut l'appeler dans une `task` avec l'option `notify` :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: <name>
+      <module>: <arguments>
+      notify: <handler>
+
+  handlers:
+    - name: <name>
+      <module>: <arguments>
+```
+
+Par exemple, on va pouvoir démarrer un service directement après l'avoir installé :
+
+```yaml
+---
+- name: <name>
+  hosts: <hosts>
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+      notify: Start nginx
+
+  handlers:
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+```
 
 
 #### Liens et ressources utiles :
