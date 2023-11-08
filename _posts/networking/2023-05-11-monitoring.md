@@ -214,12 +214,6 @@ conf t
 snmp-server community public RO
 ```
 
-Il faut ensuite configurer le `serveur SNMP` :
-
-```bash
-snmp-server host <IP> <communauté>
-```
-
 Pour activer les traps `SNMP` :
 
 ```bash
@@ -233,6 +227,12 @@ Exemples de types de traps :
 snmp-server enable traps tty
 snmp-server enable traps config
 snmp-server enable traps vtp
+```
+
+Il faut ensuite configurer le `serveur SNMP` (pour envoyer les traps) :
+
+```bash
+snmp-server host <IP> <communauté>
 ```
 
 ##### Commandes utiles (sous Linux)
@@ -270,15 +270,7 @@ Dans cette commande, on précise différents paramètres :
 La commande `snmptranslate` permet de traduire un `OID` en nom d'objet :
 
 ```bash
-snmptranslate -On .1.3.6.1.2.1.1.3.0
-```
-
-###### SNMPWalk
-
-La commande `snmpwalk` permet de récupérer la valeur de tous les objets de la `MIB` :
-
-```bash
-snmpwalk
+snmptranslate -On <OID à traduire>
 ```
 
 ###### SNMP Bulk Walk
@@ -286,7 +278,7 @@ snmpwalk
 La commande `snmpbulkwalk` permet de récupérer la valeur de tous les objets de la `MIB` en une seule requête :
 
 ```bash
-snmpbulkwalk
+snmpbulkwalk -v 2c -c <community> <ip de l'agent> <OID de l'objet à récupérer>
 ```
 
 Elle n'est pas disponible en `SNMPv1` puisqu'elle a été introduite en `SNMPv2c` pour améliorer les performances du protocole. 
