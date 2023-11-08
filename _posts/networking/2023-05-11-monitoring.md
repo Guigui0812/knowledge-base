@@ -5,9 +5,7 @@ categories: [Réseau]
 tags: [supervision, réseau, monitoring]
 ---
 
-# Les protocoles de supervision réseau
-
-La **supervision** consiste à surveiller l'état d'un système informatique et à alerter en cas de dysfonctionnement. Elle permet de détecter les problèmes et de les résoudre rapidement avant qu'ils n'aient un impact sur les utilisateurs. 
+La **supervision** consiste à surveiller l'état d'un système informatique et à alerter en cas de dysfonctionnement. Elle permet de détecter les problèmes et de les résoudre rapidement avant qu'ils n'aient un impact sur les utilisateurs.
 
 Ces notes sont tirées du cours de supervision réseau dispensé à l'école d'ingénieurs **ESIEE Amiens** dans la spécialité **Réseaux informatiques**.
 
@@ -16,72 +14,82 @@ Ces notes sont tirées du cours de supervision réseau dispensé à l'école d'i
 - Détecter les problèmes avant qu'ils n'aient un impact sur les utilisateurs
 - Faciliter l'administration du réseau (entretien, surveillance, dépannage)
 - Améliorer la qualité de service (QoS)
-- Améliorer la sécurité du réseau
+- Assurer la sécurité du réseau (détection d'intrusion, etc.)
 
-## SNMP (Simple Network Management Protocol)
+## Les protocoles de supervision réseau
 
-`SNMP` est un **protocole** de supervision réseau qui permet de superviser des équipements réseau (routeurs, commutateurs, imprimantes, etc.). Il est utilisé pour récupérer des informations sur l'état des équipements et pour les configurer à distance. 
-Il a été normalisé par l'`IETF` (Internet Engineering Task Force) dans la **RFC 1157** en **1988**. C'est un standard pour l'administration des réseaux. 
-La version actuelle est la `SNMPv3` (1999).
+### SNMP (Simple Network Management Protocol)
 
-**Objectif :** communiquer, échanger des données et gérer les équipements de façon automatique et transparente. 
+`SNMP` est un protocole de supervision réseau qui permet de **superviser des équipements réseau et informatiques** (routeurs, commutateurs, imprimantes, etc.). Il est **utilisé pour récupérer des informations sur l'état des équipements et pour les configurer à distance**.
+Il a été normalisé par l'`IETF` (Internet Engineering Task Force) dans la **RFC 1157** en **1988**. C'est un standard pour l'administration des réseaux. La version actuelle est la `SNMPv3` (1999).
 
-`SNMP` est un protocole de la `couche application`. Il utilise le protocole de transport `UDP` (User Datagram Protocol) pour envoyer des messages de supervision via deux ports :
-- `161` pour envoyer des requêtes (côté client)
-- `162` pour recevoir des réponses (côté serveur).
+**Objectif :** communiquer, échanger des données et gérer les équipements de façon automatique et transparente.
 
-Il utilise le concept de `client-serveur` : 
-- Les **clients** sont les équipements supervisés (ordinateurs, routeurs, etc.) et sont appelés des `agents`.
-- Les **serveurs** sont les stations d'administration de la solution de supervision et sont appelés des `manager`.
+Quelques informations sur `SNMP` :
+
+- Protocole de la `couche application` (couche 7)
+- Utilise le protocole de transport `UDP` : 
+  - Port `161` pour envoyer des requêtes (côté client)
+  - Port `162` pour recevoir des réponses (côté serveur).
+- Il utilise le concept de `client-serveur` :
+  - `Client` : équipements réseau à superviser ou `agents`
+  - `Serveur` : équipement hébergeant la solution de supervision ou `manager`
 
 **Avantages :**
+
 - **Simple** : mise en place rapide et peu chère
 - **Stable** : repose sur le principe du paradigme « aller chercher – enregistrer »
 - **Souple** : on installe uniquement les commandes qui seront adaptées au réseau
 - **Performant** : rapide et de petite taille
 - **Disponible** : répandu sur le marché (incontournable pour les constructeurs)
 
-### Les versions de SNMP
+#### Les versions de SNMP
 
-#### SNMPv1 (1988)
+##### SNMPv1 (1988)
 
 C'est la version initiale du protocole qui a permis de :
+
 - Fournir un **standard accepté par l'ensemble des constructeurs**
-- Développer un **grand choix d'outils de supervision**.
+- Développer un **grand choix de logiciels de supervision**
 
 Ses **points faibles** :
-- **Manque de sécurité** : les `communautés` (chaînes de caractères) sont envoyées en clair sur le réseau.
-- **Protocole inefficace** : pas de transfert d'informations en masse.
-- **Pas de limitation sélectives d'accès** à la `MIB` de l'agent (l'agent est l'équipement supervisé).
 
-#### SNMPv2 (1993)
+- **Manque de sécurité** : les `communautés` sont envoyées en clair sur le réseau.
+- **Protocole inefficace** : pas de transfert d'informations en masse des variables de la `MIB` (Management Information Base).
+- **Pas de contrôle d'accès** : pas de contrôle d'accès en lecture et en écriture sur les objets de la `MIB`.
+
+##### SNMPv2 (1993)
 
 `SNMPv2` apporte des **améliorations** :
-- Une entité SNMP peut être à la fois un **agent** et un **manager**.
-- **Primitive Inform** : dialogue de manager à manager.
-- **Primitive GetBulk** : permet au `manager` de demander en bloc plusieurs variables consécutives dans la `MIB` de l'agent.
-- Mécanismes de sécurité : confidentialité des messages par cryptographie DES et support multiprotocole (UDP, OSI, etc.).
 
-#### SNMPv3 (1999)
+- Une **entité SNMP** peut être à la fois un `manager` et un `agent`.
+- **Primitive `Inform`** : dialogue de manager à manager.
+- **Primitive `GetBulk`** : permet au `manager` de demander en bloc plusieurs variables consécutives dans la `MIB` de l'agent.
+
+##### SNMPv3 (1999)
 
 `SNMPv3` apporte des **améliorations** pour la sécurité :
-- **Authentification** : garantit l'authenticité de l'émetteur et du récepteur en se basant sur `MD5` ou `SHA` afin de crypter les données d'authentification.
-- **Chiffrement** : réalisé par `DES` (Data Encryption Standard) afin d'empêcher la lecture des données contenues dans les paquets `SNMP` en cas d'interception par un tiers.
-- **Estempillage du temps**: empêche la réutilisation d'un paquet SNMPv3 valide déjà transmis par un tiers pour éviter les attaques de type « rejeu ». Chaque paquet `SNMPv3` est estampillé avec une date qui est comparée à la réception avec le temps local de l'agent. Si la différence est **supérieure à 150 secondes**, le paquet est rejeté.
 
-### La notion de MIB
+- **Authentification** : garantit l'authenticité de l'émetteur et du récepteur en **se basant sur `MD5` ou `SHA` afin de crypter les données d'authentification**.
+- **Chiffrement** : réalisé par `DES` (Data Encryption Standard) **afin d'empêcher la lecture des données contenues dans les paquets `SNMP`** en cas d'interception par un tiers.
+- **Estempillage du temps**: mécanisme anti-rejeu qui permet de **vérifier que le paquet n'a pas déjà été transmis**. Pour cela, la **date d'émission du paquet est comparée à la date de réception**. Si la différence est **supérieure à 150 secondes**, le paquet est **rejeté**.
 
-La `MIB` est une base de données qui **contient des informations sur les équipements réseau**. Elle est organisée sous forme d'arbre et chaque objet est identifié par un `OID` (Object IDentifier). Elle respecte les règles `SMI` (Structure of Management Information) et s'organise sous la forme d'un **arbre**.
+#### La notion de MIB
 
-Le chemin vers un objet est représenté par une suite de nombres séparés par des points de manière absolue (par rapport à la racine).
+La `MIB` est une **base de données** gérée par un `agent` et qui **contient des informations sur celui-ci** : nom, version, constructeur, etc. 
 
-Afin d'être organisées, les variables des `MIB` sont regroupées en **groupes**. Chaque groupe est identifié par un `OID` et contient des **objets**. Chaque objet est identifié par un `OID` et contient des **instances**. Chaque instance est identifiée par un `OID` et contient des **valeurs**.
+Ces informations sont contenues dans des `objets` qui sont eux-mêmes organisés en `groupes`.
+
+Une `MIB` a donc une structure en **arbre** dans laquelle chaque `objet`` est identifié par un `OID` (Object IDentifier). Cette structure les règles `SMI` (Structure of Management Information). 
+
+Le chemin vers un objet est ainsi représenté par une **suite de nombres séparés par des points** de manière absolue : `1.3.6.1.2.1.2.2.1.2` (nom de l'interface réseau).
 
 **Aperçu :**
 
 ![MIB](../../assets/networks/MIB_example.png)
 
 **Les MIB les plus utilisées sont :**
+
 - `System` : description de l'equipement
 - `Interfaces` : description des interfaces réseau
 - `Dot1dBridge` : equipements de routage (port STP, port forwarding, routage...)
@@ -93,19 +101,17 @@ Afin d'être organisées, les variables des `MIB` sont regroupées en **groupes*
 - Sur des sites spécialisés comme [OIDview](http://www.oidview.com/mibs/detail.html) ou [plixer](https://www.plixer.com/support/netflow-configuration/cisco-snmp-mibs/)
 - En utilisant des logiciels comme [MIB Browser](https://www.ireasoning.com/mibbrowser.shtml) ou [SNMPutil](https://www.snmpsoft.com/freetools/snmpwalk.html)
 
-### La notion de communauté
+#### La notion de communauté
 
-Une `communauté SNMP` définit un groupes de périphériques et de systèmes de gestion. Seuls les périphériques et les systèmes de gestion qui sont membres d'une même communauté peuvent échanger des messages SNMP. Un périphérique ou un système de gestion peuvent être membres de plusieurs communautés. 
+Une `communauté` correspond à un groupe composé d'`agents` et de `managers` à qui on a configuré la même `chaîne de caractères de communauté` (un mot de passe en quelque sorte). **Seuls les périhpériques possédant la même `communauté` peuvent échanger des messages `SNMP`**. Un périphérique peut être membre de plusieurs `communautés`.
 
-On peut donc dire qu'une `communauté` est la relation entre un agent SNMP et un.plusieurs manager(s). L'accès est effectué par la comparaison d'une chaîne de caractères appelée `chaîne de communauté` (ou `community string`) qui permet une `authentification` et un `contrôle d'accès`. 
+**Principe de l'authentification :** le `manager` envoie une requête `SNMP` à un `agent` en précisant la `communauté` dans le message afin d'assurer l'authenticité de la communication.
 
-**Principe de l'authentification :** la station de gestion envoie avec le message un mot de passe correspondant à la communauté afin de permettre au récepter de vérifier l'authenticité de l'émetteur.
+**Politique d'accès :** les communautés permettent un **contrôle d'accès en lecture et en écriture** sur les objets de la MIB (RO, RW, etc.).
 
-**Politique d'accès :** les communautés permettent un **contrôle d'accès en lecture et en écriture** sur les objets de la MIB.
+#### Résumé des fonctionnalités et niveaux de sécurité par version de SNMP
 
-### Résumé des fonctionnalités et niveaux de sécurité par version de SNMP
-
-#### Niveau de sécurité
+##### Niveau de sécurité
 
 | Version | Level | Authentification | Chiffrement | Processus d'authentification |
 |---------|--------------|------------------|-------------|---------------------------|
@@ -115,7 +121,7 @@ On peut donc dire qu'une `communauté` est la relation entre un agent SNMP et un
 | SNMPv3  | AuthNoPriv   | MD5 ou SHA       | Non         | Authentification basée sur HMAC-MD5 ou HMAC-SHA |
 | SNMPv3  | AuthPriv     | MD5 ou SHA       | DES         | Authentification basée sur HMAC-MD5 ou HMAC-SHA et chiffrement basé sur DES (56 bits) |
 
-#### Fonctionnalités
+##### Fonctionnalités
 
 | Fonctionnalité | SNMPv1 | SNMPv2c | SNMPv3 |
 |----------------|--------|---------|--------|
@@ -130,14 +136,15 @@ On peut donc dire qu'une `communauté` est la relation entre un agent SNMP et un
 | Authentification par message | Non | Non | Oui |
 | Chiffrement des messages | Non | Non | Oui |
 
-### Quelques exemples de logiciels de supervision SNMP
+#### Quelques exemples de logiciels de supervision SNMP
 
 - PRTG
 - Zabbix
 - Nagios
 - Observium
+- Icinga 2
 
-### Structure d'un message SNMP
+#### Structure d'un message SNMP
 
 Une trame `SNMP` se présente comme suit :
 
@@ -145,7 +152,7 @@ Une trame `SNMP` se présente comme suit :
 
 - **Version** : le manager et l'agent doivent utiliser la même version.
 - **Communauté** : chaîne de caractères qui permet l'authentification et le contrôle d'accès.
-- **Type de PDU** : 
+- **Type de PDU** :
   - GetRequest : valeur du champ à 0
   - GetNextRequest : valeur du champ à 1
   - GetResponse : valeur du champ à 2
@@ -154,11 +161,14 @@ Une trame `SNMP` se présente comme suit :
 - **Index d'erreur** : identifie les entrées avec la liste des variables qui ont causé l'erreur.
 - **Obj/Val** : liste des objets et des valeurs associées.
 
-### Trap SNMP
+#### Trap SNMP
 
-Un `trap SNMP` est un message envoyé par un `agent` à un `manager` pour l'informer d'un événement. Il est envoyé de façon asynchrone (pas de requête préalable du manager) sur le port `162` en `UDP`. On peut configurer des événements afin qu'ils soient signalés par un `trap SNMP` lors de leur déclenchement : défaut de câble réseau, disque dur défaillant, problème d'aliementation, etc.
+Un `trap SNMP` est un message envoyé par un `agent` à un `manager` pour l'informer d'un événement. Il est envoyé de façon asynchrone (pas de requête préalable du manager) sur le port `162` en `UDP`. 
+
+Afin qu'ils soient déclenchés, **les `traps SNMP` doivent être configurés** : défaut de câble réseau, disque dur défaillant, problème d'aliementation, etc.
 
 **Exemple de trap SNMP :**
+
 - **Link Down** ou **Link Up** : interface réseau passe en état `down` ou `up`
 - **Cold Start** ou **Warm Start** : type de redémarrage de l'équipement
 - **Authentication Failure** : tentative d'accès à un équipement a échoué
@@ -177,15 +187,15 @@ Un paquet `Trap SNMP` se présente comme suit :
 - **Time Stamp** : date et heure de l'événement.
 - **Obj/Val** : liste des objets et des valeurs associées.
 
-### Mise en place du SNMP
+#### Mise en place du SNMP
 
-#### Configuration d'un agent SNMP Windows
+##### Configuration d'un agent SNMP Windows
 
 Sur **Windows**, il faut paramétrer le service `SNMP` dans les `Services Windows` :
 
 ![SNMP Windows](../../assets/networks/SNMP_windows.png)
 
-#### Configuration d'un agent SNMP Linux
+##### Configuration d'un agent SNMP Linux
 
 Sur **Linux**, il faut installer le paquet `snmpd` :
 
@@ -193,9 +203,9 @@ Sur **Linux**, il faut installer le paquet `snmpd` :
 sudo apt-get install snmpd
 ```
 
-On peut ensuite configurer le service `SNMP` dans le fichier `/etc/snmp/snmpd.conf` (communauté, trap, etc.). 
+On peut ensuite configurer le service `SNMP` dans le fichier `/etc/snmp/snmpd.conf` (communauté, trap, etc.).
 
-#### Configuration d'un agent SNMP Cisco
+##### Configuration d'un agent SNMP Cisco
 
 Sur **Cisco**, on peut activer le service `SNMP` en version `2c` avec la communauté `public` :
 
@@ -223,11 +233,11 @@ Exemples de types de traps :
 snmp-server enable traps tty
 snmp-server enable traps config
 snmp-server enable traps vtp
-```	
+```
 
-#### Commandes utiles (sous Linux)
+##### Commandes utiles (sous Linux)
 
-##### SNMPGet
+###### SNMPGet
 
 La commande `snmpget` permet d'obtenir une information sur un objet de la `MIB` d'un agent SNMP.
 
@@ -244,6 +254,7 @@ snmpget -v3 -l auth -u giollaume -a sha -A giollaume -x AES -X giollaume 10.6.0.
 ```
 
 Dans cette commande, on précise différents paramètres :
+
 - `-v3` : version `SNMPv3`
 - `-l auth` : précise la nécessité d'une authentification
 - `-u giollaume` : nom d'utilisateur
@@ -254,7 +265,7 @@ Dans cette commande, on précise différents paramètres :
 - `IP de l'agent`
 - `OID` : identifiant de l'objet à récupérer
 
-##### SNMPTranslate
+###### SNMPTranslate
 
 La commande `snmptranslate` permet de traduire un `OID` en nom d'objet :
 
@@ -262,7 +273,7 @@ La commande `snmptranslate` permet de traduire un `OID` en nom d'objet :
 snmptranslate -On .1.3.6.1.2.1.1.3.0
 ```
 
-##### SNMPWalk
+###### SNMPWalk
 
 La commande `snmpwalk` permet de récupérer la valeur de tous les objets de la `MIB` :
 
@@ -270,7 +281,7 @@ La commande `snmpwalk` permet de récupérer la valeur de tous les objets de la 
 snmpwalk
 ```
 
-##### SNMP Bulk Walk
+###### SNMP Bulk Walk
 
 La commande `snmpbulkwalk` permet de récupérer la valeur de tous les objets de la `MIB` en une seule requête :
 
@@ -280,18 +291,20 @@ snmpbulkwalk
 
 Elle n'est pas disponible en `SNMPv1` puisqu'elle a été introduite en `SNMPv2c` pour améliorer les performances du protocole. 
 
-## Syslog
+### Syslog
 
-`Syslog` est un protocole de supervision provenant du monde `Linux`, mais permettant également de superviser des équipements réseau. 
+`Syslog` est un protocole de supervision provenant du monde `Linux`, mais permettant également de superviser des équipements réseau.
 
 **Fonctionnalités :**
+
 - Centralisation des journaux d'événements
-- Transport des messages de journalisation sur le réseau vers un **serveur** ()`rsyslog` ou `syslog-ng`)
+- Transport des messages de journalisation sur le réseau vers un **serveur** (`rsyslog` ou `syslog-ng`)
 - Décharge les programmeurs de la gestion des journaux d'événements. Par exemple sous `linux` les logs des applications sont stockés dans `/var/log/` de manière systématique.
 - Permet à l'administrateur de gérer l'ensemble des logs avec un fichier unique.
 - Permet de gérer les entrées de journaux en fonction de leur type et de leur niveau d'urgence
 
 **Quelques caractéristiques :**
+
 - `Syslog` est un protocole de la `couche application` qui utilise le protocole de transport `UDP` (port `514`).
 - Utilise une architecture `client-serveur`
 - `Syslogd` est le démon qui gère les messages de journalisation
@@ -299,27 +312,41 @@ Elle n'est pas disponible en `SNMPv1` puisqu'elle a été introduite en `SNMPv2c
 - `ntsyslog` est l'implémentation de `Syslog` sous `Windows`
 - Avec `syslogd -r` on peut gérer les logs d'hôtes distants
 
-### Format des messages Syslog
+#### Format des messages Syslog
 
 **Un journal comporte les informations suivantes dans l'ordre :**
+
 - **Date** à laquelle l'événement s'est produit
 - **Nom de l'hôte** sur lequel l'événement s'est produit
 - **Information sur le processus** qui a généré l'événement
 - **Gravité** de l'événement
-- **Identifiant** de l'événement
+- **Identifiant** du processus
 - **Message** décrivant l'événement
 
 Certaines de ces informations sont optionnelles et peuvent être omises.
 
 **Comment connaître la priorité d'un événement ?**
 
-Elle est définie par sa fonctionnalité ainsi que sa gravité : il faut multiplier par 8 la fonctionnalité et ajouter la gravité. Par exemple, un événement de type `authpriv.notice` a une priorité de `10` (8 * 1 + 2).
+Il faut d'abord identifier la valeur liée à la `fonctionnalité` de l'événement :
 
-**A noter** : une priorité importante ne signifie pas que l'événement sera traité ou acheminé plus rapidement qu'un autre. 
+![Syslog functionnalities](../../assets/networks/Syslog_fonctions.png)
 
-### Sécurité
+Ensuite, il faut identifier la valeur liée à la `gravité` de l'événement :
 
-`Syslog` ne permet pas de sécuriser les messages de journalisation : 
+![Syslog severity](../../assets/networks/Syslog_severity.png)
+
+Pour trouver la `priorité` de l'événement, il suffit d'appliquer la formule suivante : 
+
+```matlab
+Priorité = (Fonctionnalité * 8) + Gravité
+```
+
+**A noter** : une priorité importante ne signifie pas que le message sera traité ou acheminé plus rapidement qu'un autre.
+
+#### Sécurité
+
+`Syslog` ne permet pas de sécuriser les messages de journalisation :
+
 - Pas d'authentification
 - Pas de chiffrement
 - Facile à abuser ou inonder de faux messages
@@ -328,33 +355,37 @@ Elle est définie par sa fonctionnalité ainsi que sa gravité : il faut multipl
 - Risque de spoofing (usurpation de l'adresse IP d'un hôte)
 - Pas d'accusé de réception des messages car utilisation de `UDP` (pas en mode connecté)
 
-### Gestion des journaux
+#### Gestion des journaux
 
-Les journaux sont des fichiers dans lesquels les informations s'accumulent et ils peuvent devenir très volumineux. 
+Les journaux sont des fichiers dans lesquels les informations s'accumulent et ils peuvent devenir très volumineux.
 
-**Contraintes et solutions :**
+**Contraintes :**
+
 - **Taille** : supprimer les informations les plus anciennes quand le fichier atteint une certaine taille.
-- **Temps** : conserver les informations un temps minimal pour permettre de faire des analyses.
+- **Temps** : ne garder les informations un temps minimal pour permettre de faire des analyses.
 
 **Quelques idées pour gérer les journaux :**
+
 - Suppression des entrées à intervalles réguliers
 - Alerte si le fichier dépasse d'un coup une certaine taille (peut être un signe de déni de service)
 - Utiliser des outils comme `logrotate` ou `newsyslog` pour gérer la rotation des journaux
 
-### Quelques exemples de logiciels de supervision Syslog
+#### Quelques exemples de logiciels de supervision Syslog
 
 - Graylog
 - Splunk
 - ELK Stack
 
-## NetFlow
+### NetFlow
 
 `NetFlow` est un protocole de supervision réseau qui permet de collecter des informations sur le trafic réseau. Il a été développé par `Cisco` en **1996**.
 
 **Caractéristiques :**
+
 - Protocole de **niveau 3** (couche `réseau`)
 - Standardisé depuis la **version 9** : `IPFIX` (Internet Protocol Flow Information Export)
-- **Chaque constructeur a sa propre implémentation** (Cisco, Juniper, etc.) : 
+- **Chaque constructeur a sa propre implémentation** (Cisco, Juniper, etc.) :
+
   - `JFlow` pour Juniper
   - `AppFlow` pour Citrix
   - `NetStream` pour HP
@@ -363,7 +394,8 @@ Les journaux sont des fichiers dans lesquels les informations s'accumulent et il
 
 **Intérêt :** permet de voir les évolutions des flux et adapter la `QoS` en fonction des besoins.
 
-`Netflow` permet : 
+`Netflow` permet :
+
 - **Surveiller en temps réel l'utilisation de la bande passante** par les applications et les utilisateurs
 - Comprendre par qui, quand, et où est utilisé le réseau
 - Mesurer l’efficacité du réseau et des ressources
@@ -381,15 +413,28 @@ Les journaux sont des fichiers dans lesquels les informations s'accumulent et il
 
 **A savoir** : Pour fonctionner, `Netflow` a besoin d'accéder au contenu des paquets. Il est donc incompatible avec le chiffrement des données (VPN, SSH, IPSec, etc.).
 
-Quelques exemples de logiciels de supervision `NetFlow` :
+**Netflos vs SFlow :**
+
+- SFlow réalise un échantillonnage des paquets alors que NetFlow analyse tous les paquets.
+- SFlow consomme moins de CPU et moins de bande passante que NetFlow.
+- Mais NetFlow est plus précis que SFlow.
+
+**Quand utilise l'un ou l'autre ?**
+
+- **SFlow :** pour avoir une vue générale sur le trafic réseau
+- **NetFlow :** pour avoir une vue détaillée sur le trafic réseau
+
+Quelques exemples de sondes `NetFlow` :
+
 - Ntop (open source) : agent logiciel
 - Nprobe (open source) : agent logiciel
 - WhatsUp Flow Publisher : agent logiciel
 - Flowmon : agent matériel
-- SolarWinds NetFlow Traffic Analyzer
 - PRTG Traffic Grapher
 
-# Notion de SLA
+**A savoir :** il existe des `agents logiciels` et des `agents matériels` pour `NetFlow`. Les agents logiciels sont moins performants que les agents matériels.
+
+## Notions de SLA et IP SLA
 
 Un `SLA` (Service Level Agreement) est un **document** qui définit la **qualité de service** requise entre un prestataire et un client. 
 
@@ -417,13 +462,12 @@ Le `MOS` est une note (entre 1 et 5) donnée à un codec audio pour caractérise
 
 L'intérêt est d'éviter les **coupures** et les **interruptions** de service, mais également de garantir une **qualité minimale de service**.
 
-## Utiliser les SLA pour superviser un réseau
+## Utiliser les IP SLA pour superviser un réseau et garantir le respect des SLA
 
 On peut utiliser différents types de SLA pour superviser un réseau :
+
 - `UDP Echo`
 - `TCP Connect`
 - `HTTP`
 
-Une fois les types de `SLA` choisis, on va pouvoir effectuer des tests afin de vérifier si les objectifs sont atteints. On va définir des tests qui seront effectués à intervalles réguliers (toutes les 5 minutes par exemple) et qui permettront de vérifier si les objectifs contractuels sont atteints. Si ce n'est pas le cas, on pourra déclencher une alerte afin de notifier les administrateurs de la dégradation de la qualité de service.
-
-Ces éléments sont à configurer sur les équipements réseau (routeurs, commutateurs, etc.) et sont appelés des `IP SLA` (IP Service Level Agreement).
+En configurant des `IP SLA` sur les équipements réseau, on va pouvoir **vérifier si les objectifs contractuels sont atteints**. Si ce n'est pas le cas, **on pourra déclencher une alerte afin de notifier les administrateurs de la dégradation de la qualité de service**. Ces tests peuvent être réalisés de façon régulière (toutes les 5 minutes par exemple) et consistent en l'envoi de **paquets de tests**, en utilisant différents protocoles (UDP, TCP, HTTP, etc.), vers des équipements distants (souvent les équipements faisant l'objet du contrat de service).
