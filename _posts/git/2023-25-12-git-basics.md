@@ -1,6 +1,6 @@
 ---
 title: GIT - Les bases
-date: 2023-25-12 00:00:00
+date: 2023-12-25 00:00:00
 categories: [git]
 tags: [devops, dev, git, versioning]
 ---
