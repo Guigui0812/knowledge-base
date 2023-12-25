@@ -1,8 +1,8 @@
 ---
 title: Use git with SSH for authentication
 date: 2023-07-23 00:00:00
-categories: [dev, git]
-tags: [devops, dev, git, ci/cd, security]
+categories: [git]
+tags: [git, ssh, authentication]
 ---
 
 If you can use git with HTTPS, it is better to use SSH for authentication. It is more secure and you don't have to enter your credentials each time you want to push your changes. It's even more usefull and secure if you use differents laptops or computers.
