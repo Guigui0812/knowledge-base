@@ -5,7 +5,7 @@ categories: [devops]
 tags: [terminal, zsh, oh-my-zsh, powerlevel10k, customisation]
 ---
 
-![Image to illustrate the article](img/p10k_linux_terminal.png)
+<img src="./img/p10k_linux_terminal.png" alt="p10k_linux_terminal" style="zoom:50%;align:center" />
 
 Avec `zsh` et `oh-my-zsh`, il est possible de personnaliser son terminal afin de le rendre plus agréable et plus attrayant.
 
