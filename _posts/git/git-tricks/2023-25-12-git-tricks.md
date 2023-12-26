@@ -5,7 +5,7 @@ categories: [git]
 tags: [devops, dev, git, versioning, commandes]
 ---
 
-![git tricks](./git_tricks.jpg)
+![git_tricks](git_tricks.jpg)
 
 Liste d'astuces **git** utiles au quotidien.
 
