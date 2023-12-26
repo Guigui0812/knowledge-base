@@ -5,13 +5,13 @@ categories: [git]
 tags: [devops, dev, git, versioning, commandes]
 ---
 
+![git tricks](./git_tricks.jpg)
+
 Liste d'astuces **git** utiles au quotidien.
 
 ## Annuler le dernier commit
 
 Afin d'annuler le dernier commit, il est possible d'utiliser la commande `reset`.
-
-```bash
 
 ```bash
 git reset --soft HEAD~1
