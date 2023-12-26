@@ -5,7 +5,7 @@ categories: [git]
 tags: [devops, dev, git, versioning]
 ---
 
-![git basics](../img/git/git_basics/git_basics.png)
+![git basics](assets/git_basics.png)
 
 **Git** est un logiciel de **versioning** de code. Plus simplement, c'est un outil qui permet de suivre, gérer, historiser et partager les modifications d'un projet. Il est très utilisé dans le monde du développement logiciel car il intègre des fonctionnalités permettant aux développeurs de travailler en équipe sur un même projet.
 

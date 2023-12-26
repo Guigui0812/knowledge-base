@@ -5,7 +5,7 @@ categories: [sysadmin, linux]
 tags: [linux, commandes, liens, symlink, terminal]
 ---
 
-<img src="../img/linux_links.png" alt="links" style="zoom:50%;align:center" />
+![linux links](assets/linux_links.png)
 
 ## Qu'est-ce qu'un lien dans Linux ?
 
