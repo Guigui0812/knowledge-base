@@ -239,8 +239,8 @@ Cette configuration permet de rediriger le trafic `http` vers `https` en utilisa
 
 Le certificat SSL/TLS est valable 90 jours. Il faut donc le renouveler régulièrement mais c'est évidemment contraignant et chronophage. Pour cela, on peut créer un `cron job` :
 
-```yaml
-0 0 1 */2 * /usr/bin/docker compose --rm certbot renew
+```bash
+0 0 1 */3 * "/usr/bin/docker compose" -f /chemin/absolu/vers/nginx-conf/docker-compose.yml run certbot renew
 ```
 
 #### Liens utiles
